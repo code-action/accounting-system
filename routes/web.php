@@ -60,4 +60,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 	Route::resource('proveedor', 'App\Http\Controllers\ProveedorController');
+    Route::resource('raw', 'App\Http\Controllers\MaterialController');
 });
