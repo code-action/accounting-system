@@ -64,13 +64,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 
 	Route::resource('proveedor', 'App\Http\Controllers\ProveedorController');
+
     Route::resource('cliente', ClienteController::class);
     Route::resource('cotizacion', CotizacionController::class);
+
+    Route::resource('raw', 'App\Http\Controllers\MaterialController');
 });
-
-
-
-
-
-
 
