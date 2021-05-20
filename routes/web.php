@@ -69,5 +69,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('cotizacion', CotizacionController::class);
 
     Route::resource('raw', 'App\Http\Controllers\MaterialController');
+	Route::resource('ordencompra', 'App\Http\Controllers\OrdenCompraController');
+	Route::get('materiaprimafiltro','App\Http\Controllers\OrdenCompraController@filtro');
 });
-
