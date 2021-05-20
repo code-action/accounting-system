@@ -14,7 +14,7 @@ class ChageToProveedorsTable extends Migration
     public function up()
     {
         Schema::table('proveedors', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->change();
+            $table->bigIncrements('id')->change();
         });
     }
 
