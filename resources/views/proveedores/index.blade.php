@@ -10,7 +10,7 @@
                 <div class="card-icon">
                   <i class="material-icons">groups</i>
                 </div>
-                <h4 class="card-title">{{ __('Lista de proveedores') }}</h4>
+                <h4 class="card-title">{{ __('Lista de Proveedores') }}</h4>
               </div>
               <div class="card-body">
                 <div class="row">
@@ -59,17 +59,13 @@
                                 @method('delete')
                                 
                                 {{-- @can('update', $proveedor) --}}
-                                  <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('proveedor.edit', $proveedor) }}" data-original-title="" title="">
+                                  <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('proveedor.edit', $proveedor) }}" data-original-title="" title="Editar">
                                     <i class="material-icons">edit</i>
                                     <div class="ripple-container"></div>
                                   </a>
-                                {{-- @endcan --}}
-                                {{-- @if ($proveedor->items->isEmpty() && auth()->user()->can('delete', $proveedor))
-                                  <button type="button" class="btn btn-danger btn-link" data-original-title="" title="" onclick="confirm('{{ __("Are you sure you want to delete this category?") }}') ? this.parentElement.submit() : ''">
-                                      <i class="material-icons">close</i>
-                                      <div class="ripple-container"></div>
+                                  <button style="border:none; transform: translateY(7px)" type="submit" rel="tooltip" class="<btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
+                                    <i class="material-icons">delete_outline</i>
                                   </button>
-                                @endif --}}
                               </form>
                             </td>
                           {{-- @endcan --}}

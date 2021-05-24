@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,8 +62,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+
 	Route::resource('proveedor', 'App\Http\Controllers\ProveedorController');
+
+    Route::resource('cliente', ClienteController::class);
+    Route::resource('cotizacion', CotizacionController::class);
+
     Route::resource('raw', 'App\Http\Controllers\MaterialController');
     Route::resource('categoria', 'App\Http\Controllers\CategoriaController');
     Route::resource('producto', 'App\Http\Controllers\ProductoController');
+	Route::resource('ordencompra', 'App\Http\Controllers\OrdenCompraController');
+	Route::get('materiaprimafiltro','App\Http\Controllers\OrdenCompraController@filtro');
 });

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Exception;
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProveedorRequest;
@@ -35,11 +37,11 @@ class ProveedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Proveedor $model)
+    public function store(ProveedorRequest $request, Proveedor $model)
     {
         $model->create($request->all());
 
-        return redirect()->route('proveedor.index')->withStatus(__('Proveedor creado exitosamente.'));
+        return redirect()->route('proveedor.index')->with('success','Registro creado exitosamente.');
     }
 
     /**
@@ -75,7 +77,7 @@ class ProveedorController extends Controller
     {
         $proveedor->update($request->all());
 
-        return redirect()->route('proveedor.index')->withStatus(__('Proveedor actualizado exitosamente.'));
+        return redirect()->route('proveedor.index')->with('success','Registro editado correctamente');
     }
 
     /**
@@ -86,6 +88,14 @@ class ProveedorController extends Controller
      */
     public function destroy(Proveedor $proveedor)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $proveedor->delete();
+            DB::commit();
+            return redirect()->route('proveedor.index')->with('success','Registro eliminado exitosamente.');
+        } catch(\Exception $e){
+            DB::rollback();
+            return redirect()->route('proveedor.index')->with('error','El registro no pudo eliminarse.');
+        }
     }
 }
