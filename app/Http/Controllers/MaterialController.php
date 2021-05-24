@@ -65,7 +65,6 @@ class MaterialController extends Controller
     public function edit($id)
     {
         $material = Material::find($id);
-        // dd($material);
         return view('materiales.edit', compact('material'));
     }
 
