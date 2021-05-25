@@ -63,6 +63,9 @@
                                             </th>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                $total=0;
+                                            @endphp
                                             @foreach ($ordenCompra->materiaOrden as $materia)
                                                 <tr>
                                                     <td>{{$materia->material->mat_nombre}}</td>
@@ -70,9 +73,41 @@
                                                     <td class="text-right">{{number_format($materia->mo_costo,2,'.', ',')}}</td>
                                                     <td class="text-right">{{number_format(($materia->mo_cantidad*$materia->mo_costo),2,'.', ',')}}</td>
                                                 </tr>
+                                                @php
+                                                    $total=$total+($materia->mo_costo*$materia->mo_cantidad);
+                                                @endphp
                                             @endforeach
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                    </div>
+                                    <label class="col-sm-3 col-form-label lv" id="subtotal-l">Subtotal: $</label>
+                                    <label class="col-sm-2 col-form-label lv" id="subtotal">{{number_format($total,2,'.', ',')}}</label>
+                                    <div class="col-md-7">
+                                    </div>
+                                    <label class="col-sm-3 col-form-label lv" id="descuento-l">Descuento ({{$ordenCompra->ord_descuento}}%)</label>
+                                    @php
+                                        $valorDescuento=$total*($ordenCompra->ord_descuento/100);
+                                    @endphp
+                                    <label class="col-sm-2 col-form-label lv" id="descuento">-{{number_format($valorDescuento,2,'.', ',')}}</label>
+                                    @php
+                                        $totalActual=$total-round($valorDescuento,2);
+                                    @endphp
+                                    @if(!$ordenCompra->ord_iva_incluido)
+                                    @php
+                                        $iva=round($totalActual*0.13,2);
+                                    @endphp
+                                        <div class="col-md-7">
+                                        </div>
+                                        <label class="col-sm-3 col-form-label lv" id="iva-l">IVA (13%)</label>
+                                        <label class="col-sm-2 col-form-label lv" id="iva">{{number_format($iva,2,'.', ',')}}</label>
+                                    @endif
+                                    <div class="col-md-7">
+                                    </div>
+                                    <label class="col-sm-3 col-form-label lv" id="total-l">Total</label>
+                                    <label class="col-sm-2 col-form-label lv" id="total">{{number_format($ordenCompra->ord_total,2,'.', ',')}}</label>
                                 </div>
                             </div>
                         </div>

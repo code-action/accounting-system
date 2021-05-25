@@ -29,3 +29,30 @@ function msmError(field, type = 0) {
         }
     });
 }
+
+function positiveNumber(obj, e, valor) {
+    val = (document.all) ? e.keyCode : e.which;
+    if (val != 45) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function positiveNumberH(obj, e, valor) {
+    val = (document.all) ? e.keyCode : e.which;
+    if (val != 45) {
+
+        var cad = valor + String.fromCharCode(val);
+
+        var res = cad.split(".");
+        if (res.length > 1) {
+            if (res[1].length > 2) {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
+}

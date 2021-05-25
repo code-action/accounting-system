@@ -20,16 +20,19 @@ $('#agregarMateria').click(function () {
             "</td>" +
             "<td class='text-right'>" +
             formatNumber((costo * cantidad).toFixed(2)) +
+            "<input type='hidden' name='estado_fila[]' value='nuevo'/>" +
             "</td>" +
-            "<td class='text-right'>" +
+            "<td class='td-actions text-right'>" +
             '<button rel="tooltip" class="btn btn-danger btn-link deleteMaterial" type="button">' +
             '<i class="material-icons">close</i>' +
             '<div class="ripple-container"></div>' +
             '</button>' +
+            "<input type='hidden' name='materia_orden_id[]' value=''/>" +
             "</td>" +
             "</tr>";
 
         $('#tablaMateriales').find('tbody').append(html)
+        refreshTotal()
 
     }
     refreshActiveFunctions();
@@ -38,8 +41,14 @@ function validarAux() {
     if ($('#aux_cantidad').val().trim() == '') {
         msmError("cantidad");
         return false;
+    } else if (parseFloat($('#aux_cantidad').val()) == 0) {
+        msmError("cantidad");
+        return false;
     }
     if ($('#aux_costo').val().trim() == '') {
+        msmError("costo");
+        return false;
+    } else if (parseFloat($('#aux_costo').val()) == 0) {
         msmError("costo");
         return false;
     }
@@ -60,7 +69,13 @@ $('#guardarOrden').click(function () {
 function refreshActiveFunctions() {
     $(".deleteMaterial").unbind()
     $('.deleteMaterial').click(function () {
-        $(this).parent('td').parent('tr').remove();
+        if ($(this).parent('td').parent('tr').find('input:eq(3)').val() == "nuevo")
+            $(this).parent('td').parent('tr').remove();
+        else {
+            $(this).parent('td').parent('tr').find('input:eq(3)').val("eliminado")
+            $(this).parent('td').parent('tr').addClass('d-none')
+        }
+        refreshTotal()
     });
 }
 
@@ -83,3 +98,62 @@ function validarOrden() {
     }
     return true;
 }
+
+function refreshTotal() {
+    filas = $('#tablaMateriales').find('tbody').find('tr')
+    total = 0;
+    $(filas).each(function () {
+        if ($(this).find('input:eq(3)').val() != "eliminado") {
+            cantidad = parseFloat($(this).find('input:eq(1)').val())
+            costo = parseFloat($(this).find('input:eq(2)').val())
+            total = total + (cantidad * costo)
+        }
+    })
+    $('#subtotal').text(formatNumber(total.toFixed(2)))
+    $('#suma').val(total.toFixed(2))
+    actualizarPorcentajes()
+}
+
+function actualizarPorcentajes() {
+    descuento = $('#ord_descuento').val()
+    if (descuento.trim() == "")
+        descuento = 0;
+    else
+        descuento = parseFloat(descuento)
+
+    $('#descuento-l').text("Descuento (" + descuento + "%)")
+    valorDescuento = ((descuento / 100) * parseFloat($('#suma').val())).toFixed(2)
+    $('#descuento').text("-" + formatNumber(valorDescuento))
+
+    if ($('#ord_iva_incluido').val() == "1") {
+        $('#iva-l,#iva').addClass('d-none')
+        $('#total').text(formatNumber((parseFloat($('#suma').val()) - valorDescuento).toFixed(2)))
+        $('#ord_total').val((parseFloat($('#suma').val()) - valorDescuento).toFixed(2))
+    } else {
+        $('#iva-l,#iva').removeClass('d-none')
+        valorIva = (0.13 * (parseFloat($('#suma').val()) - valorDescuento))
+        $('#iva').text(formatNumber(valorIva.toFixed(2)))
+        auxSuma = parseFloat($('#suma').val()) - valorDescuento + valorIva
+        $('#total').text(formatNumber(auxSuma.toFixed(2)))
+        $('#ord_total').val(auxSuma.toFixed(2))
+    }
+}
+
+$('#aux_iva').click(function () {
+    if ($('#ord_iva_incluido').val() == "1") {
+        $('#ord_iva_incluido').val('0')
+    }
+    else {
+        $('#ord_iva_incluido').val('1')
+    }
+    actualizarPorcentajes()
+})
+
+$('#ord_descuento').click(function () {
+    actualizarPorcentajes()
+})
+$('#ord_descuento').keyup(function () {
+    actualizarPorcentajes()
+})
+
+refreshActiveFunctions()
