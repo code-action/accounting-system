@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'materiales', 'titlePage' => __('Materia Prima')])
+@extends('layouts.app', ['activePage' => 'producto', 'titlePage' => __('Editar Producto')])
 
 @section('content')
 @if ($errors->any())

@@ -29,7 +29,7 @@
 </form>--}}
 
 
-@extends('layouts.app', ['activePage' => 'cliente', 'titlePage' => __('Clientes')])
+@extends('layouts.app', ['activePage' => 'cliente', 'titlePage' => __('Editar Cliente')])
 
 @section('content')
     <div class="content">
