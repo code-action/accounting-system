@@ -63,14 +63,19 @@
                                         <i class="material-icons">edit</i>
                                         <div class="ripple-container"></div>
                                         </a>
-                                        <button style="border:none; transform: translateY(7px)" type="submit" rel="tooltip" class="<btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
+                                        <a rel="tooltip" class="btn btn-primary btn-link" href="{{ asset('materiaprimafactura').'?id='.$orden->id }}" data-original-title="" title="Recibir">
+                                          <i class="material-icons">receipt_long</i>
+                                          <div class="ripple-container"></div>
+                                        </a>
+                                        <button type="submit" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
                                         <i class="material-icons">delete_outline</i>
                                         </button>
-                                    @endif
-                                    <a rel="tooltip" class="btn btn-info btn-link" href="{{ route('ordencompra.show', $orden->id) }}" data-original-title="" title="Ver">
-                                        <i class="material-icons">assignment</i>
-                                        <div class="ripple-container"></div>
+                                    @else
+                                        <a rel="tooltip" class="btn btn-info btn-link" href="{{ route('ordencompra.show', $orden->id) }}" data-original-title="" title="Ver">
+                                          <i class="material-icons">assignment</i>
+                                          <div class="ripple-container"></div>
                                         </a>
+                                    @endif
                                 </form>
                             </td>
                         </tr>

@@ -88,7 +88,8 @@ class OrdenCompraController extends Controller
     public function show($id)
     {
         $ordenCompra=OrdenCompra::find($id);
-        return view('ordenescompras.show',compact('ordenCompra'));
+        $tipo="show";
+        return view('ordenescompras.show',compact('ordenCompra','tipo'));
     }
 
     /**
@@ -178,5 +179,25 @@ class OrdenCompraController extends Controller
             DB::rollback();
             return redirect()->route('ordencompra.index')->with('error','El registro no pudo eliminarse.');
         }
+    }
+
+    public function factura(Request $request){
+        $ordenCompra=OrdenCompra::find($request->id);
+        $tipo="factura";
+        return view('ordenescompras.show',compact('ordenCompra','tipo'));
+    }
+    public function guardar(Request $request){
+        DB::beginTransaction();
+        $orden = OrdenCompra::find($request->id);
+        foreach ($orden->materiaOrden as $materia){
+            $actual = $materia->material->mat_cantidad;
+            $materia->material->mat_cantidad = $actual+$materia->mo_cantidad;
+            $materia->material->save(); 
+        }
+        $orden->ord_factura=$request->ord_factura;
+        $orden->ord_estado=1;
+        $orden->save();
+        DB::commit();
+        return redirect()->route('ordencompra.index')->with('success','Registro creado exitosamente.');
     }
 }

@@ -1,5 +1,4 @@
 @extends('layouts.app', ['activePage' => 'ordenes', 'titlePage' => __('Órdenes de Compra')])
-
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -10,7 +9,7 @@
                             <div class="card-icon">
                                 <i class="material-icons">shopping_cart</i>
                             </div>
-                            <h4 class="card-title">{{ __('Ver Orden de Compra') }}</h4>
+                            <h4 class="card-title">{{$tipo=="show"?__('Ver Orden de Compra'):__('Generar Factura por Compra') }}</h4>
                         </div>
                     <div class="card-body">
                         <div class="row">
@@ -44,6 +43,29 @@
                                     <label class="col-sm-4 col-form-label">{{ __('Estado') }}:</label>
                                     <label class="col-sm-8 col-form-label"><b>{{$ordenCompra->ord_estado?__('Efectuada'):__('Sin efectuar')}}</b></label>
                                 </div>
+                                @if($tipo=="factura")
+                                <form action="{{ route('guardarmateriafactura') }}" method="post" id="formfactura" autocomplete="off">
+                                    @csrf
+                                    @method('post')
+                                    <input type="hidden" name="id" value="{{$ordenCompra->id}}">
+                                <div class="row">
+                                    <label class="col-sm-4 col-form-label">{{ __('N° de Factura') }}:</label>
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                        <input class="form-control" name="ord_factura" id="ord_factura" type="text"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <button class="btn btn-success btn-sm" id="agregarFactura" type="button">
+                                            <i class="material-icons">done</i>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                    </div>
+                                </div>
+                                </form>
+                                @endif
                             </div>
                             <div class="col-md-9">
                                 <div class="table-responsive">
@@ -118,19 +140,14 @@
     </div>
 </div>
 @endsection
-{{-- 
+
 @push('js')
     <script>
-        $("#proveedor_id,#aux_material").select2({
-            language: {
-                noResults: function() {
-                    return "{{__('Resultado no encontrado')}}";
-                },
-                searching: function() {
-                    return "{{__('Buscando')}}...";
-                }
-            }
+        $('#agregarFactura').click(function(){
+            if ($('#ord_factura').val().trim() == '') 
+                msmError("N° de Factura");
+            else
+                $('#formfactura').submit()
         })
     </script>
-    <script src="{{ asset('js') }}/ordencompra.js"></script>
-@endpush --}}
+@endpush

@@ -73,4 +73,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('producto', 'App\Http\Controllers\ProductoController');
 	Route::resource('ordencompra', 'App\Http\Controllers\OrdenCompraController');
 	Route::get('materiaprimafiltro','App\Http\Controllers\OrdenCompraController@filtro');
+	Route::get('materiaprimafactura','App\Http\Controllers\OrdenCompraController@factura')->name('materiafactura');
+	Route::post('guardarmateriafactura','App\Http\Controllers\OrdenCompraController@guardar')->name('guardarmateriafactura');
 });
