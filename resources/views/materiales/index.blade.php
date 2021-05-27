@@ -7,17 +7,21 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title ">Materia Prima</h4>
-                        <p class="card-category"> Here is a subtitle for this table</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="my-3">
-                            <a href="{{ route('raw.create') }}" class="btn btn-success"><i class="material-icons">add</i> Nuevo</a>
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                          <i class="material-icons">storefront</i>
                         </div>
+                        <h4 class="card-title">{{ __('Lista de Materia Prima') }}</h4>
+                      </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                              <a href="{{ route('raw.create') }}" class="btn btn-sm btn-info">{{ __('Nuevo') }}</a>
+                            </div>
+                          </div>
                         <div class="table-responsive">
                             <table id="datatables" class="table">
-                                <thead class=" text-primary">
+                                <thead class=" text-info">
                                     <th> ID </th>
                                     <th> Nombre </th>
                                     <th> Cantidad </th>

@@ -20,7 +20,7 @@ class MaterialProducto extends Model
 
     public $timestamps = false;
 
-    public function material() { return $this->hasOne('App\Material', 'id', 'material_id'); }
+    public function material() { return $this->belongsTo(Material::class); }
     public function producto() { return $this->hasOne('App\Producto', 'id', 'producto_id'); }
 
 }

@@ -20,7 +20,7 @@
                 </div>
                 <div class="table-responsive">
                   <table id="datatables" class="table table-striped table-no-bordered table-hover datatable-rose" style="display:none; width: 100%">
-                    <thead class="text-primary">
+                    <thead class="text-info">
                       <th>
                           {{ __('Nombre') }}
                       </th>

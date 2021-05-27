@@ -13,7 +13,7 @@
                         <div class="card ">
                             <div class="card-header card-header-info card-header-icon">
                                 <div class="card-icon">
-                                    <i class="material-icons">groups</i>
+                                    <i class="material-icons">contact_phone</i>
                                 </div>
                                 <h4 class="card-title">{{ __('Editar Cliente') }}</h4>
                             </div>

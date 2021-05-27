@@ -21,7 +21,7 @@
                             </div>
                             <div class="table-responsive">
                                 <table id="datatables" class="table table-striped table-no-bordered table-hover datatable-rose" style="display:none; width: 100%">
-                                    <thead class="text-primary">
+                                    <thead class="text-info">
                                         <th>
                                             {{ __('Código') }}
                                         </th>
@@ -149,7 +149,7 @@
                 responsive: true,
                 language: {
                     search: "_INPUT_",
-                    searchPlaceholder: "Buscar proveedores",
+                    searchPlaceholder: "Buscar contización",
                     "lengthMenu": 'Mostrar _MENU_ registros',
                     "info": 'Mostrando página _PAGE_ de _PAGES_',
                     "infoEmpty": 'No hay registros disponibles',

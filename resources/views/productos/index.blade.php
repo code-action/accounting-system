@@ -7,14 +7,18 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-info">
-                        <h4 class="card-title ">Productos</h4>
-                        <p class="card-category"> Listado de productos </p>
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">inventory_2</i>
+                        </div>
+                        <h4 class="card-title">Lista de Productos</h4>
                     </div>
                     <div class="card-body">
-                        <div class="my-3">
-                            <a href="{{ route('producto.create') }}" class="btn btn-info"><i class="material-icons">add</i> Nuevo</a>
-                        </div>
+                        <div class="row">
+                            <div class="col-12 text-right">
+                              <a href="{{ route('producto.create') }}" class="btn btn-sm btn-info">{{ __('Nuevo') }}</a>
+                            </div>
+                          </div>
                         <div class="table-responsive">
                             <table id="datatables" class="table">
                                 <thead class=" text-info">
@@ -70,7 +74,7 @@
             responsive: true,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Buscar material",
+                searchPlaceholder: "Buscar producto",
                 "lengthMenu": 'Mostrar _MENU_ registros',
                 "info": 'Mostrando página _PAGE_ de _PAGES_',
                 "infoEmpty": 'No hay registros disponibles',

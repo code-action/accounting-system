@@ -7,17 +7,21 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-warning">
-                        <h4 class="card-title ">Categorias</h4>
-                        <p class="card-category"> Listado de categorias </p>
-                    </div>
-                    <div class="card-body">
-                        <div class="my-3">
-                            <a href="{{ route('categoria.create') }}" class="btn btn-warning"><i class="material-icons">add</i> Nuevo</a>
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                          <i class="material-icons">category</i>
                         </div>
+                        <h4 class="card-title">{{ __('Lista de Categorías') }}</h4>
+                      </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                              <a href="{{ route('categoria.create') }}" class="btn btn-sm btn-info">{{ __('Nuevo') }}</a>
+                            </div>
+                          </div>
                         <div class="table-responsive">
                             <table id="datatables" class="table">
-                                <thead class=" text-warning">
+                                <thead class=" text-info">
                                     <th> ID </th>
                                     <th> Nombre </th>
                                     <th class="text-right"> Acciones </th>
@@ -66,7 +70,7 @@
             responsive: true,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Buscar material",
+                searchPlaceholder: "Buscar categoría",
                 "lengthMenu": 'Mostrar _MENU_ registros',
                 "info": 'Mostrando página _PAGE_ de _PAGES_',
                 "infoEmpty": 'No hay registros disponibles',
@@ -81,7 +85,7 @@
             },
             "columnDefs": [{
                 "orderable": false,
-                "targets": 3
+                "targets": 2
             }, ],
         });
     });

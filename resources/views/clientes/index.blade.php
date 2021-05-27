@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="card-header card-header-info card-header-icon">
                             <div class="card-icon">
-                                <i class="material-icons">groups</i>
+                                <i class="material-icons">contact_phone</i>
                             </div>
                             <h4 class="card-title">{{ __('Lista de clientes') }}</h4>
                         </div>
@@ -122,7 +122,7 @@
                 responsive: true,
                 language: {
                     search: "_INPUT_",
-                    searchPlaceholder: "Buscar proveedores",
+                    searchPlaceholder: "Buscar cliente",
                     "lengthMenu": 'Mostrar _MENU_ registros',
                     "info": 'Mostrando página _PAGE_ de _PAGES_',
                     "infoEmpty": 'No hay registros disponibles',

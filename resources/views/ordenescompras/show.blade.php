@@ -24,6 +24,10 @@
                                     <label class="col-sm-4 col-form-label">{{ __('N° de Orden') }}:</label>
                                     <label class="col-sm-8 col-form-label"><b>{{ $ordenCompra->ord_numero }}</b></label>
                                 </div>
+                                <div class="row">
+                                    <label class="col-sm-4 col-form-label">{{ __('N° de Factura') }}:</label>
+                                    <label class="col-sm-8 col-form-label"><b>{{ $ordenCompra->ord_factura }}</b></label>
+                                </div>
 
                                 <div class="row">
                                     <label class="col-sm-4 col-form-label">{{ __('Fecha') }}:</label>

@@ -17,9 +17,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card ">
-                    <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">edit</i>
+                            <i class="material-icons">category</i>
                         </div>
                         <h4 class="card-title">Modificar Categoría</h4>
                     </div>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="card-footer ">
                             <a href="{{ route('categoria.index') }}"><button type="button" class="btn btn-fill btn-default">Cancelar</button></a>
-                            <button type="submit" class="btn btn-fill btn-warning">Modificar</button>
+                            <button type="submit" class="btn btn-fill btn-info">Modificar</button>
                         </div>
                     </form>
                 </div>
