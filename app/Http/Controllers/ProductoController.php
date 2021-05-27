@@ -54,7 +54,6 @@ class ProductoController extends Controller
         $producto->save();
 
         foreach($request->mat_cantidad as $k => $material) {
-            dump($material);
             if(!isset($material) || (int) $material <= 0)
                 continue;
 
@@ -84,9 +83,13 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Producto $producto)
+    public function edit($id)
     {
-        //
+        $materiales = Material::all();
+        $categorias = Categoria::all();
+        $productos = Producto::with('materiales')->find($id);
+        // dd($productos);
+        return view('productos.edit', compact('materiales', 'categorias', 'productos'));
     }
 
     /**
