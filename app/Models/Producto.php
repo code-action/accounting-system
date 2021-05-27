@@ -22,4 +22,11 @@ class Producto extends Model
     {
         return $this->hasMany('App\Models\MaterialProducto');
     }
+
+
+    // Relación muchos a muchos
+    public function cotizaciones()
+    {
+        return $this->belongsToMany(Cotizacion::class)->withPivot('cot_prod_cantidad', 'cot_prod_preciou');
+    }
 }

@@ -41,11 +41,11 @@ class ClienteController extends Controller
         //dd($request);
         $model->create($request->all());
 
-/*        $cliente = new Cliente();
-        $cliente->cli_nombre = $request->get('nombre');
-        $cliente->cli_email = $request->get('email');
-        $cliente->cli_contacto = $request->get('contacto');
-        $cliente->save();*/
+        /*        $cliente = new Cliente();
+                $cliente->cli_nombre = $request->get('nombre');
+                $cliente->cli_email = $request->get('email');
+                $cliente->cli_contacto = $request->get('contacto');
+                $cliente->save();*/
         return redirect()->route('cliente.index')->withStatus(__('Cliente creado exitosamente.'));
     }
 

@@ -41,23 +41,53 @@ class ClienteRequest extends FormRequest
                     'cli_email' => [
                         'required', 'min:5','max:100','unique:clientes','email'
                     ],
+                    'cli_direccion' => [
+                        'required', 'min:20', 'max:300'
+                    ],
+                    'cli_dui' => [
+                        'unique:clientes', 'size:9'
+                    ],
+                    'cli_nit' => [
+                        'required', 'size:14','unique:clientes'
+                    ],
+                    'cli_nrc' => [
+                        'required', 'size:6','unique:clientes'
+                    ],
+                    'cli_categoria' => [
+                        'required'
+                    ]
                 ];
             }
             case 'PUT':
             {
                 return [
                     'cli_nombre' => [
-                        'required', 'min:5','max:100',Rule::unique('clientes')->ignore($this->id_validate),
+                        'required', 'min:5','max:100', Rule::unique('clientes')->ignore($this->id_validate),
                     ],
                     'cli_contacto' => [
                         'required', 'min:5','max:100'
                     ],
                     'cli_telefono' => [
-                        'required', 'size:9',Rule::unique('clientes')->ignore($this->id_validate),
+                        'required', 'size:9', Rule::unique('clientes')->ignore($this->id_validate),
                     ],
                     'cli_email' => [
-                        'required', 'min:5','max:100','email',Rule::unique('clientes')->ignore($this->id_validate),
+                        'required', 'min:5','max:100','email', Rule::unique('clientes')->ignore($this->id_validate),
                     ],
+                    'cli_direccion' => [
+                        'required', 'min:20', 'max:300'
+                    ],
+                    'cli_dui' => [
+                        'size:9', 'size:9', Rule::unique('clientes')->ignore($this->id_validate),
+                    ],
+                    'cli_nit' => [
+                        'required', 'size:14', Rule::unique('clientes')->ignore($this->id_validate),
+                    ],
+                    'cli_nrc' => [
+                        'required', 'size:6', Rule::unique('clientes')->ignore($this->id_validate),
+                    ],
+                    'cli_categoria' => [
+                        'required'
+                    ]
                 ];
             }
             default:break;
@@ -72,6 +102,11 @@ class ClienteRequest extends FormRequest
             'cli_contacto' => 'contacto',
             'cli_telefono' => 'teléfono',
             'cli_email' => 'email',
+            'cli_direccion' => 'dirección',
+            'cli_dui' => 'DUI',
+            'cli_nit' => 'NIT',
+            'cli_nrc' => 'NRC',
+            'cli_categoria' => 'categoría de contribuyente'
         ];
     }
 }
