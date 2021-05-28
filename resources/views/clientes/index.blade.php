@@ -28,9 +28,9 @@
                                     <th>
                                         {{ __('Nombre Contacto') }}
                                     </th>
-                                    {{--<th>
+                                    <th>
                                         {{ __('Categoría de Contribuyente') }}
-                                    </th>--}}
+                                    </th>
                                     <th>
                                         {{ __('Email') }}
                                     </th>
@@ -51,28 +51,36 @@
                                             <td>
                                                 {{$cliente->cli_contacto}}
                                             </td>
-                                            {{--<td>
-                                                {{$cliente->cli_categoria}}
-                                            </td>--}}
+                                            <td>
+                                                {{ $cliente->cli_categoria}}
+                                            </td>
                                             <td>
                                                 {{$cliente->cli_email}}
                                             </td>
                                             <td>
                                                 {{$cliente->cli_telefono}}
                                             </td>
-
-                                            {{-- @can('manage-items', App\User::class) --}}
                                             <td class="td-actions text-right">
 
-
-                                                {{-- @can('update', $proveedor) --}}
+                                                <a rel="tooltip" class="btn btn-info btn-link"
+                                                   data-original-title=""
+                                                   title="" onclick="abrir_modal_mostrar('{{$cliente}}',
+                                                    '{{route('cliente.show', $cliente)}}')">
+                                                    <i class="material-icons">visibility</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                                {{--<a rel="tooltip" class="btn btn-dark btn-link"
+                                                   href="{{ route('cliente.show', $cliente) }}" data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">visibility</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>--}}
                                                 <a rel="tooltip" class="btn btn-success btn-link"
                                                    href="{{ route('cliente.edit', $cliente) }}" data-original-title="" title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
-                                                {{-- @endcan --}}
-                                                {{-- @if ($proveedor->items->isEmpty() && auth()->user()->can('delete', $proveedor)) --}}
+
 
                                                 <button rel="tooltip" class="btn btn-danger btn-link"
                                                         onclick="abrir_modal_eliminar('{{$cliente->cli_nombre}}',
@@ -81,9 +89,9 @@
                                                     <i class="material-icons">close</i>
                                                     <div class="ripple-container"></div>
                                                 </button>
-                                                {{--@endif --}}
+
                                             </td>
-                                            {{-- @endcan --}}
+
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -96,6 +104,9 @@
         </div>
     </div>
     @include('clientes.modalDestroy')
+    @include('clientes.modalShow')
+
+
 
 @endsection
 @push('js')
@@ -106,6 +117,28 @@
             $('#cli_nombre').text('')
             $('#cli_nombre').append(cliente)
             $('#eliminar_cliente').modal('show');
+            //console.log(cliente, url)
+        }
+
+        function abrir_modal_mostrar(cliente, url){
+            cliente = JSON.parse(cliente)
+
+            //$('#form_eliminar_cliente').prop('action', url)
+
+            //$('#cli_nombre').text('')
+            $('#input-cli_nombre-mostrar').val(cliente.cli_nombre)
+            $('#input-cli_contacto-mostrar').val(cliente.cli_contacto)
+            $('#input-cli_email-mostrar').val(cliente.cli_email)
+            $('#input-cli_telefono-mostrar').val(cliente.cli_telefono)
+
+            $('#input-cli_categoria-mostrar').val(cliente.cli_categoria)
+            $('#input-cli_direccion-mostrar').val(cliente.cli_direccion)
+            $('#input-cli_telefono-mostrar').val(cliente.cli_telefono)
+            $('#input-cli_dui-mostrar').val(cliente.cli_dui)
+            $('#input-cli_nit-mostrar').val(cliente.cli_nit)
+            $('#input-cli_nrc-mostrar').val(cliente.cli_nrc)
+
+            $('#abrir_modal_mostrar').modal('show');
             console.log(cliente, url)
         }
     </script>

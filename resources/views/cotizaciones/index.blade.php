@@ -57,13 +57,23 @@
                                                 {{date("d-m-Y", strtotime($cotizacion->cot_fecha))}}
                                             </td>
                                             <td>
-                                                {{$cotizacion->cot_estado}}
+                                                @if($cotizacion->cot_estado == 1)
+                                                        <span class="badge bg-success">Aceptado</span>
+                                                    @elseif($cotizacion->cot_estado == 2)
+                                                        <span class="badge bg-primary">Revisión</span>
+                                                    @elseif($cotizacion->cot_estado == 3)
+                                                        <span class="badge bg-danger">Rechazado</span>
+                                                @endif
+
+                                                {{--{{ $cotizacion->cot_estado == 1 ? 'Aceptado':''}}
+                                                {{ $cotizacion->cot_estado == 2 ? 'Revisión':''}}
+                                                {{ $cotizacion->cot_estado == 3 ? 'Rechazado':''}}--}}
                                             </td>
                                             <td>
                                                 {{$cotizacion->cliente->cli_nombre}}
                                             </td>
                                             <td>
-                                                {{$cotizacion->cot_total}}
+                                                {{ number_format($cotizacion->cot_total, 2, '.', ',')}}
                                             </td>
                                             <td>
                                                 {{$cotizacion->cliente->cli_email}}

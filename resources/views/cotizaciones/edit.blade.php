@@ -112,6 +112,8 @@
                                             {{--<h5 class="card-title" ><h4><b>Detalles de Cotización</b></h4></h5>--}}
                                             <div class="row justify-content-end cliente-datos">
                                                 <div class="col-md-7">
+
+
                                                     <div class="row">
                                                         <label class="col-sm-2 col-form-label">{{ __('Cliente') }}</label>
                                                         <div class="col-sm-9">
@@ -136,6 +138,31 @@
                                                                       for="input-cli_nombre" style="display: none
                                                                 {{--block--}};{{--This fixes a bootstrap known-issue--}}">
                                                                     {{ __('Seleccione un cliente') }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <label class="col-sm-2 col-form-label">{{ __('Estado') }}</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="form-group">
+                                                                <select class="js-example-basic-single js-states has-error
+                                                                form-control" name="cli_estado" id="input-cli_estado"
+                                                                        data-style="select-with-transition" title=""
+                                                                        data-size="100" style="width: 100%">
+                                                                    <option value="" disabled selected
+                                                                            style="background-color:lightgray">
+                                                                        {{__('Seleccione un estado')}}
+                                                                    </option>
+                                                                    <option value="1" {{ $cotizacion->cot_estado == 1 ? 'selected':''}}>{{ __('Aceptado') }}</option>
+                                                                    <option value="2" {{ $cotizacion->cot_estado == 2 ? 'selected':''}}>{{ __('Revisión') }}</option>
+                                                                    <option value="3" {{ $cotizacion->cot_estado == 3 ? 'selected':''}}>{{ __('Rechazado') }}</option>
+
+                                                                </select>
+                                                                <span id="input-cli_estado-error" class="error text-danger"
+                                                                      for="input-cli_estado" style="display: none
+                                                                {{--block--}};{{--This fixes a bootstrap known-issue--}}">
+                                                                    {{ __('Seleccione un estado') }}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -271,7 +298,7 @@
                                                                             {{number_format($cotizacion->cot_sumas, 2, '.', ',')}}
                                                                         </td>
                                                                         <input type="hidden" id="input_cot_sumas"
-                                                                               value="{{number_format($cotizacion->cot_sumas, 2, '.', ',')}}">
+                                                                               value="{{$cotizacion->cot_sumas}}">
                                                                     </tr>
                                                                     <tr>
                                                                         <td><b>{{ __('IVA 13%') }}</b></td>
@@ -279,7 +306,7 @@
                                                                             {{number_format($cotizacion->cot_iva, 2, '.', ',')}}
                                                                         </td>
                                                                         <input type="hidden" id="input_cot_iva"
-                                                                               value=" {{number_format($cotizacion->cot_iva, 2, '.', ',')}}">
+                                                                               value="{{$cotizacion->cot_iva}}">
                                                                     </tr>
                                                                     <tr>
                                                                         <td><b>{{ __('Subtotal') }}</b></td>
@@ -287,7 +314,7 @@
                                                                             {{number_format($cotizacion->cot_subtotal, 2, '.', ',')}}
                                                                         </td>
                                                                         <input type="hidden" id="input_cot_subtotal"
-                                                                               value="{{number_format($cotizacion->cot_subtotal, 2, '.', ',')}}">
+                                                                               value="{{$cotizacion->cot_subtotal}}">
                                                                     </tr>
                                                                     <tr>
                                                                         <td><b>{{ __('Retención 1%') }}</b></td>
@@ -295,7 +322,7 @@
                                                                             {{number_format($cotizacion->cot_retencion, 2, '.', ',')}}
                                                                         </td>
                                                                         <input type="hidden" id="input_cot_retencion"
-                                                                               value="{{number_format($cotizacion->cot_retencion, 2, '.', ',')}}">
+                                                                               value="{{$cotizacion->cot_retencion}}">
                                                                     </tr>
                                                                     <tr>
                                                                         <td><b>{{ __('TOTAL') }}</b></td>
@@ -303,7 +330,7 @@
                                                                             {{number_format($cotizacion->cot_total, 2, '.', ',')}}
                                                                         </td>
                                                                         <input type="hidden" id="input_cot_total"
-                                                                               value="{{number_format($cotizacion->cot_total, 2, '.', ',')}}">
+                                                                               value="{{$cotizacion->cot_total}}">
                                                                     </tr>
                                                                     </tbody>
                                                                 </table>
@@ -384,7 +411,21 @@
                 searching: function() {
                     return "{{__('Buscando')}}...";
                 }
-            }
+            },
+            placeholder: 'Seleccione un cliente',
+        })
+
+        $("#input-cli_estado").select2({
+            language: {
+                noResults: function() {
+                    return "{{__('Resultado no encontrado')}}";
+                },
+                searching: function() {
+                    return "{{__('Buscando')}}...";
+                }
+            },
+            placeholder: 'Seleccione un estado',
+            minimumResultsForSearch: Infinity
         })
     </script>
 

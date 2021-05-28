@@ -192,6 +192,7 @@ function guardar_datos_prod(url){
             )
         })
         cot_cliente_id = parseInt($('#input-cli_nombre').val())
+        cli_estado = parseInt($('#input-cli_estado').val())
 
         input_cot_sumas = parseFloat($('#input_cot_sumas').val())
         input_cot_iva = parseFloat($('#input_cot_iva').val())
@@ -204,6 +205,7 @@ function guardar_datos_prod(url){
 
         modal_body_cot_guardar.append(
             '<input type="hidden" name="cot_cliente_id" id="" value="'+cot_cliente_id+'">'+ //id del cliente
+            '<input type="hidden" name="cot_estado" id="" value="'+cli_estado+'">'+ // estado cotización
             '<input type="hidden" name="cot_descripcion" id="" value="'+cot_descripcion+'">'+ // descripción
             '<input type="hidden" name="input_cot_sumas" id="" value="'+input_cot_sumas+'">' + // sumas
             '<input type="hidden" name="input_cot_iva" id="" value="'+input_cot_iva+'">' + // iva
@@ -242,6 +244,12 @@ function validarCotizacion(){
         camposCorrectos = false;
     }
 
+    if ($('#input-cli_estado').val() === null) {
+        // console.log('Vendedor sin seleccionar')
+        camposError.push('estado')
+        camposCorrectos = false;
+    }
+
     if (filas.find('td').hasClass('dataTables_empty')) {
         //console.log('Cotización sin productos')
         camposError.push('cotizacion')
@@ -267,6 +275,14 @@ function mostrarMensajesError(campos){
         $('#input-vend_nombre-error').css({'display':'block'});
     }else
         $('#input-vend_nombre-error').css({'display':'none'});
+
+    if(campos.includes('estado') === true){
+        //console.log('Cliente sin seleccionar 2')
+        //$('#input-cli_nombre-error').css({'display':'block'});
+        $('#input-cli_estado-error').css( "display", "inline" ).fadeOut(500).fadeIn(300);
+
+    }else
+        $('#input-cli_estado-error').css({'display':'none'});
 
     if(campos.includes('cotizacion') === true){
         $('#cot_incompleta').modal('show')

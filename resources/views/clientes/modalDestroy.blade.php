@@ -6,8 +6,8 @@
                 @method('delete')
                 <div class="modal-header">
                     <h3 class="modal-title">{{ __('¿Desea eliminar el cliente') }} <b id="cli_nombre"></b>?</h3>
-                    <button class="close cerrarModal" type="button" aria-label="Close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="material-icons">clear</i>
                     </button>
                 </div>
                 <div class="modal-body">

@@ -1,4 +1,3 @@
-
 @extends('layouts.app', ['activePage' => 'cliente', 'titlePage' => __('Editar Cliente')])
 
 @section('content')
@@ -76,12 +75,27 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row ">
+                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Dirección') }}</label>
+                                            <div class="col-sm-10">
+                                                <div class="form-group{{ $errors->has('cli_direccion') ? ' has-danger' : '' }}">
+                                                    <textarea class="form-control{{ $errors->has('cli_direccion') ? ' is-invalid' : '' }}
+                                                        text-left" name="cli_direccion" id="input-cli_direccion"
+                                                              placeholder="{{ __('Dirección') }}"
+                                                              aria-required="true">{{old('cli_direccion', $cliente->cli_direccion)}}</textarea>
+                                                    @include('alerts.feedback', ['field' => 'cli_direccion'])
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="col-md-5">
                                         <div class="row">
                                             <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Categoría') }}</label>
                                             <div class="col-sm-10">
                                                 <div class="form-group">
+                                                    @php ($categorias=['Gran Contribuyente', 'Mediano Contribuyente', 'Otros Contribuyentes'])
                                                     <select class="js-example-basic-single js-states has-error
                                                                 form-control" name="cli_categoria" id="input-cli_categoria"
                                                             data-style="select-with-transition" title=""
@@ -90,27 +104,24 @@
                                                                 style="background-color:lightgray">
                                                             {{__('Seleccione una categoría de contribuyente')}}
                                                         </option>
-                                                        <option value="1">Gran contribuyente</option>
-                                                        <option value="2">Mediano contribuyente</option>
-                                                        <option value="3">Otros contribuyentes</option>
+                                                        @foreach($categorias as $cat)
+                                                            <option value="{{$cat}}"
+                                                               @if(old('cli_categoria') == $cat)
+                                                                   selected
+                                                                @elseif($cliente->cli_categoria == $cat)
+                                                                    selected
+                                                               @endif>
+                                                                {{$cat}}
+                                                            </option>
+                                                        @endforeach
+
+
                                                     </select>
                                                     @include('alerts.feedback', ['field' => 'cli_categoria'])
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="row ">
-                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Dirección') }}</label>
-                                            <div class="col-sm-10">
-                                                <div class="form-group{{ $errors->has('cli_direccion') ? ' has-danger' : '' }}">
-                                                    <input class="form-control{{ $errors->has('cli_direccion') ? ' is-invalid' : '' }}"
-                                                           name="cli_direccion" id="input-cli_direccion" type="text"
-                                                           placeholder="{{ __('Dirección') }}" value="{{old('cli_direccion', $cliente->cli_direccion)}}"
-                                                           aria-required="true"/>
-                                                    @include('alerts.feedback', ['field' => 'cli_direccion'])
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="row">
                                             <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('DUI') }}</label>
                                             <div class="col-sm-10">
@@ -171,7 +182,7 @@
 @endsection
 @push('js')
     <script>
-        $("#input-cli_categoria, #input-vend_nombre").select2({
+        $("#input-cli_categoria").select2({
             language: {
                 noResults: function() {
                     return "{{__('Resultado no encontrado')}}";
@@ -179,7 +190,9 @@
                 searching: function() {
                     return "{{__('Buscando')}}...";
                 }
-            }
+            },
+            placeholder: 'Seleccione una categoría de contribuyente',
+            minimumResultsForSearch: Infinity
         })
     </script>
 @endpush

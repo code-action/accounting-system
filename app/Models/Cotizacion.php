@@ -58,7 +58,7 @@ class Cotizacion extends Model
                 $producto = Producto::findORFail($cot_id_prod[$i]);
                 $cotizacion->productos()->attach($cot_id_prod[$i],
                     ['cot_prod_cantidad' => $cot_cant[$i], 'created_at' => Carbon::now(),
-                        'cot_prod_preciou' => $producto->prod_precio]);
+                        'cot_prod_preciou' => $producto->prod_precio, 'cot_prod_total' => $cot_cant[$i]* $producto->prod_precio]);
             }
         } elseif ($action == 'Actualizar') {
 
@@ -102,7 +102,8 @@ class Cotizacion extends Model
                             $cotizacion->productos()
                                 ->updateExistingPivot($producto->id,
                                     ['cot_prod_cantidad' => $cot_cant[$i], 'cot_prod_preciou' => $producto->prod_precio,
-                                        'updated_at' => Carbon::now()]);
+                                        'updated_at' => Carbon::now(),
+                                        'cot_prod_total' => $cot_cant[$i] * $producto->prod_precio]);
                         }
                     }
 
@@ -115,7 +116,8 @@ class Cotizacion extends Model
                 //dd($producto);
                 $cotizacion->productos()->attach($nuevos[$i],
                     ['cot_prod_cantidad' => $cantidades[$nuevos[$i]], 'created_at' => Carbon::now(),
-                        'cot_prod_preciou' => $producto->prod_precio]);
+                        'cot_prod_preciou' => $producto->prod_precio,
+                        'cot_prod_total' => $cot_cant[$i]* $producto->prod_precio]);
             }
 
             // ELIMINAR PRODUCTOS DE LA COTIZACIÓN ORIGINAL

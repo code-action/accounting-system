@@ -139,6 +139,31 @@
                                                     </div>
 
                                                     <div class="row">
+                                                        <label class="col-sm-2 col-form-label">{{ __('Estado') }}</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="form-group">
+                                                                <select class="js-example-basic-single js-states has-error
+                                                                form-control" name="cli_estado" id="input-cli_estado"
+                                                                        data-style="select-with-transition" title=""
+                                                                        data-size="100" style="width: 100%">
+                                                                    <option value="" disabled selected
+                                                                            style="background-color:lightgray">
+                                                                        {{__('Seleccione un estado')}}
+                                                                    </option>
+                                                                    <option value="1">{{ __('Aceptado') }}</option>
+                                                                    <option value="2">{{ __('Revisión') }}</option>
+                                                                    <option value="3">{{ __('Rechazado') }}</option>
+
+                                                                </select>
+                                                                <span id="input-cli_estado-error" class="error text-danger"
+                                                                      for="input-cli_estado" style="display: none
+                                                                {{--block--}};{{--This fixes a bootstrap known-issue--}}">
+                                                                    {{ __('Seleccione un estado') }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
                                                         <label class="col-sm-2 col-form-label">{{ __('Descripción') }}</label>
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
@@ -149,6 +174,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
 
 
 
@@ -364,7 +390,21 @@
                 searching: function() {
                     return "{{__('Buscando')}}...";
                 }
-            }
+            },
+            placeholder: 'Seleccione un cliente',
+        })
+
+        $("#input-cli_estado").select2({
+            language: {
+                noResults: function() {
+                    return "{{__('Resultado no encontrado')}}";
+                },
+                searching: function() {
+                    return "{{__('Buscando')}}...";
+                }
+            },
+            placeholder: 'Seleccione un estado',
+            minimumResultsForSearch: Infinity
         })
     </script>
 
