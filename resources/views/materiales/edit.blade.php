@@ -40,7 +40,7 @@
                         </div>
                         <div class="card-footer ">
                             <a href="{{ route('raw.index') }}"><button type="button" class="btn btn-fill btn-default">Cancelar</button></a>
-                            <button type="submit" class="btn btn-fill btn-info">Modificar</button>
+                            <button type="submit" class="btn btn-fill btn-info">Guardar</button>
                         </div>
                     </form>
                 </div>

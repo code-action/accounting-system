@@ -17,11 +17,6 @@
                                 <h4 class="card-title">{{ __('Nuevo Cliente') }}</h4>
                             </div>
                             <div class="card-body ">
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <a href="{{ route('cliente.index') }}" class="btn btn-sm btn-info">{{ __('Regresar') }}</a>
-                                    </div>
-                                </div>
                                 <div class="row ">
                                     <div class="col-md-5">
                                         <div class="row ">
@@ -156,10 +151,9 @@
 
 
                             </div>
-
-
-                            <div class="card-footer ml-auto mr-auto">
-                                    <button type="submit" class="btn btn-info">{{ __('Guardar') }}</button>
+                            <div class="card-footer ">
+                                <a href="{{ route('cliente.index') }}"><button type="button" class="btn btn-fill btn-default">Cancelar</button></a>
+                                <button type="submit" class="btn btn-fill btn-info">Agregar</button>
                             </div>
                         </div>
                     </form>

@@ -68,7 +68,7 @@
                                           <div class="ripple-container"></div>
                                         </a>
                                         <button type="submit" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
-                                        <i class="material-icons">delete_outline</i>
+                                        <i class="material-icons">close</i>
                                         </button>
                                     @else
                                         <a rel="tooltip" class="btn btn-info btn-link" href="{{ route('ordencompra.show', $orden->id) }}" data-original-title="" title="Ver">

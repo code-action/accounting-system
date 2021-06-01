@@ -36,14 +36,14 @@
                                             <td> {{ $p->prod_cantidad }} </td>
                                             <td> {{ $p->created_at }} </td>
                                             <td class="td-actions text-right">
-                                                <a rel="tooltip" class="btn btn-warning btn-link" href="{{ route('producto.edit', $p->id) }}" data-original-title="" title="Editar">
+                                                <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('producto.edit', $p->id) }}" data-original-title="" title="Editar">
                                                     <i class="material-icons">edit</i>
                                                 </a>
                                                 <form class="d-inline" id="form-delete" action="{{ route('producto.destroy', $p->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button style="border:none; transform: translateY(7px)" type="submit" rel="tooltip" class="<btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
-                                                        <i class="material-icons">delete_outline</i>
+                                                    <button type="submit" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
+                                                        <i class="material-icons">close</i>
                                                     </button>
                                                 </form>
                                             </td>

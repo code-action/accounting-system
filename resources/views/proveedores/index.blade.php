@@ -63,8 +63,8 @@
                                     <i class="material-icons">edit</i>
                                     <div class="ripple-container"></div>
                                   </a>
-                                  <button style="border:none; transform: translateY(7px)" type="submit" rel="tooltip" class="<btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
-                                    <i class="material-icons">delete_outline</i>
+                                  <button type="submit" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
+                                    <i class="material-icons">close</i>
                                   </button>
                               </form>
                             </td>

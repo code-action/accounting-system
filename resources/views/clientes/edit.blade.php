@@ -18,11 +18,6 @@
                             </div>
                             <div class="card-body ">
                                 <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <a href="{{ route('cliente.index') }}" class="btn btn-sm btn-info">{{ __('Regresar') }}</a>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-5">
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">{{ __('Nombre') }}</label>
@@ -104,11 +99,11 @@
                                                                 style="background-color:lightgray">
                                                             {{__('Seleccione una categoría de contribuyente')}}
                                                         </option>
-                                                        @foreach($categorias as $cat)
-                                                            <option value="{{$cat}}"
-                                                               @if(old('cli_categoria') == $cat)
+                                                        @foreach($categorias as $key => $cat)
+                                                            <option value="{{$key+1}}"
+                                                               @if(old('cli_categoria') == ($key+1))
                                                                    selected
-                                                                @elseif($cliente->cli_categoria == $cat)
+                                                                @elseif($cliente->cli_categoria == ($key+1))
                                                                     selected
                                                                @endif>
                                                                 {{$cat}}
@@ -164,14 +159,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <input type="hidden" name="id_validate" value="{{$cliente->id}}">
-
                             </div>
-
-
-                            <div class="card-footer ml-auto mr-auto">
-                                <button type="submit" class="btn btn-info">{{ __('Guardar') }}</button>
+                            <div class="card-footer ">
+                                <a href="{{ route('cliente.index') }}"><button type="button" class="btn btn-fill btn-default">Cancelar</button></a>
+                                <button type="submit" class="btn btn-fill btn-info">Guardar</button>
                             </div>
                         </div>
                     </form>

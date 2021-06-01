@@ -18,11 +18,6 @@
               </div>
               <div class="card-body ">
                 <div class="row">
-                  <div class="col-md-12 text-right">
-                      <a href="{{ route('proveedor.index') }}" class="btn btn-sm btn-info">{{ __('Regresar') }}</a>
-                  </div>
-                </div>
-                <div class="row">
                   <label class="col-sm-2 col-form-label">{{ __('Nombre') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('prov_nombre') ? ' has-danger' : '' }}">
@@ -65,9 +60,10 @@
                 <input type="hidden" name="id_validate" value="{{$proveedor->id}}">
 
               </div>
-              <div class="card-footer ml-auto mr-auto">
-                <button type="submit" class="btn btn-info">{{ __('Guardar') }}</button>
-              </div>
+              <div class="card-footer ">
+                <a href="{{ route('proveedor.index') }}"><button type="button" class="btn btn-fill btn-default">Cancelar</button></a>
+                <button type="submit" class="btn btn-fill btn-info">Guardar</button>
+            </div>
             </div>
           </form>
         </div>
