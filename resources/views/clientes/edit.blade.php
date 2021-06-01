@@ -187,4 +187,15 @@
             minimumResultsForSearch: Infinity
         })
     </script>
+
+    <script>
+        // Uso de mascaras en los campos
+        $(document).ready(function(){
+            $('#input-cli_telefono').mask('0000-0000');
+            $('#input-cli_dui').mask('00000000-0');
+            $('#input-cli_nit').mask('0000-000000-000-0');
+            $('#input-cli_nrc').mask('000000');
+
+        });
+    </script>
 @endpush

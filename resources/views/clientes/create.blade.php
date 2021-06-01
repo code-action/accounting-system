@@ -60,7 +60,7 @@
                                         <div class="row">
                                             <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Teléfono') }}</label>
                                             <div class="col-sm-10">
-                                                <div class="form-group{{ $errors->has('cli_telefono') ? ' has-danger' : '' }}">
+                                                <div class="form-group {{ $errors->has('cli_telefono') ? ' has-danger' : '' }}">
                                                     <input class="form-control{{ $errors->has('cli_telefono') ? ' is-invalid' : '' }}"
                                                            name="cli_telefono" id="input-cli_telefono" type="text"
                                                            placeholder="{{ __('Teléfono') }}" value="{{ old('cli_telefono') }}"
@@ -69,6 +69,21 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row ">
+                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Dirección') }}</label>
+                                            <div class="col-sm-10">
+                                                <div class="form-group{{ $errors->has('cli_direccion') ? ' has-danger' : '' }}">
+                                                    <textarea class="form-control{{ $errors->has('cli_direccion') ? ' is-invalid' : '' }}"
+                                                           name="cli_direccion" id="input-cli_direccion" type="text"
+                                                           placeholder="{{ __('Dirección') }}"
+                                                           aria-required="true">{{old('cli_direccion') }}</textarea>
+                                                    @include('alerts.feedback', ['field' => 'cli_direccion'])
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                     <div class="col-md-5">
 
@@ -76,6 +91,7 @@
                                             <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Categoría') }}</label>
                                             <div class="col-sm-10">
                                                 <div class="form-group">
+                                                    @php ($categorias=['Gran Contribuyente', 'Mediano Contribuyente', 'Otros Contribuyentes'])
                                                     <select class="js-example-basic-single js-states has-error
                                                                 form-control" name="cli_categoria" id="input-cli_categoria"
                                                             data-style="select-with-transition" title=""
@@ -84,27 +100,16 @@
                                                                 style="background-color:lightgray">
                                                             {{__('Seleccione una categoría de contribuyente')}}
                                                         </option>
-                                                        <option value="1">Gran contribuyente</option>
-                                                        <option value="2">Mediano contribuyente</option>
-                                                        <option value="3">Otros contribuyentes</option>
+                                                        @foreach($categorias as $cat)
+                                                            <option value="{{$cat}}">{{$cat}}</option>
+                                                        @endforeach
                                                     </select>
                                                     @include('alerts.feedback', ['field' => 'cli_categoria'])
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="row ">
-                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Dirección') }}</label>
-                                            <div class="col-sm-10">
-                                                <div class="form-group{{ $errors->has('cli_direccion') ? ' has-danger' : '' }}">
-                                                    <input class="form-control{{ $errors->has('cli_direccion') ? ' is-invalid' : '' }}"
-                                                           name="cli_direccion" id="input-cli_direccion" type="text"
-                                                           placeholder="{{ __('Dirección') }}" value="{{ old('cli_direccion') }}"
-                                                           aria-required="true"/>
-                                                    @include('alerts.feedback', ['field' => 'cli_direccion'])
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         <div class="row">
                                             <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('DUI') }}</label>
                                             <div class="col-sm-10">
@@ -131,13 +136,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{ old('cli_nrc') }}
                                         <div class="row">
                                             <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('NRC') }}</label>
                                             <div class="col-sm-10">
                                                 <div class="form-group{{ $errors->has('cli_nrc') ? ' has-danger' : '' }}">
                                                     <input class="form-control{{ $errors->has('cli_nrc') ? ' is-invalid' : '' }}"
-                                                           name="cli_nrc" id="input-cli_nit" type="text"
+                                                           name="cli_nrc" id="input-cli_nrc" type="text"
                                                            placeholder="{{ __('Número de Registro de Contribuyente') }}"
                                                            value="{{ old('cli_nrc') }}"
                                                            aria-required="true"/>
@@ -145,11 +149,8 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-
-
                             </div>
                             <div class="card-footer ">
                                 <a href="{{ route('cliente.index') }}"><button type="button" class="btn btn-fill btn-default">Cancelar</button></a>
@@ -178,6 +179,16 @@
             placeholder: 'Seleccione una categoría de contribuyente',
             minimumResultsForSearch: Infinity
         })
+    </script>
+    <script>
+        // Uso de mascaras en los campos
+        $(document).ready(function(){
+            $('#input-cli_telefono').mask('0000-0000');
+            $('#input-cli_dui').mask('00000000-0');
+            $('#input-cli_nit').mask('0000-000000-000-0');
+            $('#input-cli_nrc').mask('000000');
+
+        });
     </script>
 
 @endpush

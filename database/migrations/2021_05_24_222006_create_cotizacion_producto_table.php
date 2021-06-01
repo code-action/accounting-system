@@ -17,7 +17,8 @@ class CreateCotizacionProductoTable extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->foreignId('cotizacion_id')->constrained('cotizacions');
+            $table->foreignId('cotizacion_id')->constrained('cotizacions')
+                ->onDelete('cascade');
             $table->foreignId('producto_id')->constrained('productos');
 
             $table->integer('cot_prod_cantidad');

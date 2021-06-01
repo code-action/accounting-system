@@ -45,10 +45,9 @@ class ClienteRequest extends FormRequest
                         'required', 'min:20', 'max:300'
                     ],
                     'cli_dui' => [
-                        'unique:clientes', 'size:9'
                     ],
                     'cli_nit' => [
-                        'required', 'size:14','unique:clientes'
+                        'required', 'size:17','unique:clientes'
                     ],
                     'cli_nrc' => [
                         'required', 'size:6','unique:clientes'
@@ -77,10 +76,10 @@ class ClienteRequest extends FormRequest
                         'required', 'min:20', 'max:300'
                     ],
                     'cli_dui' => [
-                        'size:9', 'size:9', Rule::unique('clientes')->ignore($this->id_validate),
+                        Rule::unique('clientes')->ignore($this->id_validate),
                     ],
                     'cli_nit' => [
-                        'required', 'size:14', Rule::unique('clientes')->ignore($this->id_validate),
+                        'required', 'size:17', Rule::unique('clientes')->ignore($this->id_validate),
                     ],
                     'cli_nrc' => [
                         'required', 'size:6', Rule::unique('clientes')->ignore($this->id_validate),

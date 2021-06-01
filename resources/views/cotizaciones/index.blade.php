@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="card-header card-header-info card-header-icon">
                             <div class="card-icon">
-                                <i class="material-icons">groups</i>
+                                <i class="material-icons">assignment</i>
                             </div>
                             <h4 class="card-title">{{ __('Lista de Cotizaciones') }}</h4>
                         </div>
@@ -22,13 +22,13 @@
                             <div class="table-responsive">
                                 <table id="datatables" class="table table-striped table-no-bordered table-hover datatable-rose" style="display:none; width: 100%">
                                     <thead class="text-info">
-                                        <th>
+                                        <th >
                                             {{ __('Código') }}
                                         </th>
-                                        <th>
+                                        <th >
                                             {{ __('Fecha') }}
                                         </th>
-                                        <th>
+                                        <th >
                                             {{ __('Estado') }}
                                         </th>
                                         <th>
@@ -85,24 +85,25 @@
                                             <td class="td-actions text-right">
 
                                                 <a rel="tooltip" class="btn btn-info btn-link"
-                                                   href="{{ route('cotizacion.show', $cotizacion) }}"
-                                                   data-original-title="" title="{{ __('Ver') }}">
+                                                  {{-- href="{{ route('cotizacion.show', $cotizacion) }}"--}}
+                                                   data-original-title="" title="{{ __('') }}"
+                                                   onclick="abrir_modal_ver('{{$cotizacion}}', '{{$cotizacion->productos}}',
+                                                       '{{route('cotizacion.show', $cotizacion)}}')">
                                                     <i class="material-icons">assignment</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
                                                 <a rel="tooltip" class="btn btn-success btn-link"
                                                    href="{{ route('cotizacion.edit', $cotizacion) }}"
-                                                   data-original-title="" title="{{ __('Editar') }}">
+                                                   data-original-title="" title="{{ __('') }}">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
                                                 <button rel="tooltip" class="btn btn-danger btn-link"
-                                                        onclick="abrir_modal_eliminar('{{$cotizacion->created_at->format('d-m-Y')}}',
-                                                            '{{$cotizacion->cliente->cli_nombre}}',
-                                                        '{{route('cotizacion.destroy', $cotizacion)}}','{{$cotizacion}}')"
-                                                        data-original-title="" title="{{ __('Eliminar') }}">
+                                                        onclick="abrir_modal_eliminar('{{$cotizacion}}', '{{$cotizacion->productos}}',
+                                                        '{{route('cotizacion.destroy', $cotizacion)}}')"
+                                                        data-original-title="" title="{{ __('') }}">
                                                     <i class="material-icons">delete_outline</i>
                                                     <div class="ripple-container"></div>
                                                 </button>
@@ -127,26 +128,12 @@
             </div>
         </div>
     </div>
-
-    @include('cotizaciones.modalDestroy')
-
 @endsection
+@include('cotizaciones.modalDestroy')
+@include('cotizaciones.modalShow')
 @push('js')
+    <script src="{{asset('js/cotizaciones/index.js')}}"></script>
 
-    <script type="text/javascript">
-        function abrir_modal_eliminar(fecha, cliente, url){
-            $('#form_eliminar_cotizacion').prop('action', url)
-
-            $('#cot_cli_nombre').text('')
-            $('#cot_fecha').text('')
-
-            $('#cot_cli_nombre').append(cliente)
-            $('#cot_fecha').append(fecha)
-
-            $('#eliminar_cotizacion').modal('show');
-            //console.log(fecha, cliente, url)
-        }
-    </script>
     <script>
         $(document).ready(function() {
             $('#datatables').fadeIn(1100);

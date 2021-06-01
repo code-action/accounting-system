@@ -133,7 +133,7 @@
                                             </div>--}}
                                             <br>
                                             <div class="table-responsive">
-                                                <table id="datatables2" class="table table-striped table-no-bordered
+                                                <table id="cotizacion_show" class="table table-striped table-no-bordered
                                                 table-hover datatable-rose" style="width: 100%">
                                                     <thead class="text-primary">
                                                     <th>
@@ -245,6 +245,35 @@
 
 @endsection
 @push('js')
+    <script>
+        $(document).ready(function() {
+            $('#cotizacion_show').fadeIn(1100);
+            $('#cotizacion_show').DataTable({
+                "pagingType": "full_numbers",
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Buscar productos",
+                    "lengthMenu": 'Mostrar _MENU_ registros',
+                    "info": 'Mostrando página _PAGE_ de _PAGES_',
+                    "infoEmpty": 'No hay registros disponibles',
+                    "zeroRecords": 'Registro no encontrado',
+                    "infoFiltered": '(Total de registros filtrados _MAX_)',
+                    "paginate": {
+                        "next":     'siguiente',
+                        "previous": 'anterior',
+                        "first":    'primero',
+                        "last":     'último'
+                    },
+                },
+            });
+        });
+    </script>
+
     <script src="{{asset('js/cotizaciones/create.js')}}"></script>
 
     <script>
@@ -261,68 +290,4 @@
     </script>
 
 
-    <script type="text/javascript">
-
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#datatables').fadeIn(1100);
-            $('#datatables').DataTable({
-                "pagingType": "full_numbers",
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                responsive: true,
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Buscar productos",
-                    "lengthMenu": 'Mostrar _MENU_ registros',
-                    "info": 'Mostrando página _PAGE_ de _PAGES_',
-                    "infoEmpty": 'No hay registros disponibles',
-                    "zeroRecords": 'Registro no encontrado',
-                    "infoFiltered": '(Total de registros filtrados _MAX_)',
-                    "paginate": {
-                        "next":     'siguiente',
-                        "previous": 'anterior',
-                        "first":    'primero',
-                        "last":     'último'
-                    },
-                },
-                "columnDefs": [
-                    { "orderable": false, "targets": 4 },
-                ],
-            });
-        });
-        $(document).ready(function() {
-            $('#datatables2').fadeIn(1100);
-            $('#datatables2').DataTable({
-                "pagingType": "full_numbers",
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                responsive: true,
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Buscar productos",
-                    "lengthMenu": 'Mostrar _MENU_ registros',
-                    "info": 'Mostrando página _PAGE_ de _PAGES_',
-                    "infoEmpty": 'No hay registros disponibles',
-                    "zeroRecords": 'Registro no encontrado',
-                    "infoFiltered": '(Total de registros filtrados _MAX_)',
-                    "paginate": {
-                        "next":     'siguiente',
-                        "previous": 'anterior',
-                        "first":    'primero',
-                        "last":     'último'
-                    },
-                },
-                "columnDefs": [
-                    { "orderable": false, "targets": 4 },
-                    { "targets": [4], className: "text-right", }
-                ],
-            });
-        });
-    </script>
 @endpush
