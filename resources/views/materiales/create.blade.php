@@ -6,9 +6,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card ">
-                    <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">control_point_duplicate</i>
+                            <i class="material-icons">storefront</i>
                         </div>
                         <h4 class="card-title">Agregar Materia Prima</h4>
                     </div>
@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-footer ">
                             <a href="{{ route('raw.index') }}"><button type="button" class="btn btn-fill btn-default">Cancelar</button></a>
-                            <button type="submit" class="btn btn-fill btn-rose">Agregar</button>
+                            <button type="submit" class="btn btn-fill btn-info">Agregar</button>
                         </div>
                     </form>
                 </div>

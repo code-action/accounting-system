@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\FacturacionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
@@ -66,7 +67,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('proveedor', 'App\Http\Controllers\ProveedorController');
 
     Route::resource('cliente', ClienteController::class);
+    Route::get('buscar/cliente', [ClienteController::class, 'buscarCliente'])->name('cliente.buscar');
     Route::resource('cotizacion', CotizacionController::class);
+    Route::resource('facturacion', FacturacionController::class);
 
     Route::resource('raw', 'App\Http\Controllers\MaterialController');
     Route::resource('categoria', 'App\Http\Controllers\CategoriaController');

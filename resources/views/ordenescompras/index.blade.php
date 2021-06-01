@@ -20,7 +20,7 @@
                 </div>
                 <div class="table-responsive">
                   <table id="datatables" class="table table-striped table-no-bordered table-hover datatable-rose" style="display:none; width: 100%">
-                    <thead class="text-primary">
+                    <thead class="text-info">
                         <th>
                           {{ __('N° de Orden') }}
                         </th>
@@ -68,7 +68,7 @@
                                           <div class="ripple-container"></div>
                                         </a>
                                         <button type="submit" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
-                                        <i class="material-icons">delete_outline</i>
+                                        <i class="material-icons">close</i>
                                         </button>
                                     @else
                                         <a rel="tooltip" class="btn btn-info btn-link" href="{{ route('ordencompra.show', $orden->id) }}" data-original-title="" title="Ver">
@@ -104,7 +104,7 @@
         responsive: true,
         language: {
           search: "_INPUT_",
-          searchPlaceholder: "Buscar proveedores",
+          searchPlaceholder: "Buscar orden",
           "lengthMenu": 'Mostrar _MENU_ registros',
               "info": 'Mostrando página _PAGE_ de _PAGES_',
               "infoEmpty": 'No hay registros disponibles',

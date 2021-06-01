@@ -7,17 +7,21 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title ">Materia Prima</h4>
-                        <p class="card-category"> Here is a subtitle for this table</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="my-3">
-                            <a href="{{ route('raw.create') }}" class="btn btn-success"><i class="material-icons">add</i> Nuevo</a>
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                          <i class="material-icons">storefront</i>
                         </div>
+                        <h4 class="card-title">{{ __('Lista de Materia Prima') }}</h4>
+                      </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                              <a href="{{ route('raw.create') }}" class="btn btn-sm btn-info">{{ __('Nuevo') }}</a>
+                            </div>
+                          </div>
                         <div class="table-responsive">
                             <table id="datatables" class="table">
-                                <thead class=" text-primary">
+                                <thead class=" text-info">
                                     <th> ID </th>
                                     <th> Nombre </th>
                                     <th> Cantidad </th>
@@ -32,14 +36,14 @@
                                             <td> {{ $m->mat_cantidad }} </td>
                                             <td> {{ $m->created_at }} </td>
                                             <td class="td-actions text-right">
-                                                <a rel="tooltip" class="btn btn-warning btn-link" href="{{ route('raw.edit', $m->id) }}" data-original-title="" title="Editar">
+                                                <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('raw.edit', $m->id) }}" data-original-title="" title="Editar">
                                                     <i class="material-icons">edit</i>
                                                 </a>
                                                 <form class="d-inline" id="form-delete" action="{{ route('raw.destroy', $m->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button style="border:none; transform: translateY(7px)" type="submit" rel="tooltip" class="<btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
-                                                        <i class="material-icons">delete_outline</i>
+                                                    <button type="submit" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
+                                                        <i class="material-icons">close</i>
                                                     </button>
                                                 </form>
                                             </td>
@@ -70,7 +74,7 @@
             responsive: true,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Buscar material",
+                searchPlaceholder: "Buscar materia prima",
                 "lengthMenu": 'Mostrar _MENU_ registros',
                 "info": 'Mostrando página _PAGE_ de _PAGES_',
                 "infoEmpty": 'No hay registros disponibles',

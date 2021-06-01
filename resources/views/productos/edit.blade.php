@@ -6,9 +6,9 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="card ">
-                    <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">control_point_duplicate</i>
+                            <i class="material-icons">inventory_2</i>
                         </div>
                         <h4 class="card-title">Editar Producto</h4>
                     </div>
@@ -60,8 +60,8 @@
                             </div>
                         </div>
                         <div class="card-footer ">
-                            <a href="{{ route('producto.index') }}"><button type="button" class="btn btn-fill btn-default">Cancelar</button></a>
-                            <button type="submit" class="btn btn-fill btn-warning">Editar</button>
+                            <a href="{{ route('raw.index') }}"><button type="button" class="btn btn-fill btn-default">Cancelar</button></a>
+                            <button type="submit" class="btn btn-fill btn-info">Modificar</button>
                         </div>
                     </form>
                 </div>

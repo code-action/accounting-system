@@ -17,7 +17,6 @@ class CreateCotizacionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('cot_estado');
-            //$table->string('cot_descripcion');
 
             $table->foreignId('cliente_id')->constrained();
         });

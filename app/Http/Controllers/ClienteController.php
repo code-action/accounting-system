@@ -41,11 +41,11 @@ class ClienteController extends Controller
         //dd($request);
         $model->create($request->all());
 
-/*        $cliente = new Cliente();
-        $cliente->cli_nombre = $request->get('nombre');
-        $cliente->cli_email = $request->get('email');
-        $cliente->cli_contacto = $request->get('contacto');
-        $cliente->save();*/
+        /*        $cliente = new Cliente();
+                $cliente->cli_nombre = $request->get('nombre');
+                $cliente->cli_email = $request->get('email');
+                $cliente->cli_contacto = $request->get('contacto');
+                $cliente->save();*/
         return redirect()->route('cliente.index')->withStatus(__('Cliente creado exitosamente.'));
     }
 
@@ -53,11 +53,11 @@ class ClienteController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Cliente  $cliente
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Cliente $cliente)
     {
-        //
+        return view('clientes.show', ['cliente' => $cliente]);
     }
 
     /**

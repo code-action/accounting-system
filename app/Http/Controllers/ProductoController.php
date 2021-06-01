@@ -62,6 +62,11 @@ class ProductoController extends Controller
             $materialProducto->material_id          = $request->mat_id[$k];
             $materialProducto->producto_id          = $producto->id;
             $materialProducto->save();
+
+            $actual = $materialProducto->material->mat_cantidad;
+            $materialProducto->material->mat_cantidad = $actual-$materialProducto->mat_prod_cantidad;
+            $materialProducto->material->save();
+            
         }
         return redirect()->route('producto.index') ->with('success','Registro editado correctamente');
     }

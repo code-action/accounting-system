@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'cliente', 'titlePage' => __('Listado de clientes')])
+@extends('layouts.app', ['activePage' => 'cliente', 'titlePage' => __('Clientes')])
 
 @section('content')
 
@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="card-header card-header-info card-header-icon">
                             <div class="card-icon">
-                                <i class="material-icons">groups</i>
+                                <i class="material-icons">contact_phone</i>
                             </div>
                             <h4 class="card-title">{{ __('Lista de clientes') }}</h4>
                         </div>
@@ -22,22 +22,25 @@
                             <div class="table-responsive">
                                 <table id="datatables" class="table table-striped table-no-bordered table-hover datatable-rose" style="display:none; width: 100%">
                                     <thead class="text-primary">
-                                        <th>
-                                            {{ __('Nombre') }}
-                                        </th>
-                                        <th>
-                                            {{ __('Nombre Contacto') }}
-                                        </th>
-                                        <th>
-                                            {{ __('Email') }}
-                                        </th>
-                                        <th>
-                                            {{ __('Teléfono') }}
-                                        </th>
+                                    <th>
+                                        {{ __('Nombre') }}
+                                    </th>
+                                    <th>
+                                        {{ __('Nombre Contacto') }}
+                                    </th>
+                                    <th>
+                                        {{ __('Categoría de Contribuyente') }}
+                                    </th>
+                                    <th>
+                                        {{ __('Email') }}
+                                    </th>
+                                    <th>
+                                        {{ __('Teléfono') }}
+                                    </th>
 
-                                        <th class="text-right">
-                                            {{ __('Acciones') }}
-                                        </th>
+                                    <th class="text-right">
+                                        {{ __('Acciones') }}
+                                    </th>
                                     </thead>
                                     <tbody>
                                     @foreach ($clientes as $cliente)
@@ -49,34 +52,46 @@
                                                 {{$cliente->cli_contacto}}
                                             </td>
                                             <td>
+                                                {{ $cliente->cli_categoria}}
+                                            </td>
+                                            <td>
                                                 {{$cliente->cli_email}}
                                             </td>
                                             <td>
                                                 {{$cliente->cli_telefono}}
                                             </td>
-
-                                            {{-- @can('manage-items', App\User::class) --}}
                                             <td class="td-actions text-right">
-                                                <form action="{{ route('cliente.destroy', $cliente) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
 
-                                                    {{-- @can('update', $proveedor) --}}
-                                                    <a rel="tooltip" class="btn btn-success btn-link"
-                                                       href="{{ route('cliente.edit', $cliente) }}" data-original-title="" title="">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    {{-- @endcan --}}
-                                                    {{-- @if ($proveedor->items->isEmpty() && auth()->user()->can('delete', $proveedor)) --}}
-                                                      <button type="button" class="btn btn-danger btn-link" data-original-title="" title="" onclick="confirm('{{ __("Are you sure you want to delete this client?") }}') ? this.parentElement.submit() : ''">
-                                                          <i class="material-icons">close</i>
-                                                          <div class="ripple-container"></div>
-                                                      </button>
-                                                    {{--@endif --}}
-                                                </form>
+                                                <a rel="tooltip" class="btn btn-info btn-link"
+                                                   data-original-title=""
+                                                   title="" onclick="abrir_modal_mostrar('{{$cliente}}',
+                                                    '{{route('cliente.show', $cliente)}}')">
+                                                    <i class="material-icons">visibility</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                                {{--<a rel="tooltip" class="btn btn-dark btn-link"
+                                                   href="{{ route('cliente.show', $cliente) }}" data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">visibility</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>--}}
+                                                <a rel="tooltip" class="btn btn-success btn-link"
+                                                   href="{{ route('cliente.edit', $cliente) }}" data-original-title="" title="">
+                                                    <i class="material-icons">edit</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
+
+
+                                                <button rel="tooltip" class="btn btn-danger btn-link"
+                                                        onclick="abrir_modal_eliminar('{{$cliente->cli_nombre}}',
+                                                            '{{route('cliente.destroy', $cliente)}}')"
+                                                        data-original-title="" title="">
+                                                    <i class="material-icons">close</i>
+                                                    <div class="ripple-container"></div>
+                                                </button>
+
                                             </td>
-                                            {{-- @endcan --}}
+
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -88,9 +103,43 @@
             </div>
         </div>
     </div>
-
 @endsection
+@include('clientes.modalDestroy')
+@include('clientes.modalShow')
 @push('js')
+    <script type="text/javascript">
+        function abrir_modal_eliminar(cliente, url){
+            $('#form_eliminar_cliente').prop('action', url)
+
+            $('#cli_nombre').text('')
+            $('#cli_nombre').append(cliente)
+            $('#eliminar_cliente').modal('show');
+            //console.log(cliente, url)
+        }
+
+        function abrir_modal_mostrar(cliente, url){
+            cliente = JSON.parse(cliente)
+
+            //$('#form_eliminar_cliente').prop('action', url)
+
+            //$('#cli_nombre').text('')
+            $('#input-cli_nombre-mostrar').val(cliente.cli_nombre)
+            $('#input-cli_contacto-mostrar').val(cliente.cli_contacto)
+            $('#input-cli_email-mostrar').val(cliente.cli_email)
+            $('#input-cli_telefono-mostrar').val(cliente.cli_telefono)
+
+            $('#input-cli_categoria-mostrar').val(cliente.cli_categoria)
+            $('#input-cli_direccion-mostrar').val(cliente.cli_direccion)
+            $('#input-cli_telefono-mostrar').val(cliente.cli_telefono)
+            $('#input-cli_dui-mostrar').val(cliente.cli_dui)
+            $('#input-cli_nit-mostrar').val(cliente.cli_nit)
+            $('#input-cli_nrc-mostrar').val(cliente.cli_nrc)
+
+            $('#abrir_modal_mostrar').modal('show');
+            console.log(cliente, url)
+        }
+    </script>
+
     <script>
         $(document).ready(function() {
             $('#datatables').fadeIn(1100);
@@ -103,7 +152,7 @@
                 responsive: true,
                 language: {
                     search: "_INPUT_",
-                    searchPlaceholder: "Buscar proveedores",
+                    searchPlaceholder: "Buscar cliente",
                     "lengthMenu": 'Mostrar _MENU_ registros',
                     "info": 'Mostrando página _PAGE_ de _PAGES_',
                     "infoEmpty": 'No hay registros disponibles',
