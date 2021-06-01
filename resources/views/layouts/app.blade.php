@@ -78,6 +78,7 @@
         {{-- Select2 --}}
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
         <script src="{{ asset('js') }}/funcionesgenerales.js"></script>
+        <script src="{{ asset('material') }}/js/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
 
         <script>
           $(document).ready(function () {

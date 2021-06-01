@@ -83,6 +83,12 @@
             <p>{{__('Órdenes de Compra')}}</p>
         </a>
       </li>
+        <li class="nav-item{{ $activePage == 'cotizacion' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('cotizacion.index') }}">
+                <i class="material-icons">assignment</i>
+                <p>{{__('Cotizaciones')}}</p>
+            </a>
+        </li>
     </ul>
   </div>
 </div>

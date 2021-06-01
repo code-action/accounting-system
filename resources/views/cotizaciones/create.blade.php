@@ -65,7 +65,7 @@
                                                             </td>
                                                             <td>
                                                                 {{--$producto->prod_cantidad--}}
-                                                                <input type="number" class="form-control" id="prod_cantidad"
+                                                                <input type="number" class="form-control input-cantidad" id="prod_cantidad"
                                                                        name="prod_cantidad" min="1" value="1"
                                                                        max="{{$producto->prod_cantidad}}">
                                                             </td>
@@ -337,7 +337,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     {{--<h3 class="modal-title">{{ __('No se ha agregado ningún producto a la cotización')}}</h3>--}}
-                    <button class="close cerrarModal" type="button" aria-label="Close" data-dismiss="modal">
+                    <button class="close cerrarModal" type="button" aria-label="Close" data-dismiss="modal"
+                            style="position: absolute; z-index: 5;">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -410,7 +411,11 @@
 
 
     <script type="text/javascript">
-
+            //input-cantidad
+            // Uso de mascaras en los campos
+            $(document).ready(function(){
+                $('.input-cantidad').mask('0000000');
+            });
     </script>
     <script>
         $(document).ready(function() {
