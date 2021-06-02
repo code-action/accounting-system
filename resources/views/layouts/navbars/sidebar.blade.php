@@ -41,6 +41,12 @@
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
+      <li class="nav-item{{ $activePage == 'info' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('informacion.edit',1) }}">
+          <i class="material-icons">settings_suggest</i>
+            <p>{{__('Información')}}</p>
+        </a>
+      </li>
       <li class="nav-item{{ $activePage == 'user' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('user.index') }}">
           <i class="material-icons">person</i>

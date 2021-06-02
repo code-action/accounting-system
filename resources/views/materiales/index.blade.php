@@ -20,7 +20,7 @@
                             </div>
                           </div>
                         <div class="table-responsive">
-                            <table id="datatables" class="table">
+                            <table id="datatables" class="table" style="display:none; width: 100%">
                                 <thead class=" text-info">
                                     <th> ID </th>
                                     <th> Nombre </th>
@@ -42,7 +42,22 @@
                                                 <form class="d-inline" id="form-delete" action="{{ route('raw.destroy', $m->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
+                                                    <button type="button" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar"
+                                                    onclick="
+                                                        return swal({
+                                                        html: '{{ __('¿Desea eliminar la materia prima') }}'+' '+'<b>'+'{{$m->mat_nombre}}'+'?</b>',
+                                                            showCancelButton: true,
+                                                            reverseButtons : true,
+                                                            confirmButtonText: '{{ __('Eliminar') }}',
+                                                            cancelButtonText: '{{ __('Cancelar') }}',
+                                                            confirmButtonClass: 'btn btn-danger',
+                                                            cancelButtonClass: 'btn btn-default',
+                                                            buttonsStyling: false
+                                                        }).then((result) => {
+                                                            if (result.value) {
+                                                            submit();
+                                                            }
+                                                        });">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </form>
