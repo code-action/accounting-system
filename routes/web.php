@@ -67,9 +67,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('proveedor', 'App\Http\Controllers\ProveedorController');
 
     Route::resource('cliente', ClienteController::class);
-    Route::get('buscar/cliente', [ClienteController::class, 'buscarCliente'])->name('cliente.buscar');
+    Route::get('buscar/cliente', [ClienteController::class, 'buscarCliente'])->name('cliente.buscar'); // Sin uso
     Route::resource('cotizacion', CotizacionController::class);
     Route::resource('facturacion', FacturacionController::class);
+    Route::post('facturacion/crear/{cotizacion}', [FacturacionController::class, 'crear'])->name('facturacion.crear');
 
     Route::resource('raw', 'App\Http\Controllers\MaterialController');
     Route::resource('categoria', 'App\Http\Controllers\CategoriaController');

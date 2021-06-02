@@ -1,4 +1,4 @@
-$("#datatables").on('click', '.add_product', function () {
+$("#tabla_productos").on('click', '.add_product', function () {
     // Campos que no se muestran eb ka tabla "Agregar Productos" estarán en campos ocultos
     // Validar exitencias
     //console.log('id', $(this).parents('tr').find('td:eq(0)').find('input:eq(0)').val())
@@ -9,7 +9,7 @@ $("#datatables").on('click', '.add_product', function () {
     precioT = (parseFloat(cantidad) * parseFloat(precioU)).toFixed(2)
     //console.log(id, producto, cantidad, precioU)
 
-    var table = $('#datatables2').DataTable()
+    var table = $('#tabla_facturacion').DataTable()
     table.draw()
     var agregado = verificarProdEnLista(id)
     //console.log(agregado)
@@ -36,7 +36,7 @@ $("#datatables").on('click', '.add_product', function () {
             '<div class="ripple-container"></div>\n' +
             '</button>\n'
         ]).draw(false)
-        $("#datatables2").resize();
+        $("#tabla_facturacion").resize();
     }else{ // Solo actualizamos los datos del producto que está en la cotización sumando la cantidad y calculando
         // el nuevo total
         actualizarProdEnLista(id, cantidad, agregado[1])
@@ -46,7 +46,7 @@ $("#datatables").on('click', '.add_product', function () {
 });
 
 function calcularTotales(){
-    filas = $('#datatables2').find('tbody').find('tr')
+    filas = $('#tabla_facturacion').find('tbody').find('tr')
     //console.log('calcularTotales')
 
     var sumas = 0.0
@@ -86,7 +86,7 @@ function calcularTotales(){
 // Verificar si el producto ya ha sido agregado para sumar la cantidad
 // retorna [boolean, id, cantidad] si ya existen el producto en la cotización
 function verificarProdEnLista(idProdAdd){
-    filas = $('#datatables2').find('tbody').find('tr')
+    filas = $('#tabla_facturacion').find('tbody').find('tr')
     agregado = false
     var fila = 0
     filas.each(function (i) {
@@ -136,7 +136,7 @@ function actualizarProdEnLista(idProdAdd, cant, fila){
 }
 
 
-$("#datatables2").on('click', '.del_product', function () {
+$("#tabla_facturacion").on('click', '.del_product', function () {
     //debugger
     // Campos que no se muestran eb ka tabla "Agregar Productos" estarán en campos ocultos
     // Validar exitencias
@@ -146,11 +146,11 @@ $("#datatables2").on('click', '.del_product', function () {
     precioU = $(this).parents('tr').find('td:eq(2)').text().trim()
     console.log(producto, cantidad, precioU)
 
-    var table = $('#datatables2').DataTable()
+    var table = $('#tabla_facturacion').DataTable()
     fila = $(this).parents('tr')
     table.row(fila).remove().draw(false);
 
-    filas = $('#datatables2').find('tbody').find('tr')
+    filas = $('#tabla_facturacion').find('tbody').find('tr')
     if (filas.length === 1 && filas.find('td').hasClass('dataTables_empty')) { // No hay productos
         //console.log('if')
         reiniciarTotales()
@@ -174,15 +174,15 @@ function guardar_datos_prod(url, titulo){
     if(url)
         $('#form_guardar_cotizacion').prop('action', url)
 
-    if(titulo == 'guardar'){
+    if(titulo === 'guardar'){
         $('#cot_guardar_titulo').text($('#guardar').text())
     }
-    else if (titulo == 'facturar') {
+    else if (titulo === 'facturar') {
         $('#cot_guardar_titulo').text($('#facturar').text())
     }
 
 
-    filas = $('#datatables2').find('tbody').find('tr')
+    filas = $('#tabla_facturacion').find('tbody').find('tr')
     modal_body_cot_guardar = $('#modal_body_cot_guardar')
     modal_body_cot_guardar.empty()
     valido = validarCotizacion()
@@ -201,26 +201,26 @@ function guardar_datos_prod(url, titulo){
             )
         })
         cot_cliente_id = parseInt($('#input-cli_nombre').val())
-        cli_estado = $('#input-cli_estado').val()
+        //cli_estado = $('#input-cli_estado').val()
 
         input_cot_sumas = parseFloat($('#input_cot_sumas').val())
         input_cot_iva = parseFloat($('#input_cot_iva').val())
         input_cot_subtotal = parseFloat($('#input_cot_subtotal').val())
         input_cot_retencion = parseFloat($('#input_cot_retencion').val())
         input_cot_total = parseFloat($('#input_cot_total').val())
-        cot_descripcion = $('#cot_descripcion').val().trim()
+        //cot_descripcion = $('#cot_descripcion').val().trim()
         /*console.log('input_cot_sumas', input_cot_sumas, 'input_cot_iva', input_cot_iva,
             'input_cot_subtotal', input_cot_subtotal, 'input_cot_retencion', input_cot_retencion, 'input_cot_total', input_cot_total)*/
 
         modal_body_cot_guardar.append(
-            '<input type="hidden" name="cot_cliente_id" id="" value="'+cot_cliente_id+'">'+ //id del cliente
-            '<input type="hidden" name="cot_estado" id="" value="'+cli_estado+'">'+ // estado cotización
-            '<input type="hidden" name="cot_descripcion" id="" value="'+cot_descripcion+'">'+ // descripción
-            '<input type="hidden" name="input_cot_sumas" id="" value="'+input_cot_sumas+'">' + // sumas
-            '<input type="hidden" name="input_cot_iva" id="" value="'+input_cot_iva+'">' + // iva
-            '<input type="hidden" name="input_cot_subtotal" id="" value="'+input_cot_subtotal+'">' + // subtotal
-            '<input type="hidden" name="input_cot_retencion" id="" value="'+input_cot_retencion+'">' + // retención
-            '<input type="hidden" name="input_cot_total" id="" value="'+input_cot_total+'">' // total de la cotización
+            '<input type="hidden" name="fact_cliente_id" id="" value="'+cot_cliente_id+'">'+ //id del cliente
+            //'<input type="hidden" name="cot_estado" id="" value="'+cli_estado+'">'+ // estado cotización
+            //'<input type="hidden" name="cot_descripcion" id="" value="'+cot_descripcion+'">'+ // descripción
+            '<input type="hidden" name="input_fact_sumas" id="" value="'+input_cot_sumas+'">' + // sumas
+            '<input type="hidden" name="input_fact_iva" id="" value="'+input_cot_iva+'">' + // iva
+            '<input type="hidden" name="input_fact_subtotal" id="" value="'+input_cot_subtotal+'">' + // subtotal
+            '<input type="hidden" name="input_fact_retencion" id="" value="'+input_cot_retencion+'">' + // retención
+            '<input type="hidden" name="input_fact_total" id="" value="'+input_cot_total+'">' // total de la cotización
         )
     }
 
@@ -237,7 +237,7 @@ function abrir_modal_guardar(cliente){
 // Indica si los campos necesarios para guardar están completos e indica cuales hacen falta
 function validarCotizacion(){
     //console.log('validacion', $('#input-cli_nombre').val())
-    filas = $('#datatables2').find('tbody').find('tr')
+    filas = $('#tabla_facturacion').find('tbody').find('tr')
     camposError = []
     camposCorrectos = true
 
@@ -298,8 +298,3 @@ function mostrarMensajesError(campos){
         //console.log('Cotización sin productos 2')
     }
 }
-
-
-function enviar_datos_prod() {
-}
-

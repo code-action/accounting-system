@@ -18,7 +18,10 @@ class CotizacionController extends Controller
      */
     public function index()
     {
-        $cotizaciones = Cotizacion::all();
+        $cotizaciones = Cotizacion::where('cot_estado', '=', 'Revision')
+            ->orWhere('cot_estado', '=', 'Rechazada')
+            ->orderBy('cot_fecha')->get();
+        //$cotizaciones = Cotizacion::all();
         return view('cotizaciones.index', ['cotizaciones' => $cotizaciones]);
     }
 
@@ -102,7 +105,7 @@ class CotizacionController extends Controller
         $cotizacion->cot_codigo = '00025'; // Cambiar
         $cotizacion->cliente_id = $request->cot_cliente_id;
         $cotizacion->cot_descripcion = $request->cot_descripcion;
-        $cotizacion->cot_estado = $request->cot_estado; // 1: aceptado, 2: revisión, 3: rechazado
+        $cotizacion->cot_estado = $request->cot_estado;
         $cotizacion->cot_sumas = $request->input_cot_sumas;
         $cotizacion->cot_iva = $request->input_cot_iva;
         $cotizacion->cot_subtotal = $request->input_cot_subtotal;
@@ -114,7 +117,7 @@ class CotizacionController extends Controller
         $cot_cant = $request->get('cot_cant');
         (new Cotizacion())->agregarProductosCotizacion('Actualizar', $cotizacion, $cot_id_prod, $cot_cant);
 
-        return redirect()->route('cotizacion.index', $cotizacion)->withStatus(__('Cotización editada exitosamente.'));
+        return redirect()->route('cotizacion.index')->withStatus(__('Cotización editada exitosamente.'));
     }
 
     /**

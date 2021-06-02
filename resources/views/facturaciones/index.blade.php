@@ -16,7 +16,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 text-right">
-                                    <a href="{{ route('facturacion.create') }}" class="btn btn-sm btn-info">{{ __('Nueva') }}</a>
+                                    {{--<a href="{{ route('facturacion.create') }}" class="btn btn-sm btn-info">{{ __('Nueva') }}</a>--}}
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -52,7 +52,7 @@
                                                 {{$facturacion->cotizacion->cliente->cli_nombre}}
                                             </td>
                                             <td>
-                                                ${{$facturacion->fact_total}}
+                                                {{$facturacion->fact_total}}
                                             </td>
                                             <td>
                                                 {{$facturacion->cotizacion->cliente->cli_email}}

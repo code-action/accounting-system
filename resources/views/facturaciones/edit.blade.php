@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'cotizacion', 'titlePage' => __('Cotizaciones')])
+@extends('layouts.app', ['activePage' => 'facturacion', 'titlePage' => __('Facturas')])
 
 @section('content')
     <div class="content">
@@ -8,14 +8,14 @@
                     <div class="card">
                         <div class="card-header card-header-info card-header-icon">
                             <div class="card-icon">
-                                <i class="material-icons">assignment</i>
+                                <i class="material-icons">receipt_long</i>
                             </div>
-                            <h4 class="card-title">{{ __('Editar Cotización') }}</h4>
+                            <h4 class="card-title">{{ __('Editar Factura') }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 text-right">
-                                    <a href="{{ route('cotizacion.index') }}" class="btn btn-sm btn-info">{{ __('Regresar') }}</a>
+                                    <a href="{{ route('facturacion.index') }}" class="btn btn-sm btn-info">{{ __('Regresar') }}</a>
                                 </div>
                             </div>
                             {{--<div class="row">
@@ -34,7 +34,8 @@
                                         <div class="card-body border text-dark">
                                             {{--<h5 class="card-title"><h4><b>Agregar Productos</b></h4></h5>--}}
                                             <div class="table-responsive">
-                                                <table id="datatables" class="table table-striped table-no-bordered table-hover datatable-rose" style="display:none; width: 100%">
+                                                <table id="tabla_productos" class="table table-striped table-no-bordered
+                                                table-hover datatable-rose" style="display:none; width: 100%">
                                                     <thead class="text-primary">
                                                     <th>
                                                         {{ __('Producto') }}
@@ -42,9 +43,6 @@
                                                     <th style="width: 70px;">
                                                         {{ __('Cant.') }}
                                                     </th>
-                                                    {{--<th>
-                                                        {{ __('Descripción') }}
-                                                    </th>--}}
                                                     <th style="width: 90px;">
                                                         {{ __('Precio U.') }}
                                                     </th>
@@ -64,7 +62,6 @@
                                                                        value="{{$producto->id}}">
                                                             </td>
                                                             <td>
-                                                                {{--$producto->prod_cantidad--}}
                                                                 <input type="number" class="form-control" id="prod_cantidad"
                                                                        name="prod_cantidad" min="1" value="1"
                                                                        max="{{$producto->prod_cantidad}}">
@@ -72,19 +69,13 @@
                                                             <td>{{number_format($producto->prod_precio, 2, '.', ',')}}</td>
                                                             <td>{{$producto->prod_cantidad}}</td>
 
-                                                            {{-- @can('manage-items', App\User::class) --}}
                                                             <td class="td-actions text-right">
-                                                                {{-- @if ($proveedor->items->isEmpty() && auth()->user()->can('delete', $proveedor)) --}}
                                                                 <button type="button" class="btn btn-success btn-link add_product"
-                                                                        onclick="enviar_datos_prod('/*datos del producto*/')"
                                                                         data-original-title="" title="">
                                                                     <i class="material-icons">add</i>
                                                                     <div class="ripple-container"></div>
                                                                 </button>
-                                                                {{--@endif --}}
-
                                                             </td>
-                                                            {{-- @endcan --}}
                                                         </tr>
                                                     @endforeach
 
@@ -101,10 +92,10 @@
                                         <div class="card-header border bg-light" {{--style="border: dimgray 1px solid"--}}>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <h4><b>Cotización</b> No. 00125</h4>
+                                                    <h4><b>Factura</b> No. 00125</h4>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <h4 class="text-right">{{date("d-m-Y", strtotime($cotizacion->cot_fecha))}}</h4>
+                                                    <h4 class="text-right">{{date("d-m-Y", strtotime($facturacion->fact_fecha))}}</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -128,9 +119,9 @@
                                                                     </option>
                                                                     @foreach ($clientes as $cliente)
                                                                         <option value="{{$cliente->id}}"
-                                                                                @if ($cotizacion->cliente->id == $cliente->id)
+                                                                                @if ($facturacion->cliente->id == $cliente->id)
                                                                                 selected="selected" @endif">
-                                                                            {{ $cliente->cli_nombre }}
+                                                                        {{ $cliente->cli_nombre }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -141,33 +132,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="row">
-                                                        <label class="col-sm-2 col-form-label">{{ __('Estado') }}</label>
-                                                        <div class="col-sm-9">
-                                                            <div class="form-group">
-                                                                <select class="js-example-basic-single js-states has-error
-                                                                form-control" name="cli_estado" id="input-cli_estado"
-                                                                        data-style="select-with-transition" title=""
-                                                                        data-size="100" style="width: 100%">
-                                                                    <option value="" disabled selected
-                                                                            style="background-color:lightgray">
-                                                                        {{__('Seleccione un estado')}}
-                                                                    </option>
-                                                                    <option value="Aceptada" {{ $cotizacion->cot_estado == 'Aceptada' ? 'selected':''}}>{{ __('Aceptada') }}</option>
-                                                                    <option value="Revision" {{ $cotizacion->cot_estado == 'Revision' ? 'selected':''}}>{{ __('Revisión') }}</option>
-                                                                    <option value="Rechazada" {{ $cotizacion->cot_estado == 'Rechazada' ? 'selected':''}}>{{ __('Rechazada') }}</option>
-
-                                                                </select>
-                                                                <span id="input-cli_estado-error" class="error text-danger"
-                                                                      for="input-cli_estado" style="display: none
-                                                                {{--block--}};{{--This fixes a bootstrap known-issue--}}">
-                                                                    {{ __('Seleccione un estado') }}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
+                                                    {{--<div class="row">
                                                         <label class="col-sm-2 col-form-label">{{ __('Descripción') }}</label>
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
@@ -175,9 +140,9 @@
                                                                            name="cot_descripcion" id="cot_descripcion" type="text"
                                                                            placeholder="{{ __('Descripción (Opcional)') }}" value=""
                                                                            aria-required="true">{{$cotizacion->cot_descripcion}}</textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>--}}
 
 
 
@@ -216,13 +181,13 @@
                                             <div class="row">
                                                 <div class="col-12 text-right">
                                                     <a href="#" class="btn btn-primary"
-                                                       onclick="guardar_datos_prod('{{ route('cotizacion.update', $cotizacion)}}')"
+                                                       onclick="guardar_datos_prod('{{ route('facturacion.update', $facturacion)}}')"
                                                     >Guardar</a>
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="table-responsive">
-                                                <table id="datatables2" class="table table-striped table-no-bordered
+                                                <table id="tabla_facturacion" class="table table-striped table-no-bordered
                                                 table-hover datatable-rose" style="width: 100%">
                                                     <thead class="text-primary">
                                                     <th>
@@ -245,40 +210,41 @@
                                                     </th>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($cotizacion->productos as $producto)
-                                                            <tr>
-                                                                <td>
-                                                                    {{$producto->prod_nombre}}
-                                                                    <input type="hidden" value="{{$producto->id}}" id="prod_{{$producto->id}}">
-                                                                </td>
-                                                                <td>
-                                                                    {{$producto->pivot->cot_prod_cantidad}}
-                                                                    <input type="hidden" value="{{$producto->pivot->cot_prod_cantidad}}"
-                                                                           id="cant_{{$producto->id}}">
-                                                                </td>
-                                                                <td>
-                                                                    {{number_format($producto->prod_precio, 2, '.', ',')}}
-                                                                    <input type="hidden"
-                                                                           value="{{number_format($producto->prod_precio, 2, '.', ',')}}"
-                                                                           id="prec_{{$producto->id}}">
-                                                                </td>
-                                                                <td>
-                                                                    {{number_format($producto->prod_precio *
-                                                                    $producto->pivot->cot_prod_cantidad, 2, '.', ',')}}
+                                                    @foreach($facturacion->productos as $producto)
 
-                                                                    <input type="hidden" id="prect_{{$producto->id}}" value="" >
-                                                                    <input type="hidden" value="" id="precio_total">
-                                                                </td>
-                                                                <td class=" text-right">
-                                                                    <button type="button" class="btn btn-danger btn-link del_product"
-                                                                            style="margin-top: 0px; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;
+                                                        <tr>{{$producto->prod_nombre}}
+                                                            <td>
+                                                                {{$producto->prod_nombre}}
+                                                                <input type="hidden" value="{{$producto->id}}" id="prod_{{$producto->id}}">
+                                                            </td>
+                                                            <td>
+                                                                {{$producto->pivot->fact_prod_cantidad}}
+                                                                <input type="hidden" value="{{$producto->pivot->fact_prod_cantidad}}"
+                                                                       id="cant_{{$producto->id}}">
+                                                            </td>
+                                                            <td>
+                                                                {{number_format($producto->prod_precio, 2, '.', ',')}}
+                                                                <input type="hidden"
+                                                                       value="{{number_format($producto->prod_precio, 2, '.', ',')}}"
+                                                                       id="prec_{{$producto->id}}">
+                                                            </td>
+                                                            <td>
+                                                                {{number_format($producto->prod_precio *
+                                                                $producto->pivot->fact_prod_cantidad, 2, '.', ',')}}
+
+                                                                <input type="hidden" id="prect_{{$producto->id}}" value="" >
+                                                                <input type="hidden" value="" id="precio_total">
+                                                            </td>
+                                                            <td class=" text-right">
+                                                                <button type="button" class="btn btn-danger btn-link del_product"
+                                                                        style="margin-top: 0px; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;
                                                                             padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;"
-                                                                            data-original-title="" title="">
-                                                                        <i class="material-icons">close</i>
-                                                                        <div class="ripple-container"></div></button>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
+                                                                        data-original-title="" title="">
+                                                                    <i class="material-icons">close</i>
+                                                                    <div class="ripple-container"></div></button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -294,42 +260,42 @@
                                                                     <tr>
                                                                         <td><b>{{ __('Sumas') }}</b></td>
                                                                         <td id="cot_sumas">
-                                                                            {{number_format($cotizacion->cot_sumas, 2, '.', ',')}}
+                                                                            {{number_format($facturacion->fact_sumas, 2, '.', ',')}}
                                                                         </td>
                                                                         <input type="hidden" id="input_cot_sumas"
-                                                                               value="{{$cotizacion->cot_sumas}}">
+                                                                               value="{{$facturacion->fact_sumas}}">
                                                                     </tr>
                                                                     <tr>
                                                                         <td><b>{{ __('IVA 13%') }}</b></td>
                                                                         <td id="cot_iva">
-                                                                            {{number_format($cotizacion->cot_iva, 2, '.', ',')}}
+                                                                            {{number_format($facturacion->fact_iva, 2, '.', ',')}}
                                                                         </td>
                                                                         <input type="hidden" id="input_cot_iva"
-                                                                               value="{{$cotizacion->cot_iva}}">
+                                                                               value="{{$facturacion->fact_iva}}">
                                                                     </tr>
                                                                     <tr>
                                                                         <td><b>{{ __('Subtotal') }}</b></td>
                                                                         <td id="cot_subtotal">
-                                                                            {{number_format($cotizacion->cot_subtotal, 2, '.', ',')}}
+                                                                            {{number_format($facturacion->fact_subtotal, 2, '.', ',')}}
                                                                         </td>
                                                                         <input type="hidden" id="input_cot_subtotal"
-                                                                               value="{{$cotizacion->cot_subtotal}}">
+                                                                               value="{{$facturacion->fact_subtotal}}">
                                                                     </tr>
                                                                     <tr>
                                                                         <td><b>{{ __('Retención 1%') }}</b></td>
                                                                         <td id="cot_retencion">
-                                                                            {{number_format($cotizacion->cot_retencion, 2, '.', ',')}}
+                                                                            {{number_format($facturacion->fact_retencion, 2, '.', ',')}}
                                                                         </td>
                                                                         <input type="hidden" id="input_cot_retencion"
-                                                                               value="{{$cotizacion->cot_retencion}}">
+                                                                               value="{{$facturacion->fact_retencion}}">
                                                                     </tr>
                                                                     <tr>
                                                                         <td><b>{{ __('TOTAL') }}</b></td>
                                                                         <td id="cot_total">
-                                                                            {{number_format($cotizacion->cot_total, 2, '.', ',')}}
+                                                                            {{number_format($facturacion->fact_total, 2, '.', ',')}}
                                                                         </td>
                                                                         <input type="hidden" id="input_cot_total"
-                                                                               value="{{$cotizacion->cot_total}}">
+                                                                               value="{{$facturacion->fact_total}}">
                                                                     </tr>
                                                                     </tbody>
                                                                 </table>
@@ -361,7 +327,7 @@
                     </button>
                 </div>
                 <div class="modal-body text-center" id="modal_body_cot_incompleta">
-                    <h3 class="modal-title">{{ __('No se ha agregado ningún producto a la cotización')}}</h3>
+                    <h3 class="modal-title">{{ __('No se ha agregado ningún producto a la factura')}}</h3>
                 </div>
                 <div class="modal-footer">
                     <div class="d-grid gap-2 d-md-block">
@@ -379,7 +345,7 @@
                     @csrf
                     @method('put')
                     <div class="modal-header">
-                        <h3 class="modal-title">{{ __('¿Desea guardar la cotización?') }} {{--<b id="cli_nombre"></b>--}}</h3>
+                        <h3 class="modal-title">{{ __('¿Desea guardar la facturación?') }} {{--<b id="cli_nombre"></b>--}}</h3>
                         <button class="close cerrarModal" type="button" aria-label="Close" data-dismiss="modal">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -399,8 +365,8 @@
 
 @endsection
 @push('js')
-    <script src="{{asset('js/cotizaciones/create.js')}}"></script>
-
+    <script src="{{asset('js/facturaciones/edit.js')}}"></script>
+    {{--tabla_facturacion, tabla_productos--}}
     <script>
         $("#input-cli_nombre, #input-vend_nombre").select2({
             language: {
@@ -433,9 +399,9 @@
 
     </script>
     <script>
-        $(document).ready(function() {
-            $('#datatables').fadeIn(1100);
-            $('#datatables').DataTable({
+
+            $('#tabla_productos').fadeIn(1100);
+            $('#tabla_productos').DataTable({
                 "pagingType": "full_numbers",
                 "lengthMenu": [
                     [10, 25, 50, -1],
@@ -461,10 +427,9 @@
                     { "orderable": false, "targets": 4 },
                 ],
             });
-        });
-        //$(document).ready(function() {
-            //$('#datatables2').fadeIn(1100);
-            $('#datatables2').DataTable({
+
+            $('#tabla_facturacion').fadeIn(1100);
+            $('#tabla_facturacion').DataTable({
                 "pagingType": "full_numbers",
                 "lengthMenu": [
                     [10, 25, 50, -1],
@@ -491,6 +456,6 @@
                     { "targets": [4], className: "text-right", }
                 ],
             });
-        //});
+
     </script>
 @endpush

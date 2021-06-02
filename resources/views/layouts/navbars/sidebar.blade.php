@@ -89,6 +89,12 @@
                 <p>{{__('Cotizaciones')}}</p>
             </a>
         </li>
+        <li class="nav-item{{ $activePage == 'facturacion' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('facturacion.index') }}">
+                <i class="material-icons">receipt_long</i>
+                <p>{{__('Facturaciones')}}</p>
+            </a>
+        </li>
     </ul>
   </div>
 </div>
