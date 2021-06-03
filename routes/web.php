@@ -72,6 +72,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('facturacion', FacturacionController::class);
 
     Route::resource('raw', 'App\Http\Controllers\MaterialController');
+    Route::resource('tarea', 'App\Http\Controllers\TareaController');
+    Route::resource('ubicacion', 'App\Http\Controllers\UbicacionController');
     Route::resource('categoria', 'App\Http\Controllers\CategoriaController');
     Route::resource('producto', 'App\Http\Controllers\ProductoController');
 	Route::resource('ordencompra', 'App\Http\Controllers\OrdenCompraController');
