@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Material;
 use Illuminate\Http\Request;
+use DB;
 
 class MaterialController extends Controller
 {
@@ -96,7 +97,14 @@ class MaterialController extends Controller
      */
     public function destroy($id)
     {
-        $material = Material::find($id)->delete();
-        return redirect()->route('raw.index')->with('success','Registro eliminado exitosamente.');
+        DB::beginTransaction();
+        try{
+            $material = Material::find($id)->delete();
+            DB::commit();
+            return redirect()->route('raw.index')->with('success','Registro eliminado exitosamente.');
+        } catch(\Exception $e){
+            DB::rollback();
+            return redirect()->route('raw.index')->with('error','El registro no pudo eliminarse.');
+        }
     }
 }

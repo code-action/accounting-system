@@ -41,6 +41,12 @@
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
+      <li class="nav-item{{ $activePage == 'info' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('informacion.edit',1) }}">
+          <i class="material-icons">settings_suggest</i>
+            <p>{{__('Información')}}</p>
+        </a>
+      </li>
       <li class="nav-item{{ $activePage == 'user' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('user.index') }}">
           <i class="material-icons">person</i>
@@ -87,6 +93,12 @@
             <a class="nav-link" href="{{ route('cotizacion.index') }}">
                 <i class="material-icons">assignment</i>
                 <p>{{__('Cotizaciones')}}</p>
+            </a>
+        </li>
+        <li class="nav-item{{ $activePage == 'facturacion' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('facturacion.index') }}">
+                <i class="material-icons">receipt_long</i>
+                <p>{{__('Facturaciones')}}</p>
             </a>
         </li>
     </ul>

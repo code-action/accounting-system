@@ -57,12 +57,12 @@
                                                 {{date("d-m-Y", strtotime($cotizacion->cot_fecha))}}
                                             </td>
                                             <td>
-                                                @if($cotizacion->cot_estado == 1)
-                                                        <span class="badge bg-success">Aceptado</span>
-                                                    @elseif($cotizacion->cot_estado == 2)
+                                                @if($cotizacion->cot_estado == 'Aceptada')
+                                                        <span class="badge bg-success">Aceptada</span>
+                                                    @elseif($cotizacion->cot_estado == 'Revision')
                                                         <span class="badge bg-primary">Revisión</span>
-                                                    @elseif($cotizacion->cot_estado == 3)
-                                                        <span class="badge bg-danger">Rechazado</span>
+                                                    @elseif($cotizacion->cot_estado == 'Rechazada')
+                                                        <span class="badge bg-danger">Rechazada</span>
                                                 @endif
 
                                                 {{--{{ $cotizacion->cot_estado == 1 ? 'Aceptado':''}}
@@ -84,20 +84,28 @@
 
                                             <td class="td-actions text-right">
 
+
+                                                <a rel="tooltip" class="btn btn-default btn-link"
+                                                  data-original-title="" title=""
+                                                   onclick="abrir_modal_facturar('{{$cotizacion}}', '{{$cotizacion->productos}}',
+                                                       '{{route('facturacion.crear', $cotizacion)}}')">
+                                                    <i class="material-icons">credit_card</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
+
                                                 <a rel="tooltip" class="btn btn-info btn-link"
                                                   {{-- href="{{ route('cotizacion.show', $cotizacion) }}"--}}
                                                    data-original-title="" title="{{ __('') }}"
                                                    onclick="abrir_modal_ver('{{$cotizacion}}', '{{$cotizacion->productos}}',
                                                        '{{route('cotizacion.show', $cotizacion)}}')">
                                                     <i class="material-icons">assignment</i>
-                                                    <div class="ripple-container"></div>
+
                                                 </a>
 
                                                 <a rel="tooltip" class="btn btn-success btn-link"
                                                    href="{{ route('cotizacion.edit', $cotizacion) }}"
                                                    data-original-title="" title="{{ __('') }}">
                                                     <i class="material-icons">edit</i>
-                                                    <div class="ripple-container"></div>
                                                 </a>
 
                                                 <button rel="tooltip" class="btn btn-danger btn-link"
@@ -105,7 +113,6 @@
                                                         '{{route('cotizacion.destroy', $cotizacion)}}')"
                                                         data-original-title="" title="{{ __('') }}">
                                                     <i class="material-icons">delete_outline</i>
-                                                    <div class="ripple-container"></div>
                                                 </button>
                                                 {{-- @endcan --}}
                                                 {{--
@@ -128,9 +135,18 @@
             </div>
         </div>
     </div>
+
 @endsection
-@include('cotizaciones.modalDestroy')
-@include('cotizaciones.modalShow')
+
+@section('modals')
+    @include('cotizaciones.modalDestroy')
+    @include('cotizaciones.modalShow')
+    @include('cotizaciones.modalFacturacion')
+@endsection
+
+
+
+
 @push('js')
     <script src="{{asset('js/cotizaciones/index.js')}}"></script>
 

@@ -17818,7 +17818,7 @@ a .material-icons {
 
 .sidebar .sidebar-wrapper {
   position: relative;
-  height: calc(100vh - 75px);
+  height: calc(100vh - 235px);
   overflow: auto;
   width: 260px;
   z-index: 4;

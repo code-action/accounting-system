@@ -150,9 +150,9 @@
                                                                             style="background-color:lightgray">
                                                                         {{__('Seleccione un estado')}}
                                                                     </option>
-                                                                    <option value="1">{{ __('Aceptado') }}</option>
-                                                                    <option value="2">{{ __('Revisión') }}</option>
-                                                                    <option value="3">{{ __('Rechazado') }}</option>
+                                                                    <option value="Aceptada">{{ __('Aceptada') }}</option>
+                                                                    <option value="Revision">{{ __('Revisión') }}</option>
+                                                                    <option value="Rechazada">{{ __('Rechazada') }}</option>
 
                                                                 </select>
                                                                 <span id="input-cli_estado-error" class="error text-danger"
@@ -212,10 +212,12 @@
 
                                             <div class="row">
                                                 <div class="col-12 text-right">
-                                                    <a href="#" class="btn btn-success"
-                                                       onclick="guardar_datos_prod('cliente')"
-                                                       {{-- onclick="validarCotizacion()"--}}
+                                                    <a href="#" class="btn btn-primary"
+                                                       onclick="guardar_datos_prod('{{ route('cotizacion.store') }}', 'guardar')"
                                                     >Guardar</a>
+                                                    <a href="#" class="btn btn-success"
+                                                       onclick="guardar_datos_prod('{{ route('facturacion.store') }}', 'facturar')"
+                                                    >Guardar y facturar</a>
                                                 </div>
                                             </div>
                                             <br>
@@ -357,10 +359,13 @@
     <div class="modal fade" id="cot_guardar" role="dialog">
         <div class="modal-dialog" role="document" id="">
             <div class="modal-content">
-                <form action="{{ route('cotizacion.store') }}" method="post">
+                <form action="" method="post" id="form_guardar_cotizacion">
                     @csrf
+                    @method('post')
                     <div class="modal-header">
-                        <h3 class="modal-title">{{ __('¿Desea guardar la cotización?') }} {{--<b id="cli_nombre"></b>--}}</h3>
+                        <h3 class="modal-title" id="cot_guardar_titulo">
+                            {{-- __('¿Desea guardar la cotización?') --}}
+                        </h3>
                         <button class="close cerrarModal" type="button" aria-label="Close" data-dismiss="modal">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -377,6 +382,8 @@
             </div>
         </div>
     </div>
+    <text id="guardar"> {{ __('¿Desea guardar la cotización?') }}</text>
+    <text id="facturar"> {{ __('¿Desea guardar y facturar la cotización?') }}</text>
 
 @endsection
 @push('js')

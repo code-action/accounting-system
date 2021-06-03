@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFacturacionsTable extends Migration
+class CreateInformacionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateFacturacionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('facturacions', function (Blueprint $table) {
+        Schema::create('informacions', function (Blueprint $table) {
             $table->id();
+            $table->string('info_nombre');
+            $table->string('info_direccion');
+            $table->string('info_telefono');            
             $table->timestamps();
-            $table->date('fact_fecha');
-            $table->double('fact_total', 8, 2);
-
-            $table->foreignId('cotizacion_id')->constrained('cotizacions'); // total = subtotal - retención
         });
     }
 
@@ -30,6 +29,6 @@ class CreateFacturacionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facturacions');
+        Schema::dropIfExists('informacions');
     }
 }

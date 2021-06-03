@@ -41,7 +41,7 @@ class Cotizacion extends Model
     // Agregar productos a una cotización,
     // Recibe: objeto: cotización, array: id productos, array: cantidades de productos
     public function agregarProductosCotizacion(string $action, Cotizacion $cotizacion, array $cot_id_prod, array $cot_cant){
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput(); // Imprimir en consola
+        // $out = new \Symfony\Component\Console\Output\ConsoleOutput(); // Imprimir en consola
         $prodCotizacion = [];
         foreach ($cotizacion->productos as $producto){
             array_push($prodCotizacion, $producto->id);
@@ -96,14 +96,14 @@ class Cotizacion extends Model
                     if($producto->id == $repiten[$i]){ // Si son el mismo producto de la cotización original y la nueva
                         if($producto->pivot->cot_prod_cantidad == $cantidades[$repiten[$i]]){ // Verificar si las cantidades cambiaron
                             // No hacer nada
-                            $out->writeln("Mismo producto sin cambios" );
+                            //$out->writeln("Mismo producto sin cambios" );
                         }else { // La cantidad no es igual hay cambios, entonces actualizamos cantidad
-                            $out->writeln("Mismo producto con cambios en la cantidad" );
+                            //$out->writeln("Mismo producto con cambios en la cantidad" );
                             $cotizacion->productos()
                                 ->updateExistingPivot($producto->id,
-                                    ['cot_prod_cantidad' => $cot_cant[$i], 'cot_prod_preciou' => $producto->prod_precio,
+                                    ['cot_prod_cantidad' => $cantidades[$repiten[$i]], 'cot_prod_preciou' => $producto->prod_precio,
                                         'updated_at' => Carbon::now(),
-                                        'cot_prod_total' => $cot_cant[$i] * $producto->prod_precio]);
+                                        'cot_prod_total' => $cantidades[$repiten[$i]] * $producto->prod_precio]);
                         }
                     }
 
@@ -117,7 +117,7 @@ class Cotizacion extends Model
                 $cotizacion->productos()->attach($nuevos[$i],
                     ['cot_prod_cantidad' => $cantidades[$nuevos[$i]], 'created_at' => Carbon::now(),
                         'cot_prod_preciou' => $producto->prod_precio,
-                        'cot_prod_total' => $cot_cant[$i]* $producto->prod_precio]);
+                        'cot_prod_total' => $cantidades[$nuevos[$i]] * $producto->prod_precio]);
             }
 
             // ELIMINAR PRODUCTOS DE LA COTIZACIÓN ORIGINAL

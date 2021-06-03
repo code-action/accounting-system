@@ -63,7 +63,22 @@
                                     <i class="material-icons">edit</i>
                                     <div class="ripple-container"></div>
                                   </a>
-                                  <button type="submit" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
+                                  <button type="button" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar"
+                                  onclick="
+                                    return swal({
+                                    html: '{{ __('¿Desea eliminar el proveedor') }}'+' '+'<b>'+'{{$proveedor->prov_nombre}}'+'?</b>',
+                                        showCancelButton: true,
+                                        reverseButtons : true,
+                                        confirmButtonText: '{{ __('Eliminar') }}',
+                                        cancelButtonText: '{{ __('Cancelar') }}',
+                                        confirmButtonClass: 'btn btn-danger',
+                                        cancelButtonClass: 'btn btn-default',
+                                        buttonsStyling: false
+                                    }).then((result) => {
+                                        if (result.value) {
+                                          submit();
+                                        }
+                                    });">
                                     <i class="material-icons">close</i>
                                   </button>
                               </form>

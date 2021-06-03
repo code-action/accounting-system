@@ -1,14 +1,15 @@
-<div class="modal fade" id="ver_cotizacion" role="dialog" tabindex="-1">
+<div class="modal fade" id="facturar_cotizacion" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-lg" role="document" id="">
         <div class="modal-content">
             {{--@if(@count($cotizaciones) > 0) action="{{route('cotizacion.destroy', $cotizacion)}}"
                 @else action="{{route('cotizacion.index')}}" @endif--}}
-            <form id="form_ver_cotizacion"  method="post">
-
+            <form id="form_facturar_cotizacion"  method="post">
+                @csrf
+                @method('post')
                 <div class="modal-header">
                     {{-- <h3 class="modal-title">{{ __('¿Desea eliminar la cotización de') }} <b id="cot_fecha"></b>
                          {{ __('del cliente') }} <b id="cot_cli_nombre"></b>?</h3>--}}
-                    <h3 class="modal-title text-center"><b>{{ __('Detalles de Cotización') }}</b></h3>
+                    <h3 class="modal-title text-center"><b>{{ __('¿Desea facturar esta cotización?')}}</b></h3>
                     <button class="close cerrarModal" type="button" aria-label="Close" data-dismiss="modal"
                             style="position: absolute; z-index: 5;">
                         <span aria-hidden="true">&times;</span>
@@ -31,7 +32,7 @@
                                             <h4><b>Cotización</b> No. 00125</h4>
                                         </div>
                                         <div class="col-md-6">
-                                            <h4 class="text-right" id="ver_cot_fecha">
+                                            <h4 class="text-right" id="fact_cot_fecha">
                                             </h4>
                                         </div>
                                     </div>
@@ -78,18 +79,18 @@
                                             <div class="text-left">
                                                 <h4>
                                                     <b>{{ __('Cliente') }}: </b>
-                                                    <text id="ver_cli_nombre"></text>
+                                                    <text id="fact_cli_nombre"></text>
                                                 </h4>
                                                 <h6>
                                                     <b>{{ __('Descripción')}}: </b>
-                                                    <text id="ver_cot_descripcion"></text>
+                                                    <text id="fact_cot_descripcion"></text>
                                                 </h6>
                                                 <h6>
                                                     <b>{{ __('Email') }}: </b>
-                                                    <text id="ver_cli_email"></text>
+                                                    <text id="fact_cli_email"></text>
                                                 </h6>
                                                 <h6><b>{{ __('Teléfono') }}: </b>
-                                                    <text id="ver_cli_telefono"></text>
+                                                    <text id="fact_cli_telefono"></text>
                                                 </h6>
                                             </div>
 
@@ -133,7 +134,7 @@
                                     </div>--}}
                                     <br>
                                     <div class="table-responsive">
-                                        <table id="cotizacion_show" class="table table-striped table-no-bordered
+                                        <table id="cotizacion_facturar" class="table table-striped table-no-bordered
                                                 table-hover datatable-rose" style="width: 100%">
                                             <thead class="text-primary">
                                             <th>
@@ -183,31 +184,31 @@
                                                             <tbody>
                                                             <tr>
                                                                 <td><b>{{ __('Sumas') }}</b></td>
-                                                                <td id="ver_cot_sumas">
+                                                                <td id="fact_cot_sumas">
 
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td><b>{{ __('IVA 13%') }}</b></td>
-                                                                <td id="ver_cot_iva">
+                                                                <td id="fact_cot_iva">
 
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td><b>{{ __('Subtotal') }}</b></td>
-                                                                <td id="ver_cot_subtotal">
+                                                                <td id="fact_cot_subtotal">
 
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td><b>{{ __('Retención 1%') }}</b></td>
-                                                                <td id="ver_cot_retencion">
+                                                                <td id="fact_cot_retencion">
 
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td><b>{{ __('TOTAL') }}</b></td>
-                                                                <td id="ver_cot_total">
+                                                                <td id="fact_cot_total">
 
                                                                 </td>
                                                             </tr>
@@ -228,6 +229,7 @@
                 <div class="modal-footer">
                     <div class="d-grid gap-2 d-md-block">
                         <button class="btn btn-light" type="button" data-dismiss="modal">{{ __('Cerrar') }}</button>
+                        <button class="btn btn-success" type="submit">{{ __('Facturar') }}</button>
                     </div>
                 </div>
             </form>
