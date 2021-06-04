@@ -5,12 +5,8 @@ function abrir_modal_eliminar(cotizacion, productos, url){
     // PONER URL PARA HACER POST, UPDATE, ETC
     $('#form_eliminar_cotizacion').prop('action', url)
 
-    // DATOS DEL CLIENTE
-    $('#cot_fecha').text(moment.parseZone(cotizacion.cot_fecha).format("DD-MM-YYYY"))
-    $('#cli_nombre').text(cotizacion.cliente.cli_nombre)
-    $('#cot_descripcion').text(cotizacion.cot_descripcion)
-    $('#cli_email').text(cotizacion.cliente.cli_email)
-    $('#cli_telefono').text(cotizacion.cliente.cli_telefono)
+    // COLOCAR DATOS DEL CLIENTE, LA EMPRESA Y TOTALES
+    colocarDatos('eliminar', cotizacion)
 
     // DATOS DE LA EMPRESA
 
@@ -44,18 +40,7 @@ function abrir_modal_eliminar(cotizacion, productos, url){
         ],
     });
     listarProductos(cotizacion_borrar, productos)
-
-
-
-
     //console.log(fecha, cliente, url)
-
-    // Colocando totales
-    $('#eliminar_cot_sumas').text(cotizacion.cot_sumas.toFixed(2))
-    $('#eliminar_cot_iva').text(cotizacion.cot_iva.toFixed(2))
-    $('#eliminar_cot_subtotal').text(cotizacion.cot_subtotal.toFixed(2))
-    $('#eliminar_cot_retencion').text(cotizacion.cot_retencion.toFixed(2))
-    $('#eliminar_cot_total').text(cotizacion.cot_total.toFixed(2))
 
     $('#eliminar_cotizacion').modal('show');
 }
@@ -113,6 +98,7 @@ function abrir_modal_facturar(cotizacion, productos, url){
     cotizacion = JSON.parse(cotizacion)
     productos = JSON.parse(productos)
 
+
     // PONER URL PARA HACER POST, UPDATE, ETC
     $('#form_facturar_cotizacion').prop('action', url)
 
@@ -161,19 +147,23 @@ function listarProductos(tabla, productos){
             productos[i].prod_nombre,
             productos[i].pivot.cot_prod_cantidad,
             productos[i].pivot.cot_prod_preciou.toFixed(2),
-            (productos[i].pivot.cot_prod_preciou * productos[i].pivot.cot_prod_cantidad).toFixed(2),
+            (productos[i].pivot.cot_prod_total).toFixed(2),
         ]).draw(false)
     }
 }
 
 
 function colocarDatos(prefijo, cotizacion){
+
     // DATOS DEL CLIENTE
     $('#'+prefijo+'_cot_fecha').text(moment.parseZone(cotizacion.cot_fecha).format("DD-MM-YYYY"))
     $('#'+prefijo+'_cli_nombre').text(cotizacion.cliente.cli_nombre)
     $('#'+prefijo+'_cot_descripcion').text(cotizacion.cot_descripcion)
     $('#'+prefijo+'_cli_email').text(cotizacion.cliente.cli_email)
     $('#'+prefijo+'_cli_telefono').text(cotizacion.cliente.cli_telefono)
+
+    // DATOS DE LA EMPRESA
+    // Existe una variable $empresa enviada desde el controlador
 
     // COLOCANDO TOTALES
     $('#'+prefijo+'_cot_sumas').text(cotizacion.cot_sumas.toFixed(2))

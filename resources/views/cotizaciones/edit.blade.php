@@ -205,10 +205,10 @@
                                                 </div>
                                                 <div class="col-md-5">
                                                     <div class="text-right">
-                                                        <h4 class="text-right">Empresa R&A, S.A. de C.V.</h4>
-                                                        <h6 class="text-right">Pasaje J No. 3T Colonia San Carlos, San Salvador</h6>
-                                                        <h6>PBX: (503) 26548-8965 Fax: (503) 2789-8923</h6>
-                                                        <h6>email: empresara@gmail.com</h6>
+                                                        <h4 class="text-right">{{ $empresa->info_nombre }}</h4>
+                                                        <h6 class="text-right">Dirección: {{ $empresa->info_direccion }}</h6>
+                                                        <h6>Teléfono: {{ $empresa->info_telefono }}</h6>
+                                                        {{--<h6> email: empresara@gmail.com</h6>--}}
                                                     </div>
                                                 </div>
                                             </div>

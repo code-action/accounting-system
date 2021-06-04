@@ -107,8 +107,13 @@
         </div>
     </div>
 @endsection
-@include('clientes.modalDestroy')
-@include('clientes.modalShow')
+
+@section('modals')
+    @include('clientes.modalDestroy')
+    @include('clientes.modalShow')
+@endsection
+
+
 @push('js')
     <script type="text/javascript">
         function abrir_modal_eliminar(cliente, url){

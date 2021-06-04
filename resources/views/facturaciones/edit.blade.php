@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'facturacion', 'titlePage' => __('Facturas')])
+@extends('layouts.app', ['activePage' => 'facturacion', 'titlePage' => __('Facturaciones')])
 
 @section('content')
     <div class="content">
@@ -10,7 +10,7 @@
                             <div class="card-icon">
                                 <i class="material-icons">receipt_long</i>
                             </div>
-                            <h4 class="card-title">{{ __('Editar Factura') }}</h4>
+                            <h4 class="card-title">{{ __('Editar Facturación') }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -92,7 +92,7 @@
                                         <div class="card-header border bg-light" {{--style="border: dimgray 1px solid"--}}>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <h4><b>Factura</b> No. 00125</h4>
+                                                    <h4><b>Facturación</b> No. 00125</h4>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <h4 class="text-right">{{date("d-m-Y", strtotime($facturacion->fact_fecha))}}</h4>
@@ -170,10 +170,10 @@
                                                 </div>
                                                 <div class="col-md-5">
                                                     <div class="text-right">
-                                                        <h4 class="text-right">Empresa R&A, S.A. de C.V.</h4>
-                                                        <h6 class="text-right">Pasaje J No. 3T Colonia San Carlos, San Salvador</h6>
-                                                        <h6>PBX: (503) 26548-8965 Fax: (503) 2789-8923</h6>
-                                                        <h6>email: empresara@gmail.com</h6>
+                                                        <h4 class="text-right">{{ $empresa->info_nombre }}</h4>
+                                                        <h6 class="text-right">Dirección: {{ $empresa->info_direccion }}</h6>
+                                                        <h6>Teléfono: {{ $empresa->info_telefono }}</h6>
+                                                        {{--<h6> email: empresara@gmail.com</h6>--}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -182,7 +182,7 @@
                                                 <div class="col-12 text-right">
                                                     <a href="#" class="btn btn-primary"
                                                        onclick="guardar_datos_prod('{{ route('facturacion.update', $facturacion)}}')"
-                                                    >Guardar</a>
+                                                    >{{ __('Finalizar') }}</a>
                                                 </div>
                                             </div>
                                             <br>
@@ -229,8 +229,7 @@
                                                                        id="prec_{{$producto->id}}">
                                                             </td>
                                                             <td>
-                                                                {{number_format($producto->prod_precio *
-                                                                $producto->pivot->fact_prod_cantidad, 2, '.', ',')}}
+                                                                {{number_format($producto->pivot->fact_prod_total, 2, '.', ',')}}
 
                                                                 <input type="hidden" id="prect_{{$producto->id}}" value="" >
                                                                 <input type="hidden" value="" id="precio_total">

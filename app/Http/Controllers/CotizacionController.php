@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Cotizacion;
+use App\Models\Informacion;
 use App\Models\Producto;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -21,8 +22,8 @@ class CotizacionController extends Controller
         $cotizaciones = Cotizacion::where('cot_estado', '=', 'Revision')
             ->orWhere('cot_estado', '=', 'Rechazada')
             ->orderBy('cot_fecha')->get();
-        //$cotizaciones = Cotizacion::all();
-        return view('cotizaciones.index', ['cotizaciones' => $cotizaciones]);
+        $empresa = Informacion::first();
+        return view('cotizaciones.index', ['cotizaciones' => $cotizaciones, 'empresa' => $empresa]);
     }
 
     /**
@@ -34,8 +35,10 @@ class CotizacionController extends Controller
     {
         $hoy = Carbon::now()->format('d-m-Y');
         $clientes = Cliente::orderBy('cli_nombre')->get();
+        $empresa = Informacion::first();
         $productos = Producto::where('prod_cantidad', '>=', 1)->orderBy('prod_nombre')->get();
-        return view('cotizaciones.create',  ['hoy' => $hoy, 'clientes' => $clientes, 'productos' => $productos]);
+        return view('cotizaciones.create',  ['hoy' => $hoy, 'clientes' => $clientes, 'empresa' => $empresa,
+            'productos' => $productos]);
     }
 
     /**
@@ -88,8 +91,10 @@ class CotizacionController extends Controller
     public function edit(Cotizacion $cotizacion)
     {
         $clientes = Cliente::orderBy('cli_nombre')->get();
+        $empresa = Informacion::first();
         $productos = Producto::where('prod_cantidad', '>=', 1)->orderBy('prod_nombre')->get();
-        return view('cotizaciones.edit',  ['cotizacion' => $cotizacion, 'clientes' => $clientes, 'productos' => $productos]);
+        return view('cotizaciones.edit',  ['cotizacion' => $cotizacion, 'clientes' => $clientes, 'empresa' => $empresa,
+            'productos' => $productos]);
     }
 
     /**

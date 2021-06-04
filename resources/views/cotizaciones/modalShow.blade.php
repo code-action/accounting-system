@@ -40,41 +40,6 @@
                                     {{--<h5 class="card-title" ><h4><b>Detalles de Cotización</b></h4></h5>--}}
                                     <div class="row justify-content-end cliente-datos">
                                         <div class="col-md-7">
-                                            {{--<label class="col-sm-1 col-form-label">{{ __('Fecha') }}</label>
-                                            <div class="col-sm-3">
-                                                <div class="form-group{{ $errors->has('cli_nombre') ? ' has-danger' : '' }}">
-                                                    <input class="form-control{{ $errors->has('cli_nombre') ? ' is-invalid' : '' }}"
-                                                           name="cli_nombre" id="input-cli_nombre" type="text"
-                                                           placeholder="{{ __('Fecha') }}" value="{{ $hoy }}"
-                                                           aria-required="true" disabled/>
-                                                    @include('alerts.feedback', ['field' => 'cli_nombre'])
-                                                </div>
-                                            </div>--}}
-
-                                            {{--<div class="row">
-                                                <label class="col-sm-2 col-form-label">{{ __('Cliente') }}</label>
-                                                <div class="col-sm-10">
-                                                    <div class="form-group">
-                                                        <input  class="form-control"
-                                                                   name="cot_descripcion" id="cot_descripcion" type="text"
-                                                                   placeholder="{{ __('Cliente') }}" value="{{$cotizacion->cliente->cli_nombre}}"
-                                                                   aria-required="true" disabled/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <label class="col-sm-2 col-form-label">{{ __('Descripción') }}</label>
-                                                <div class="col-sm-10">
-                                                    <div class="form-group">
-                                                        <textarea  class="form-control"
-                                                                   name="cot_descripcion" id="cot_descripcion" type="text"
-                                                                   placeholder="{{ __('Descripción') }}" value=""
-                                                                   aria-required="true" disabled>{{$cotizacion->cot_descripcion}}</textarea>
-                                                    </div>
-                                                </div>
-                                            </div>--}}
-
                                             <div class="text-left">
                                                 <h4>
                                                     <b>{{ __('Cliente') }}: </b>
@@ -93,44 +58,22 @@
                                                 </h6>
                                             </div>
 
-                                            {{--<label class="col-sm-2 col-form-label">{{ __('Vendedor') }}</label>
-                                            <div class="col-sm-9">
-                                                <div class="form-group">
-                                                    <select class="js-example-basic-single js-states
-                                                    form-control" name="vend_nombre" id="input-vend_nombre"
-                                                            data-style="select-with-transition" title=""
-                                                            data-size="100" style="width: 100%">
-                                                        <option value="" disabled selected
-                                                                style="background-color:lightgray">
-                                                            {{__('Seleccione un vendedor')}}
-                                                        </option>
-                                                        @foreach ($clientes as $cliente)
-                                                            <option value="{{$cliente->id}}">
-                                                                {{ $cliente->cli_nombre }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>--}}
-
-
                                         </div>
                                         <div class="col-md-5">
                                             <div class="text-right">
-                                                <h4 class="text-right">Empresa R&A, S.A. de C.V.</h4>
-                                                <h6 class="text-right">Pasaje J No. 3T Colonia San Carlos, San Salvador</h6>
-                                                <h6>PBX: (503) 26548-8965 Fax: (503) 2789-8923</h6>
-                                                <h6>email: empresara@gmail.com</h6>
+                                                <h4 class="text-right">
+                                                    <text id="ver_cot_info_nombre">{{ $empresa->info_nombre }}</text>
+                                                </h4>
+                                                <h6 class="text-right">{{ __('Dirección:') }}
+                                                    <text id="ver_cot_info_direccion">{{ $empresa->info_direccion }}</text>
+                                                </h6>
+                                                <h6>{{ __('Teléfono:') }}
+                                                    <text id="ver_cot_info_telefono">{{ $empresa->info_telefono }}</text>
+                                                </h6>
+                                                {{--<h6>email: empresara@gmail.com</h6>--}}
                                             </div>
                                         </div>
                                     </div>
-
-                                    {{--<div class="row">
-                                        <div class="col-12 text-right">
-                                            <a href="#" class="btn btn-success"
-                                               onclick="guardar_datos_prod('cliente')">Guardar</a>
-                                        </div>
-                                    </div>--}}
                                     <br>
                                     <div class="table-responsive">
                                         <table id="cotizacion_show" class="table table-striped table-no-bordered
@@ -156,19 +99,6 @@
                                             </th>--}}
                                             </thead>
                                             <tbody>
-
-                                            <tr>
-                                                <td>
-                                                </td>
-                                                <td>
-                                                </td>
-                                                <td>
-
-                                                </td>
-                                                <td></td>
-                                            </tr>
-
-
                                             </tbody>
                                         </table>
                                     </div>

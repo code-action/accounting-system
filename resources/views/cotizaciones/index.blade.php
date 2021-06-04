@@ -43,7 +43,7 @@
                                         <th>
                                             {{ __('Teléfono') }}
                                         </th>
-                                        <th class="text-right">
+                                        <th class="text-right" style="width:140px;">
                                             {{ __('Acciones') }}
                                         </th>
                                     </thead>
@@ -83,10 +83,8 @@
                                             </td>
 
                                             <td class="td-actions text-right">
-
-
                                                 <a rel="tooltip" class="btn btn-default btn-link"
-                                                  data-original-title="" title=""
+                                                  data-original-title="" title="{{-- __('Facturar') --}}"
                                                    onclick="abrir_modal_facturar('{{$cotizacion}}', '{{$cotizacion->productos}}',
                                                        '{{route('facturacion.crear', $cotizacion)}}')">
                                                     <i class="material-icons">credit_card</i>
@@ -95,35 +93,26 @@
 
                                                 <a rel="tooltip" class="btn btn-info btn-link"
                                                   {{-- href="{{ route('cotizacion.show', $cotizacion) }}"--}}
-                                                   data-original-title="" title="{{ __('') }}"
+                                                   data-original-title="" title="{{-- __('Ver') --}}"
                                                    onclick="abrir_modal_ver('{{$cotizacion}}', '{{$cotizacion->productos}}',
                                                        '{{route('cotizacion.show', $cotizacion)}}')">
                                                     <i class="material-icons">assignment</i>
-
                                                 </a>
 
                                                 <a rel="tooltip" class="btn btn-success btn-link"
                                                    href="{{ route('cotizacion.edit', $cotizacion) }}"
-                                                   data-original-title="" title="{{ __('') }}">
+                                                   data-original-title="" title="{{-- __('Editar') --}}">
                                                     <i class="material-icons">edit</i>
                                                 </a>
 
-                                                <button rel="tooltip" class="btn btn-danger btn-link"
+                                                <a rel="tooltip" class="btn btn-danger btn-link"
                                                         onclick="abrir_modal_eliminar('{{$cotizacion}}', '{{$cotizacion->productos}}',
                                                         '{{route('cotizacion.destroy', $cotizacion)}}')"
-                                                        data-original-title="" title="{{ __('') }}">
+                                                        data-original-title="" title="{{-- __('Eliminar') --}}">
                                                     <i class="material-icons">delete_outline</i>
-                                                </button>
-                                                {{-- @endcan --}}
-                                                {{--
-                                                  <button type="button" class="btn btn-danger btn-link" data-original-title="" title="" onclick="confirm('{{ __("Are you sure you want to delete this category?") }}') ? this.parentElement.submit() : ''">
-                                                      <i class="material-icons">close</i>
-                                                      <div class="ripple-container"></div>
-                                                  </button>
-                                                --}}
-                                                {{--</form>--}}
+                                                </a>
                                             </td>
-                                            {{-- @endcan --}}
+
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -151,7 +140,7 @@
     <script src="{{asset('js/cotizaciones/index.js')}}"></script>
 
     <script>
-        $(document).ready(function() {
+        //$(document).ready(function() {
             $('#datatables').fadeIn(1100);
             $('#datatables').DataTable({
                 "pagingType": "full_numbers",
@@ -176,9 +165,9 @@
                     },
                 },
                 "columnDefs": [
-                    { "orderable": false, "targets": 3 },
+                    { "orderable": false, "targets": 7 },
                 ],
             });
-        });
+        //});
     </script>
 @endpush

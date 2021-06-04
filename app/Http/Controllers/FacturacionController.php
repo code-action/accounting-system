@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\Cotizacion;
 use App\Models\Facturacion;
+use App\Models\Informacion;
 use App\Models\Producto;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -21,7 +22,8 @@ class FacturacionController extends Controller
     public function index()
     {
         $facturaciones = Facturacion::all();
-        return view('facturaciones.index', ['facturaciones' => $facturaciones]);
+        $empresa = Informacion::first();
+        return view('facturaciones.index', ['facturaciones' => $facturaciones, 'empresa' => $empresa]);
     }
 
     /**
@@ -108,8 +110,7 @@ class FacturacionController extends Controller
         // Agregar productos de la cotización a la facturación
         (new Facturacion())->agregarProductosFacturacion('Guardar', $cotizacion, $facturacion, $cot_id_prod, $cot_cant);
 
-        //return redirect()->route('facturacion.edit', $facturacion);
-        return redirect()->route('cotizacion.create');
+        return redirect()->route('facturacion.edit', $facturacion);
     }
 
     /**
@@ -133,10 +134,10 @@ class FacturacionController extends Controller
     {
         $clientes = Cliente::orderBy('cli_nombre')->get();
         $productos = Producto::where('prod_cantidad', '>=', 1)->orderBy('prod_nombre')->get();
-        //return view('cotizaciones.edit');
-        //dd($clientes, $productos);
-        //return view('facturaciones.edit');
-        return view('facturaciones.edit',  ['facturacion' => $facturacion, 'clientes' => $clientes, 'productos' => $productos]);
+        $empresa = Informacion::first();
+
+        return view('facturaciones.edit',  ['facturacion' => $facturacion, 'clientes' => $clientes,
+            'empresa' => $empresa,'productos' => $productos]);
     }
 
     /**
@@ -166,7 +167,7 @@ class FacturacionController extends Controller
         //dd($facturacion, $cot_id_prod, $cot_cant);
         (new Facturacion())->agregarProductosFacturacion('Actualizar', $cotizacion, $facturacion, $cot_id_prod, $cot_cant);
 
-        return redirect()->route('facturacion.edit', $facturacion)->withStatus(__('Cotización editada exitosamente.'));
+        return redirect()->route('facturacion.index')->withStatus(__('Cotización editada exitosamente.'));
 
 
         return 'Success';

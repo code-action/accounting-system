@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="card-header card-header-info card-header-icon">
                             <div class="card-icon">
-                                <i class="material-icons">fact_check</i>
+                                <i class="material-icons">receipt_long</i>
                             </div>
                             <h4 class="card-title">{{ __('Lista de Facturaciones') }}</h4>
                         </div>
@@ -49,39 +49,40 @@
                                                 {{$facturacion->created_at->format('d-m-Y')}}
                                             </td>
                                             <td>
-                                                {{$facturacion->cotizacion->cliente->cli_nombre}}
+                                                {{$facturacion->cliente->cli_nombre}}
                                             </td>
                                             <td>
                                                 {{$facturacion->fact_total}}
                                             </td>
                                             <td>
-                                                {{$facturacion->cotizacion->cliente->cli_email}}
+                                                {{$facturacion->cliente->cli_email}}
                                             </td>
                                             <td>
-                                                {{$facturacion->cotizacion->cliente->cli_telefono}}
+                                                {{$facturacion->cliente->cli_telefono}}
                                                 {{--$cotizacion->cliente->cli_telefono--}}
                                             </td>
-                                            {{-- @can('manage-items', App\User::class) --}}
                                             <td class="td-actions text-right">
-                                                {{--<form action="{{ route('cotizacion.destroy', $cotizacion) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')--}}
 
-                                                {{-- @can('update', $proveedor) --}}
+                                                <a rel="tooltip" class="btn btn-info btn-link"
+                                                   {{-- href="{{ route('cotizacion.show', $cotizacion) }}"--}}
+                                                   data-original-title="" title="{{ __('Ver') }}"
+                                                   onclick="abrir_modal_ver_fact('{{$facturacion}}', '{{$facturacion->productos}}',
+                                                       '{{route('cotizacion.show', $facturacion)}}')">
+                                                    <i class="material-icons">assignment</i>
+                                                </a>
                                                 <a rel="tooltip" class="btn btn-success btn-link"
                                                    href="{{ route('facturacion.edit', $facturacion) }}" data-original-title="" title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-                                                <button rel="tooltip" class="btn btn-danger btn-link"
-                                                        onclick="abrir_modal_eliminar('{{$facturacion->created_at->format('d-m-Y')}}',
-                                                            '{{$facturacion->cotizacion->cliente->cli_nombre}}',
+                                                <a rel="tooltip" class="btn btn-danger btn-link"
+                                                        onclick="abrir_modal_eliminar_fact('{{$facturacion}}', '{{$facturacion->productos}}',
                                                             '{{route('facturacion.destroy', $facturacion)}}')"
                                                         data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
+                                                    <i class="material-icons">delete_outline</i>
                                                     <div class="ripple-container"></div>
-                                                </button>
+                                                </a>
                                                 {{-- @endcan --}}
                                                 {{--
                                                   <button type="button" class="btn btn-danger btn-link" data-original-title="" title="" onclick="confirm('{{ __("Are you sure you want to delete this category?") }}') ? this.parentElement.submit() : ''">
@@ -104,25 +105,18 @@
         </div>
     </div>
 
+@section('modals')
     @include('facturaciones.modalDestroy')
+    @include('facturaciones.modalShow')
+
+@endsection
+
 
 @endsection
 @push('js')
 
-    <script type="text/javascript">
-        function abrir_modal_eliminar(fecha, cliente, url){
-            $('#form_eliminar_facturacion').prop('action', url)
+    <script src="{{asset('js/facturaciones/index.js')}}"></script>
 
-            $('#fact_cli_nombre').text('')
-            $('#fact_fecha').text('')
-
-            $('#fact_cli_nombre').append(cliente)
-            $('#fact_fecha').append(fecha)
-
-            $('#eliminar_facturacion').modal('show');
-            console.log(fecha, cliente)
-        }
-    </script>
     <script>
         $(document).ready(function() {
             $('#datatables').fadeIn(1100);

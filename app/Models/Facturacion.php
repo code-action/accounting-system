@@ -23,7 +23,8 @@ class Facturacion extends Model
     // Relación muchos a muchos
     public function productos()
     {
-        return $this->belongsToMany(Producto::class)->withPivot('fact_prod_cantidad', 'fact_prod_preciou');;
+        return $this->belongsToMany(Producto::class)
+            ->withPivot('fact_prod_cantidad', 'fact_prod_preciou', 'fact_prod_total');;
     }
 
     // Agregar productos a una cotización,
