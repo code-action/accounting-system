@@ -23,7 +23,7 @@
                         </div>
                         <h4 class="card-title">Modificar Materia Prima</h4>
                     </div>
-                    <form method="POST" action="{{ route('raw.update', $material->id) }}">
+                    <form method="POST" action="{{ route('raw.update', $material->id) }}" autocomplete="off">
                         <div class="card-body mt-4">
                             @csrf
                             @method('PATCH')

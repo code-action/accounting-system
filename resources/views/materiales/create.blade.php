@@ -12,7 +12,7 @@
                         </div>
                         <h4 class="card-title">Agregar Materia Prima</h4>
                     </div>
-                    <form method="POST" action="{{ route('raw.store') }}">
+                    <form method="POST" action="{{ route('raw.store') }}" autocomplete="off">
                         <div class="card-body ">
                             @csrf
                             <div class="row">

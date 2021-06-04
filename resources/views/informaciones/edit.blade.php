@@ -23,7 +23,7 @@
                         </div>
                         <h4 class="card-title">Información General</h4>
                     </div>
-                    <form method="POST" action="{{ route('informacion.update',1) }}">
+                    <form method="POST" action="{{ route('informacion.update',1) }}" autocomplete="off">
                         <div class="card-body mt-4">
                             @csrf
                             @method('put')
@@ -51,6 +51,42 @@
                                     <div class="form-group{{ $errors->has('info_telefono') ? ' has-danger' : '' }}">
                                         <input class="form-control{{ $errors->has('info_telefono') ? ' is-invalid' : '' }}" name="info_telefono" id="info_telefono" type="text" placeholder="{{ __('teléfono') }}" value="{{$info->info_telefono}}"/>
                                         @include('alerts.feedback', ['field' => 'info_telefono'])
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 col-form-label">{{ __('Fax') }}</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group{{ $errors->has('info_fax') ? ' has-danger' : '' }}">
+                                        <input class="form-control{{ $errors->has('info_fax') ? ' is-invalid' : '' }}" name="info_fax" id="info_fax" type="text" placeholder="{{ __('fax') }}" value="{{$info->info_fax}}"/>
+                                        @include('alerts.feedback', ['field' => 'info_fax'])
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 col-form-label">{{ __('Correo') }}</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group{{ $errors->has('info_correo') ? ' has-danger' : '' }}">
+                                        <input class="form-control{{ $errors->has('info_correo') ? ' is-invalid' : '' }}" name="info_correo" id="info_correo" type="text" placeholder="{{ __('correo') }}" value="{{$info->info_correo}}"/>
+                                        @include('alerts.feedback', ['field' => 'info_correo'])
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 col-form-label">{{ __('NIT') }}</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group{{ $errors->has('info_nit') ? ' has-danger' : '' }}">
+                                        <input class="form-control{{ $errors->has('info_nit') ? ' is-invalid' : '' }}" name="info_nit" id="info_nit" type="text" placeholder="{{ __('Número de Identificación Tributaria') }}" value="{{$info->info_nit}}"/>
+                                        @include('alerts.feedback', ['field' => 'info_nit'])
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 col-form-label">{{ __('NRC') }}</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group{{ $errors->has('info_nrc') ? ' has-danger' : '' }}">
+                                        <input class="form-control{{ $errors->has('info_nrc') ? ' is-invalid' : '' }}" name="info_nrc" id="info_nrc" type="text" placeholder="{{ __('Número de Registro de Contribuyente') }}" value="{{$info->info_nrc}}"/>
+                                        @include('alerts.feedback', ['field' => 'info_nrc'])
                                     </div>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Informacion;
 use Illuminate\Http\Request;
+use App\Http\Requests\InformacionRequest;
 
 class InformacionController extends Controller
 {
@@ -72,7 +73,7 @@ class InformacionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(InformacionRequest $request, $id)
     {
         if(Informacion::count()>0){
             $info = Informacion::get()->first();

@@ -43,6 +43,9 @@
                                     </th>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $categorias=['Gran Contribuyente', 'Mediano Contribuyente', 'Otros Contribuyentes'];
+                                        @endphp
                                     @foreach ($clientes as $cliente)
                                         <tr>
                                             <td>
@@ -52,7 +55,7 @@
                                                 {{$cliente->cli_contacto}}
                                             </td>
                                             <td>
-                                                {{ $cliente->cli_categoria}}
+                                                {{ $categorias[$cliente->cli_categoria-1]}}
                                             </td>
                                             <td>
                                                 {{$cliente->cli_email}}

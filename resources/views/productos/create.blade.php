@@ -12,7 +12,7 @@
                         </div>
                         <h4 class="card-title">Agregar Producto</h4>
                     </div>
-                    <form method="POST" action="{{ route('producto.store') }}">
+                    <form method="POST" action="{{ route('producto.store') }}" autocomplete="off">
                         <div class="card-body ">
                             @csrf
                             <div class="row">
