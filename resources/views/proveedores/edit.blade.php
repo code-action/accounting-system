@@ -71,3 +71,11 @@
     </div>
   </div>
 @endsection
+@push('js')
+    <script>
+        // Uso de mascaras en los campos
+        $(document).ready(function(){
+            $('#input-prov_telefono').mask('0000-0000');
+        });
+    </script>
+@endpush

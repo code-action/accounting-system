@@ -12,9 +12,10 @@
                         </div>
                         <h4 class="card-title">Editar Producto</h4>
                     </div>
-                    <form method="POST" action="{{ route('producto.store') }}" autocomplete="off">
+                    <form method="POST" action="{{ route('producto.update',$productos->id) }}" autocomplete="off">
                         <div class="card-body ">
                             @csrf
+                            @method('put')
                             <div class="row">
                                 <div class="form-group bmd-form-group col-md-12">
                                     <label for="mat_nombre" class="bmd-label-floating">Nombre</label>
@@ -27,7 +28,7 @@
                                 <div class="form-group bmd-form-group col-md-6">
                                     {{-- <label for="exampleFormControlSelect1">Categoría</label> --}}
                                     <select class="form-control selectpicker" data-style="btn btn-link" id="" name="categoria_id">
-                                        <option value="" selected disabled><b>Categoría</b></option>
+                                        <option value="" disabled><b>Categoría</b></option>
                                         @foreach($categorias as $c)
                                             <option @if($c->id == $productos->categoria_id) selected @endif value="{{ $c->id }}">{{ $c->cat_nombre }}</option>
                                         @endforeach
@@ -52,7 +53,7 @@
                                         </div>
                                         <div class="form-group bmd-form-group col-md-4">
                                             <label for="mat_cantidad_{{ $m->id }}" class="bmd-label-floating">Cantidad</label>
-                                            <input value="{{ $productos->materiales[0]->mat_prod_cantidad }}" type="number" class="form-control" id="mat_cantidad_{{ $m->id }}" name="mat_cantidad[]" max="{{ $m->mat_cantidad }}">
+                                            <input value="{{$productos->cantidad($productos->id,$m->id)}}" type="number" class="form-control" id="mat_cantidad_{{ $m->id }}" name="mat_cantidad[]" max="{{ $m->mat_cantidad }}">
                                         </div>
                                     @endforeach
                                 </div>

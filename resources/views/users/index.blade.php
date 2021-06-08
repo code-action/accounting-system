@@ -16,7 +16,7 @@
                             <a href="{{ route('user.create') }}" class="btn btn-primary"><i class="material-icons">add</i> Nuevo</a>
                         </div>
                         <div class="table-responsive">
-                            <table id="datatables" class="table">
+                            <table id="datatables" class="table" style="display:none; width: 100%">
                                 <thead class=" text-primary">
                                     <th> ID </th>
                                     <th> Nombre </th>

@@ -29,4 +29,12 @@ class Producto extends Model
     {
         return $this->belongsToMany(Cotizacion::class)->withPivot('cot_prod_cantidad', 'cot_prod_preciou');
     }
+
+    public function cantidad($producto_id,$material_id){
+        $material=MaterialProducto::where('material_id',$material_id)->where('producto_id',$producto_id)->get()->first();
+        if(is_null($material))
+            return "";
+        else
+            return $material->mat_prod_cantidad;
+    }
 }

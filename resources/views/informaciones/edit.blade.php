@@ -101,5 +101,15 @@
         </div>
     </div>
 </div>
-
 @endsection
+@push('js')
+    <script>
+        // Uso de mascaras en los campos
+        $(document).ready(function(){
+            $('#info_telefono').mask('0000-0000');
+            $('#info_fax').mask('0000-0000');
+            $('#info_nit').mask('0000-000000-000-0');
+            $('#info_nrc').mask('000000');
+        });
+    </script>
+@endpush

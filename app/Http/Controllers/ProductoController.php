@@ -7,6 +7,7 @@ use App\Models\Material;
 use App\Models\Categoria;
 use App\Models\MaterialProducto;
 use Illuminate\Http\Request;
+use DB;
 
 use function PHPUnit\Framework\isNull;
 
@@ -44,7 +45,7 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
 
-        $producto = new Producto;
+        $producto = new Producto();
         $producto->prod_nombre      = $request->prod_nombre;
         $producto->prod_cantidad    = $request->prod_cantidad;
         $producto->prod_precio      = $request->prod_precio;
@@ -104,9 +105,55 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request,$id)
     {
-        //
+        $producto = Producto::find($id);
+        $producto->prod_nombre      = $request->prod_nombre;
+        $producto->prod_cantidad    = $request->prod_cantidad;
+        $producto->prod_precio      = $request->prod_precio;
+        $producto->prod_desc        = $request->prod_desc;
+        $producto->categoria_id     = $request->categoria_id;
+
+        $producto->save();
+
+        foreach($request->mat_cantidad as $k => $material) {
+            if(isset($material) || (int) $material > 0){
+                echo "->".$request->mat_cantidad[$k];
+                //Para nueva materia prima agregada
+                if(MaterialProducto::where('material_id',$request->mat_id[$k])->where('producto_id',$producto->id)->count()<1){
+                    $materialProducto = new MaterialProducto;
+                    $materialProducto->mat_prod_cantidad    = $request->mat_cantidad[$k];
+                    $materialProducto->material_id          = $request->mat_id[$k];
+                    $materialProducto->producto_id          = $producto->id;
+                    $materialProducto->save();
+        
+                    $actual = $materialProducto->material->mat_cantidad;
+                    $materialProducto->material->mat_cantidad = $actual-$materialProducto->mat_prod_cantidad;
+                    $materialProducto->material->save();
+                }else{
+                    //Para materia prima editada se saca la diferencia para descontarla o sumarla al inventario ya que anteriormente solo se descuenta lo inicial
+                    $materialProducto=MaterialProducto::where('material_id',$request->mat_id[$k])->where('producto_id',$producto->id)->get()->first();
+                    $actual = $materialProducto->material->mat_cantidad;
+                    if($materialProducto->mat_prod_cantidad!=$request->mat_cantidad[$k]){
+                        $diferencia=$materialProducto->mat_prod_cantidad-$request->mat_cantidad[$k];
+                        $materialProducto->material->mat_cantidad = $actual+$diferencia;
+                        $materialProducto->material->save();
+                        $materialProducto->mat_prod_cantidad=$request->mat_cantidad[$k];
+                        $materialProducto->save();
+                    }
+                }  
+            }else{
+                //Para materia prima eliminada al editar
+                if(MaterialProducto::where('material_id',$request->mat_id[$k])->where('producto_id',$producto->id)->count()>0){
+                    $materialProducto=MaterialProducto::where('material_id',$request->mat_id[$k])->where('producto_id',$producto->id)->get()->first();
+                    $actual = $materialProducto->material->mat_cantidad;
+                    $materialProducto->material->mat_cantidad = $actual+$materialProducto->mat_prod_cantidad;
+                    $materialProducto->material->save();
+                    $materialProducto->delete();
+                }    
+            }    
+        }
+        return redirect()->route('producto.index') ->with('success','Registro editado correctamente');
     }
 
     /**
@@ -115,8 +162,24 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy($id)
     {
-        //
+        $producto = Producto::find($id);
+        DB::beginTransaction();
+        try{
+            foreach($producto->materiales as $materia){
+                $actual = $materia->material->mat_cantidad;
+                $materia->material->mat_cantidad = $actual + $materia->mat_prod_cantidad;
+                $materia->material->save();
+
+                $materia->delete();
+            }
+            $producto->delete();
+            DB::commit();
+            return redirect()->route('producto.index')->with('success','Registro eliminado exitosamente.');
+        } catch(\Exception $e){
+            DB::rollback();
+            return redirect()->route('producto.index')->with('error','El registro no pudo eliminarse.');
+        }
     }
 }
