@@ -73,6 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('facturacion/crear/{cotizacion}', [FacturacionController::class, 'crear'])->name('facturacion.crear');
 
     Route::resource('raw', 'App\Http\Controllers\MaterialController');
+    Route::resource('proyecto', 'App\Http\Controllers\ProyectoController');
     Route::resource('tarea', 'App\Http\Controllers\TareaController');
     Route::resource('ubicacion', 'App\Http\Controllers\UbicacionController');
 	Route::resource('informacion', 'App\Http\Controllers\InformacionController');
