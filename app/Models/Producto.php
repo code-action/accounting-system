@@ -22,6 +22,7 @@ class Producto extends Model
     {
         return $this->hasMany('App\Models\MaterialProducto');
     }
+    public function categoria() { return $this->belongsTo(Categoria::class,'categoria_id'); }
 
 
     // Relación muchos a muchos
@@ -36,5 +37,13 @@ class Producto extends Model
             return "";
         else
             return $material->mat_prod_cantidad;
+    }
+    //validar que el producto no este en cotización o en facturación
+    public function validarUso($id){
+        $producto= Producto::find($id);
+        if($producto->cotizaciones->count()>0)
+            return false;
+        else
+            return true;
     }
 }

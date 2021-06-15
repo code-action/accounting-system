@@ -36,10 +36,16 @@
                                             <td> {{ $p->prod_cantidad }} </td>
                                             <td> {{ $p->created_at }} </td>
                                             <td class="td-actions text-right">
-                                                <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('producto.edit', $p->id) }}" data-original-title="" title="Editar">
-                                                    <i class="material-icons">edit</i>
-                                                </a>
                                                 <form class="d-inline" id="form-delete" action="{{ route('producto.destroy', $p->id) }}" method="POST">
+                                                    <a rel="tooltip" class="btn btn-info btn-link"
+                                                    onclick="showModal({{$p->id}})"
+                                                    data-original-title="" title="{{ __('Ver') }}">
+                                                     <i class="material-icons">assignment</i>
+                                                    </a>
+                                                    @if($p->validarUso($p->id))
+                                                    <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('producto.edit', $p->id) }}" data-original-title="" title="Editar">
+                                                        <i class="material-icons">edit</i>
+                                                    </a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar"
@@ -60,6 +66,11 @@
                                                     });">
                                                         <i class="material-icons">close</i>
                                                     </button>
+                                                    @else
+                                                    <a rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="No se puede eliminar">
+                                                        <i class="material-icons">block</i>
+                                                    </a>
+                                                    @endif
                                                 </form>
                                             </td>
                                         </tr>
@@ -73,7 +84,7 @@
         </div>
     </div>
 </div>
-
+@include('productos.modalShow')
 @endsection
 
 @push('js')
@@ -107,7 +118,10 @@
                 "targets": 3
             }, ],
         });
+
     });
 
 </script>
+<script src="{{ asset('js') }}/productos.js"></script>
+
 @endpush

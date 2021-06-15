@@ -38,6 +38,7 @@
                                                 <form class="d-inline" id="form-delete" action="{{ route('categoria.destroy', $c->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
+                                                    @if($c->productos->count()<1)
                                                     <button type="button" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar"
                                                     onclick="
                                                         return swal({
@@ -56,6 +57,11 @@
                                                         });">
                                                         <i class="material-icons">close</i>
                                                     </button>
+                                                    @else
+                                                    <a rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="No se puede eliminar">
+                                                        <i class="material-icons">block</i>
+                                                    </a>
+                                                    @endif
                                                 </form>
                                             </td>
                                         </tr>
