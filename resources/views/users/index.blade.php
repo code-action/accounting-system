@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'user', 'titlePage' => __('Listado de categorías')])
+@extends('layouts.app', ['activePage' => 'user', 'titlePage' => __('Usuarios')])
 
 @section('content')
 
@@ -7,17 +7,21 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title ">Usuarios</h4>
-                        <p class="card-category"> Listado de usuarios </p>
-                    </div>
-                    <div class="card-body">
-                        <div class="my-3">
-                            <a href="{{ route('user.create') }}" class="btn btn-primary"><i class="material-icons">add</i> Nuevo</a>
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                          <i class="material-icons">person</i>
                         </div>
+                        <h4 class="card-title">{{ __('Lista de Usuarios') }}</h4>
+                      </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                              <a href="{{ route('user.create') }}" class="btn btn-sm btn-info">{{ __('Nuevo') }}</a>
+                            </div>
+                          </div>
                         <div class="table-responsive">
                             <table id="datatables" class="table" style="display:none; width: 100%">
-                                <thead class=" text-primary">
+                                <thead class=" text-info">
                                     <th> ID </th>
                                     <th> Nombre </th>
                                     <th> Email </th>
@@ -34,16 +38,37 @@
                                             <td> {{ $d->email_verified_at }} </td>
                                             <td> {{ $d->created_at }} </td>
                                             <td class="td-actions text-right">
-                                                <a rel="tooltip" class="btn btn-warning btn-link" href="{{ route('user.edit', $d->id) }}" data-original-title="" title="Editar">
+                                                <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('user.edit', $d->id) }}" data-original-title="" title="Editar">
                                                     <i class="material-icons">edit</i>
                                                 </a>
+                                                @if(auth()->user()->email!=$d->email)
                                                 <form class="d-inline" id="form-delete" action="{{ route('user.destroy', $d->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button style="border:none; transform: translateY(7px)" type="submit" rel="tooltip" class="<btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar">
-                                                        <i class="material-icons">delete_outline</i>
+                                                    <button type="button" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar"
+                                                    onclick="
+                                                        return swal({
+                                                        html: '{{ __('¿Desea eliminar el usuario') }}'+' '+'<b>'+'{{$d->name}}'+'?</b>',
+                                                            showCancelButton: true,
+                                                            reverseButtons : true,
+                                                            confirmButtonText: '{{ __('Eliminar') }}',
+                                                            cancelButtonText: '{{ __('Cancelar') }}',
+                                                            confirmButtonClass: 'btn btn-danger',
+                                                            cancelButtonClass: 'btn btn-default',
+                                                            buttonsStyling: false
+                                                        }).then((result) => {
+                                                            if (result.value) {
+                                                            submit();
+                                                            }
+                                                        });">
+                                                        <i class="material-icons">close</i>
                                                     </button>
                                                 </form>
+                                                @else
+                                                <a rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="No se puede eliminar">
+                                                    <i class="material-icons">block</i>
+                                                </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

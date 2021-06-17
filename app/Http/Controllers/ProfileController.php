@@ -28,7 +28,7 @@ class ProfileController extends Controller
     {
         auth()->user()->update($request->all());
 
-        return back()->withStatus(__('Profile successfully updated.'));
+        return back()->with('success','Registro editado correctamente');
     }
 
     /**
@@ -39,8 +39,9 @@ class ProfileController extends Controller
      */
     public function password(PasswordRequest $request)
     {
-        auth()->user()->update(['password' => Hash::make($request->get('password'))]);
+        echo date("Y-m-d G:i:s");
+        auth()->user()->update(['password' => Hash::make($request->get('password')),'email_verified_at' => date("Y-m-d G:i:s")]);
 
-        return back()->withStatusPassword(__('Password successfully updated.'));
+        return back()->with('success','Registro editado correctamente');
     }
 }

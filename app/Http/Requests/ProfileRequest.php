@@ -30,4 +30,11 @@ class ProfileRequest extends FormRequest
             'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore(auth()->id())],
         ];
     }
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'email' => 'correo',
+        ];
+    }
 }

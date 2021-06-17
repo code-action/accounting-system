@@ -18,7 +18,10 @@ use App\Http\Controllers\ClienteController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	if(auth()->check())
+		return redirect()->route('home');
+	else
+    	return view('welcome');
 });
 
 Auth::routes();
@@ -28,7 +31,7 @@ Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','change']], function () {
 	Route::get('table-list', function () {
 		return view('pages.table_list');
 	})->name('table');
@@ -58,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('upgrade');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','change']], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);

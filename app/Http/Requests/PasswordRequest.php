@@ -39,7 +39,9 @@ class PasswordRequest extends FormRequest
     public function attributes()
     {
         return [
-            'old_password' => __('current password'),
+            'old_password' => __('contraseña actual'),
+            'password' => __('contraseña nueva'),
+            'password_confirmation' => __('confirmar contraseña nueva'),
         ];
     }
 }

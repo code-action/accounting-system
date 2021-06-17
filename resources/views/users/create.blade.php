@@ -6,33 +6,37 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="card ">
-                    <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">control_point_duplicate</i>
+                            <i class="material-icons">person</i>
                         </div>
                         <h4 class="card-title">Agregar Usuario</h4>
                     </div>
-                    <form method="POST" action="{{ route('user.store') }}">
+                    <form method="POST" action="{{ route('user.store') }}" autocomplete="off">
                         <div class="card-body ">
                             @csrf
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">{{ __('Nombre') }}</label>
+                                    <div class="col-sm-7">
+                                      <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                                        <input class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" id="input-name" type="text" placeholder="{{ __('Nombre') }}" value="{{ old('name') }}" aria-required="true"/>
+                                        @include('alerts.feedback', ['field' => 'name'])
+                                      </div>
+                                    </div>
+                                </div>
                             <div class="row">
-                                <div class="form-group bmd-form-group col-md-12">
-                                    <label for="name" class="bmd-label-floating">Nombre</label>
-                                    <input required type="text" class="form-control" id="name" name="name">
-                                </div>
-                                <div class="form-group bmd-form-group col-md-6">
-                                    <label for="email" class="bmd-label-floating">Correo</label>
-                                    <input required type="email" class="form-control" id="email" name="email">
-                                </div>
-                                <div class="form-group bmd-form-group col-md-6">
-                                    <label for="password" class="bmd-label-floating">Contraseña</label>
-                                    <input required type="password" class="form-control" id="password" name="password">
+                                <label class="col-sm-2 col-form-label">{{ __('Correo') }}</label>
+                                <div class="col-sm-7">
+                                  <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                    <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="input-email" type="text" placeholder="{{ __('Correo') }}" value="{{ old('email') }}" aria-required="true"/>
+                                    @include('alerts.feedback', ['field' => 'email'])
+                                  </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer ">
                             <a href="{{ route('user.index') }}"><button type="button" class="btn btn-fill btn-default">Cancelar</button></a>
-                            <button type="submit" class="btn btn-fill btn-rose">Agregar</button>
+                            <button type="submit" class="btn btn-fill btn-info">Agregar</button>
                         </div>
                     </form>
                 </div>

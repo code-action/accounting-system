@@ -6,7 +6,9 @@ use App\Models\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\newUserEmail;
 
 class UserController extends Controller
 {
@@ -39,16 +41,23 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
 
+        $password = Str::random(10);
         $user = new User;
+        $emailSend = $request->email;
         $user->name             = $request->name;
         $user->email            = $request->email;
-        $user->password         = bcrypt($request->password);
+        $user->password         = bcrypt($password);
         $user->save();
-
-        return redirect()->route('user.index') ->with('success','Registro creado correctamente');
+        $user->password         = $password;
+        try{
+            Mail::to($emailSend)->send(new newUserEmail($user));
+        } catch(\Exception $e){
+            $flagSendEmail = false;
+        }
+        return redirect()->route('user.index') ->with('success','Registro creado exitosamente.');
     }
 
     /**
@@ -81,12 +90,11 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $user = User::find($id);
         $user->name             = $request->name;
         $user->email            = $request->email;
-        $user->password         = bcrypt($request->password);
         $user->save();
 
         return redirect()->route('user.index') ->with('success','Registro editado correctamente');
