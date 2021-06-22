@@ -66,7 +66,7 @@ class FacturacionController extends Controller
         // Agregar productos de la cotización a la facturación
         (new Facturacion())->agregarProductosFacturacion('Guardar', $cotizacion, $facturacion, $cot_id_prod, $cot_cant);
 
-        return redirect()->route('facturacion.edit', $facturacion);//->withStatus(__('Cotización editada exitosamente.'));
+        return redirect()->route('facturacion.edit', $facturacion)->with('success',__('Registro creado exitosamente.'));
     }
     /**
      * Store a newly created resource in storage.
@@ -110,7 +110,7 @@ class FacturacionController extends Controller
         // Agregar productos de la cotización a la facturación
         (new Facturacion())->agregarProductosFacturacion('Guardar', $cotizacion, $facturacion, $cot_id_prod, $cot_cant);
 
-        return redirect()->route('facturacion.edit', $facturacion);
+        return redirect()->route('facturacion.edit', $facturacion)->with('success',__('Registro creado exitosamente.'));
     }
 
     /**
@@ -145,7 +145,7 @@ class FacturacionController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Facturacion  $facturacion
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Facturacion $facturacion)
     {
@@ -167,10 +167,8 @@ class FacturacionController extends Controller
         //dd($facturacion, $cot_id_prod, $cot_cant);
         (new Facturacion())->agregarProductosFacturacion('Actualizar', $cotizacion, $facturacion, $cot_id_prod, $cot_cant);
 
-        return redirect()->route('facturacion.index')->withStatus(__('Cotización editada exitosamente.'));
+        return redirect()->route('facturacion.index')->with('success',__('Facturación editada exitosamente.'));
 
-
-        return 'Success';
     }
 
     /**
@@ -182,6 +180,6 @@ class FacturacionController extends Controller
     public function destroy(Facturacion $facturacion)
     {
         $facturacion->delete();
-        return redirect()->route('facturacion.index');
+        return redirect()->route('facturacion.index')->with('success', __('Registro eliminado exitosamente.'));
     }
 }

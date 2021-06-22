@@ -45,6 +45,25 @@ $("#tabla_productos").on('click', '.add_product', function () {
     calcularTotales()
 });
 
+function clienteSeleccionado(){
+    seleccionado = false
+    categoria = null
+    idCliente = $('#input-cli_nombre').val()
+    //console.log($('#input-cli_nombre').val())
+    //console.log($('#cliente_'+$('#input-cli_nombre').val()).attr('categoria'))
+
+    if ($('#input-cli_nombre').val()){
+        seleccionado = true
+        categoria = $('#cliente_'+idCliente).attr('categoria')
+    }
+    return [seleccionado, categoria]
+}
+
+// Calcular totales cuando se seleccione un cliente, si es gran contribuyente realizará el cálculo
+$('#input-cli_nombre').on('change',function(){
+    calcularTotales()
+});
+
 function calcularTotales(){
     filas = $('#tabla_facturacion').find('tbody').find('tr')
     //console.log('calcularTotales')
@@ -55,15 +74,19 @@ function calcularTotales(){
     var retención = 0.0
     var total = 0.0
 
-    filas.each(function (i) {
-        sumas = sumas + parseFloat($(this).find('#precio_total').parents('td').text().trim())
-        console.log(sumas)
-    })
+    if (!filas.find('td').hasClass('dataTables_empty')) {
+        filas.each(function (i) {
+            sumas = sumas + parseFloat($(this).find('#precio_total').parents('td').text().trim())
+            console.log(sumas)
+        })
+    }
 
+    clienteSel = clienteSeleccionado()
+    // clienteSeleccionado() funcion para saber si es 1: Gran Contribuyente, 2: Mediano Contribuyente, 3: Otros C.
     // Cálculos basados en la suma
     iva = sumas * 0.13
     subtotal = sumas + iva
-    if(sumas > 113)
+    if(sumas > 113 || clienteSel[1] === '1')
         retención = sumas * 0.01
 
     total = sumas + iva - retención
@@ -274,7 +297,7 @@ function mostrarMensajesError(campos){
     if(campos.includes('cliente') === true){
         //console.log('Cliente sin seleccionar 2')
         //$('#input-cli_nombre-error').css({'display':'block'});
-        $('#input-cli_nombre-error').css( "display", "inline" ).fadeOut(500).fadeIn(300);
+        $('#input-cli_nombre-error').css( "display", "inline" )//.fadeOut(500).fadeIn(300);
 
     }else
         $('#input-cli_nombre-error').css({'display':'none'});
@@ -288,7 +311,7 @@ function mostrarMensajesError(campos){
     if(campos.includes('estado') === true){
         //console.log('Cliente sin seleccionar 2')
         //$('#input-cli_nombre-error').css({'display':'block'});
-        $('#input-cli_estado-error').css( "display", "inline" ).fadeOut(500).fadeIn(300);
+        $('#input-cli_estado-error').css( "display", "inline" )//.fadeOut(500).fadeIn(300);
 
     }else
         $('#input-cli_estado-error').css({'display':'none'});

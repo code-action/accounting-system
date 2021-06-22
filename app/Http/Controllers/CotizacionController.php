@@ -19,9 +19,7 @@ class CotizacionController extends Controller
      */
     public function index()
     {
-        $cotizaciones = Cotizacion::where('cot_estado', '=', 'Revision')
-            ->orWhere('cot_estado', '=', 'Rechazada')
-            ->orderBy('cot_fecha')->get();
+        $cotizaciones = Cotizacion::orderBy('cot_fecha')->get();
         $empresa = Informacion::first();
         return view('cotizaciones.index', ['cotizaciones' => $cotizaciones, 'empresa' => $empresa]);
     }
@@ -45,7 +43,7 @@ class CotizacionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -67,7 +65,7 @@ class CotizacionController extends Controller
         $cot_cant = $request->get('cot_cant');
         (new Cotizacion())->agregarProductosCotizacion('Guardar', $cotizacion, $cot_id_prod, $cot_cant);
 
-        return redirect()->route('cotizacion.create')->withStatus(__('Cotización creada exitosamente.'));
+        return redirect()->route('cotizacion.create')->with('success',__('Registro creado exitosamente.'));
         // Puede también redirigir a index
     }
 
@@ -102,7 +100,7 @@ class CotizacionController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Cotizacion  $cotizacion
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Cotizacion $cotizacion)
     {
@@ -122,7 +120,7 @@ class CotizacionController extends Controller
         $cot_cant = $request->get('cot_cant');
         (new Cotizacion())->agregarProductosCotizacion('Actualizar', $cotizacion, $cot_id_prod, $cot_cant);
 
-        return redirect()->route('cotizacion.index')->withStatus(__('Cotización editada exitosamente.'));
+        return redirect()->route('cotizacion.index')->with('success',__('Registro editado correctamente.'));
     }
 
     /**
@@ -135,6 +133,6 @@ class CotizacionController extends Controller
     {
         //dd('delete');
         $cotizacion->delete();
-        return redirect()->route('cotizacion.index');
+        return redirect()->route('cotizacion.index')->with('success', __('Registro eliminado exitosamente.'));
     }
 }

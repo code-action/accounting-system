@@ -59,9 +59,15 @@
                                         <div class="col-md-5">
                                             <div class="text-right">
                                                 <h4 class="text-right">{{ $empresa->info_nombre }}</h4>
-                                                <h6 class="text-right">Dirección: {{ $empresa->info_direccion }}</h6>
-                                                <h6>Teléfono: {{ $empresa->info_telefono }}</h6>
-                                                {{--<h6> email: empresara@gmail.com</h6>--}}
+                                                <h6 class="text-right">{{ __('Dirección:') }} {{ $empresa->info_direccion }}</h6>
+                                                <h6>{{ __('Fax:') }}
+                                                    {{ $empresa->info_fax }}
+                                                    {{ __('Tel.:') }}
+                                                    {{ $empresa->info_telefono }}
+                                                </h6>
+                                                <h6>{{ __('Email:') }}
+                                                    {{ $empresa->info_correo }}
+                                                </h6>
                                             </div>
                                         </div>
                                     </div>

@@ -17,7 +17,7 @@ class CreateFacturacionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->date('fact_fecha');
-            $table->double('fact_total', 8, 2);
+            $table->double('fact_total', 8, 2);// 000 000 . 00
 
             $table->foreignId('cotizacion_id')->constrained('cotizacions'); // total = subtotal - retención
         });

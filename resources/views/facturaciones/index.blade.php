@@ -22,31 +22,37 @@
                             <div class="table-responsive">
                                 <table id="datatables" class="table table-striped table-no-bordered table-hover datatable-rose" style="display:none; width: 100%">
                                     <thead class="text-primary">
-                                    <th>
-                                        {{ __('Fecha') }}
-                                    </th>
+                                        <th>
+                                            {{ __('Código') }}
+                                        </th>
+                                        <th>
+                                            {{ __('Fecha') }}
+                                        </th>
 
-                                    <th>
-                                        {{ __('Cliente') }}
-                                    </th>
-                                    <th>
-                                        {{ __('Total') }}
-                                    </th>
-                                    <th>
-                                        {{ __('Email') }}
-                                    </th>
-                                    <th>
-                                        {{ __('Teléfono') }}
-                                    </th>
-                                    <th class="text-right">
-                                        {{ __('Acciones') }}
-                                    </th>
+                                        <th>
+                                            {{ __('Cliente') }}
+                                        </th>
+                                        <th>
+                                            {{ __('Total') }}
+                                        </th>
+                                        <th>
+                                            {{ __('Email') }}
+                                        </th>
+                                        <th>
+                                            {{ __('Teléfono') }}
+                                        </th>
+                                        <th class="text-right">
+                                            {{ __('Acciones') }}
+                                        </th>
                                     </thead>
                                     <tbody>
                                     @foreach ($facturaciones as $facturacion)
                                         <tr>
                                             <td>
-                                                {{$facturacion->created_at->format('d-m-Y')}}
+                                                {{$facturacion->fact_codigo}}
+                                            </td>
+                                            <td>
+                                                {{date("d-m-Y", strtotime($facturacion->fact_fecha))}}
                                             </td>
                                             <td>
                                                 {{$facturacion->cliente->cli_nombre}}
@@ -105,13 +111,10 @@
         </div>
     </div>
 
+@endsection
 @section('modals')
     @include('facturaciones.modalDestroy')
     @include('facturaciones.modalShow')
-
-@endsection
-
-
 @endsection
 @push('js')
 
@@ -129,7 +132,7 @@
                 responsive: true,
                 language: {
                     search: "_INPUT_",
-                    searchPlaceholder: "Buscar proveedores",
+                    searchPlaceholder: "Buscar facturaciones",
                     "lengthMenu": 'Mostrar _MENU_ registros',
                     "info": 'Mostrando página _PAGE_ de _PAGES_',
                     "infoEmpty": 'No hay registros disponibles',

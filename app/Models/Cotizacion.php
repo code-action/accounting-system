@@ -36,7 +36,7 @@ class Cotizacion extends Model
     public function productos()
     {
         return $this->belongsToMany(Producto::class)
-            ->withPivot('cot_prod_cantidad', 'cot_prod_preciou', 'cot_prod_total');;
+            ->withPivot('cot_prod_cantidad', 'cot_prod_preciou', 'cot_prod_total')->withTimestamps();
     }
 
     // Agregar productos a una cotización,
@@ -59,7 +59,7 @@ class Cotizacion extends Model
                 $producto = Producto::findORFail($cot_id_prod[$i]);
                 $cotizacion->productos()->attach($cot_id_prod[$i],
                     ['cot_prod_cantidad' => $cot_cant[$i], 'created_at' => Carbon::now(),
-                        'cot_prod_preciou' => $producto->prod_precio, 'cot_prod_total' => $cot_cant[$i]* $producto->prod_precio]);
+                        'cot_prod_preciou' => $producto->prod_precio, 'cot_prod_total' => $cot_cant[$i] * $producto->prod_precio]);
             }
         } elseif ($action == 'Actualizar') {
 
@@ -126,4 +126,5 @@ class Cotizacion extends Model
 
         }
     }
+
 }

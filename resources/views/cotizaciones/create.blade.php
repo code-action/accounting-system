@@ -36,27 +36,27 @@
                                             <div class="table-responsive">
                                                 <table id="datatables" class="table table-striped table-no-bordered table-hover datatable-rose" style="display:none; width: 100%">
                                                     <thead class="text-primary">
-                                                        <th>
-                                                            {{ __('Producto') }}
-                                                        </th>
-                                                        <th style="width: 70px;">
-                                                            {{ __('Cant.') }}
-                                                        </th>
-                                                        {{--<th>
-                                                            {{ __('Descripción') }}
-                                                        </th>--}}
-                                                        <th style="width: 90px;">
-                                                            {{ __('Precio U.') }}
-                                                        </th>
-                                                        <th  style="width: 105px;">
-                                                            {{ __('Existencia') }}
-                                                        </th>
-                                                        <th class="text-right"  style="width:80px;">
-                                                            {{ __('Acciones') }}
-                                                        </th>
+                                                    <th>
+                                                        {{ __('Producto') }}
+                                                    </th>
+                                                    <th style="width: 70px;">
+                                                        {{ __('Cant.') }}
+                                                    </th>
+                                                    {{--<th>
+                                                        {{ __('Descripción') }}
+                                                    </th>--}}
+                                                    <th style="width: 90px;">
+                                                        {{ __('Precio U.') }}
+                                                    </th>
+                                                    <th  style="width: 105px;">
+                                                        {{ __('Existencia') }}
+                                                    </th>
+                                                    <th class="text-right"  style="width:80px;">
+                                                        {{ __('Acciones') }}
+                                                    </th>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($productos as $producto)
+                                                    @foreach($productos as $producto)
                                                         <tr>
                                                             <td>
                                                                 {{$producto->prod_nombre}}
@@ -76,7 +76,6 @@
                                                             <td class="td-actions text-right">
                                                                 {{-- @if ($proveedor->items->isEmpty() && auth()->user()->can('delete', $proveedor)) --}}
                                                                 <button type="button" class="btn btn-success btn-link add_product"
-                                                                        onclick="enviar_datos_prod('/*datos del producto*/')"
                                                                         data-original-title="" title="">
                                                                     <i class="material-icons">add</i>
                                                                     <div class="ripple-container"></div>
@@ -86,7 +85,7 @@
                                                             </td>
                                                             {{-- @endcan --}}
                                                         </tr>
-                                                        @endforeach
+                                                    @endforeach
 
                                                     </tbody>
                                                 </table>
@@ -125,11 +124,13 @@
                                                                         {{__('Seleccione un cliente')}}
                                                                     </option>
                                                                     @foreach ($clientes as $cliente)
-                                                                        <option value="{{$cliente->id}}">
+                                                                        <option id="cliente_{{$cliente->id}}" value="{{$cliente->id}}"
+                                                                                categoria="{{$cliente->cli_categoria}}">
                                                                             {{ $cliente->cli_nombre }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
+                                                                <input type="hidden" id="categoriaCliente" value="">
                                                                 <span id="input-cli_nombre-error" class="error text-danger"
                                                                       for="input-cli_nombre" style="display: none
                                                                 {{--block--}};{{--This fixes a bootstrap known-issue--}}">
@@ -168,9 +169,9 @@
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <textarea  class="form-control"
-                                                                       name="cot_descripcion" id="cot_descripcion" type="text"
-                                                                       placeholder="{{ __('Descripción (Opcional)') }}" value=""
-                                                                       aria-required="true"></textarea>
+                                                                           name="cot_descripcion" id="cot_descripcion" type="text"
+                                                                           placeholder="{{ __('Descripción (Opcional)') }}" value=""
+                                                                           aria-required="true"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -178,34 +179,40 @@
 
 
 
-                                                        {{--<label class="col-sm-2 col-form-label">{{ __('Vendedor') }}</label>
-                                                        <div class="col-sm-9">
-                                                            <div class="form-group">
-                                                                <select class="js-example-basic-single js-states
-                                                                form-control" name="vend_nombre" id="input-vend_nombre"
-                                                                        data-style="select-with-transition" title=""
-                                                                        data-size="100" style="width: 100%">
-                                                                    <option value="" disabled selected
-                                                                            style="background-color:lightgray">
-                                                                        {{__('Seleccione un vendedor')}}
+                                                    {{--<label class="col-sm-2 col-form-label">{{ __('Vendedor') }}</label>
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group">
+                                                            <select class="js-example-basic-single js-states
+                                                            form-control" name="vend_nombre" id="input-vend_nombre"
+                                                                    data-style="select-with-transition" title=""
+                                                                    data-size="100" style="width: 100%">
+                                                                <option value="" disabled selected
+                                                                        style="background-color:lightgray">
+                                                                    {{__('Seleccione un vendedor')}}
+                                                                </option>
+                                                                @foreach ($clientes as $cliente)
+                                                                    <option value="{{$cliente->id}}">
+                                                                        {{ $cliente->cli_nombre }}
                                                                     </option>
-                                                                    @foreach ($clientes as $cliente)
-                                                                        <option value="{{$cliente->id}}">
-                                                                            {{ $cliente->cli_nombre }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </div>--}}
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>--}}
 
 
                                                 </div>
                                                 <div class="col-md-5">
                                                     <div class="text-right">
                                                         <h4 class="text-right">{{ $empresa->info_nombre }}</h4>
-                                                        <h6 class="text-right">Dirección: {{ $empresa->info_direccion }}</h6>
-                                                        <h6>Teléfono: {{ $empresa->info_telefono }}</h6>
-                                                        {{--<h6> email: empresara@gmail.com</h6>--}}
+                                                        <h6 class="text-right">{{ __('Dirección') }} {{ $empresa->info_direccion }}</h6>
+                                                        <h6>{{ __('Fax:') }}
+                                                            {{ $empresa->info_fax }}
+                                                            {{ __('Tel.:') }}
+                                                            {{ $empresa->info_telefono }}
+                                                        </h6>
+                                                        <h6>{{ __('Email:') }}
+                                                            {{ $empresa->info_correo }}
+                                                        </h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -279,41 +286,41 @@
                                                                 <table id="tabla_totales" class="table table-striped table-no-bordered
                                                                     table-hover datatable-rose" style="width: 100%">
                                                                     <tbody>
-                                                                        <tr>
-                                                                            <td><b>{{ __('Sumas') }}</b></td>
-                                                                            <td id="cot_sumas">0.00</td>
-                                                                            <input type="hidden" name="input_cot_sumas"
-                                                                                   id="input_cot_sumas"
-                                                                                   value="">
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><b>{{ __('IVA 13%') }}</b></td>
-                                                                            <td id="cot_iva">0.00</td>
-                                                                            <input type="hidden" name="input_cot_iva"
-                                                                                   id="input_cot_iva"
-                                                                                   value="">
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><b>{{ __('Subtotal') }}</b></td>
-                                                                            <td id="cot_subtotal">0.00</td>
-                                                                            <input type="hidden" name="input_cot_subtotal"
-                                                                                   id="input_cot_subtotal"
-                                                                                   value="">
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><b>{{ __('Retención 1%') }}</b></td>
-                                                                            <td id="cot_retencion">0.00</td>
-                                                                            <input type="hidden" name="input_cot_retencion"
-                                                                                   id="input_cot_retencion"
-                                                                                   value="">
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><b>{{ __('TOTAL') }}</b></td>
-                                                                            <td id="cot_total">0.00</td>
-                                                                            <input type="hidden" name="input_cot_total"
-                                                                                   id="input_cot_total"
-                                                                                   value="">
-                                                                        </tr>
+                                                                    <tr>
+                                                                        <td><b>{{ __('Sumas') }}</b></td>
+                                                                        <td id="cot_sumas">0.00</td>
+                                                                        <input type="hidden" name="input_cot_sumas"
+                                                                               id="input_cot_sumas"
+                                                                               value="">
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><b>{{ __('IVA 13%') }}</b></td>
+                                                                        <td id="cot_iva">0.00</td>
+                                                                        <input type="hidden" name="input_cot_iva"
+                                                                               id="input_cot_iva"
+                                                                               value="">
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><b>{{ __('Subtotal') }}</b></td>
+                                                                        <td id="cot_subtotal">0.00</td>
+                                                                        <input type="hidden" name="input_cot_subtotal"
+                                                                               id="input_cot_subtotal"
+                                                                               value="">
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><b>{{ __('Retención 1%') }}</b></td>
+                                                                        <td id="cot_retencion">0.00</td>
+                                                                        <input type="hidden" name="input_cot_retencion"
+                                                                               id="input_cot_retencion"
+                                                                               value="">
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><b>{{ __('TOTAL') }}</b></td>
+                                                                        <td id="cot_total">0.00</td>
+                                                                        <input type="hidden" name="input_cot_total"
+                                                                               id="input_cot_total"
+                                                                               value="">
+                                                                    </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -334,7 +341,9 @@
         </div>
     </div>
 
-    <div class="modal fade" id="cot_incompleta" role="dialog">
+@endsection
+@section('modals')
+    <div class="modal fade" id="mensaje_error" role="dialog">
         <div class="modal-dialog" role="document" id="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -344,12 +353,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body text-center" id="modal_body_cot_incompleta">
-                    <h3 class="modal-title">{{ __('No se ha agregado ningún producto a la cotización')}}</h3>
+                <div class="modal-body text-center" >
+                    <h3 class="modal-title" id="titulo_mensaje_error"></h3>
                 </div>
                 <div class="modal-footer">
                     <div class="d-grid gap-2 d-md-block">
-                        <button class="btn btn-primary" type="button" data-dismiss="modal">{{ __('Cerrar') }}</button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal">{{ __('Cerrar') }}</button>
                     </div>
                 </div>
             </div>
@@ -382,9 +391,10 @@
             </div>
         </div>
     </div>
-    <text id="guardar"> {{ __('¿Desea guardar la cotización?') }}</text>
-    <text id="facturar"> {{ __('¿Desea guardar y facturar la cotización?') }}</text>
 
+    <text id="guardar" class="d-none"> {{ __('¿Desea guardar la cotización?') }}</text>
+    <text id="facturar" class="d-none"> {{ __('¿Desea guardar y facturar la cotización?') }}</text>
+    <text id="mensaje_cot_incompleta" class="d-none">{{ __('No se ha agregado ningún producto a la cotización')}}</text>
 @endsection
 @push('js')
     <script src="{{asset('js/cotizaciones/create.js')}}"></script>
@@ -418,11 +428,11 @@
 
 
     <script type="text/javascript">
-            //input-cantidad
-            // Uso de mascaras en los campos
-            $(document).ready(function(){
-                $('.input-cantidad').mask('0000000');
-            });
+        //input-cantidad
+        // Uso de mascaras en los campos
+        $(document).ready(function(){
+            $('.input-cantidad').mask('0000000');
+        });
     </script>
     <script>
         $(document).ready(function() {

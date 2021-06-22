@@ -94,10 +94,14 @@
                                                 <h6 class="text-right">{{ __('Dirección:') }}
                                                     <text id="eliminar_fact_info_direccion">{{ $empresa->info_direccion }}</text>
                                                 </h6>
-                                                <h6>{{ __('Teléfono:') }}
-                                                    <text id="eliminar_fact_info_telefono">{{ $empresa->info_telefono }}</text>
+                                                <h6>{{ __('Fax:') }}
+                                                    <text id="fact_cot_info_telefono">{{ $empresa->info_fax }}</text>
+                                                    {{ __('Tel.:') }}
+                                                    <text id="fact_cot_info_telefono">{{ $empresa->info_telefono }}</text>
                                                 </h6>
-                                                {{--<h6>email: empresara@gmail.com</h6>--}}
+                                                <h6>{{ __('Email:') }}
+                                                    <text id="fact_cot_info_telefono">{{ $empresa->info_correo }}</text>
+                                                </h6>
                                             </div>
                                         </div>
                                     </div>

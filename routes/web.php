@@ -70,10 +70,10 @@ Route::group(['middleware' => ['auth','change']], function () {
 	Route::resource('proveedor', 'App\Http\Controllers\ProveedorController');
 
     Route::resource('cliente', ClienteController::class);
-    Route::get('buscar/cliente', [ClienteController::class, 'buscarCliente'])->name('cliente.buscar'); // Sin uso
     Route::resource('cotizacion', CotizacionController::class);
     Route::resource('facturacion', FacturacionController::class);
-    Route::post('facturacion/crear/{cotizacion}', [FacturacionController::class, 'crear'])->name('facturacion.crear');
+    Route::post('facturacion/crear/{cotizacion}', [FacturacionController::class, 'crear'])->name('facturacion.crear'); // botón facturar
+    Route::post('facturacion/crear/', [FacturacionController::class, 'crear2'])->name('facturacion.crear2'); // botón guardar y facturar
 
     Route::resource('raw', 'App\Http\Controllers\MaterialController');
     Route::resource('proyecto', 'App\Http\Controllers\ProyectoController');

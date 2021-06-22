@@ -118,7 +118,8 @@
                                                                         {{__('Seleccione un cliente')}}
                                                                     </option>
                                                                     @foreach ($clientes as $cliente)
-                                                                        <option value="{{$cliente->id}}"
+                                                                        <option id="cliente_{{$cliente->id}}" value="{{$cliente->id}}"
+                                                                                categoria="{{$cliente->cli_categoria}}"
                                                                                 @if ($facturacion->cliente->id == $cliente->id)
                                                                                 selected="selected" @endif">
                                                                         {{ $cliente->cli_nombre }}
@@ -171,9 +172,15 @@
                                                 <div class="col-md-5">
                                                     <div class="text-right">
                                                         <h4 class="text-right">{{ $empresa->info_nombre }}</h4>
-                                                        <h6 class="text-right">Dirección: {{ $empresa->info_direccion }}</h6>
-                                                        <h6>Teléfono: {{ $empresa->info_telefono }}</h6>
-                                                        {{--<h6> email: empresara@gmail.com</h6>--}}
+                                                        <h6 class="text-right">{{ __('Dirección') }} {{ $empresa->info_direccion }}</h6>
+                                                        <h6>{{ __('Fax:') }}
+                                                           {{ $empresa->info_fax }}
+                                                            {{ __('Tel.:') }}
+                                                            {{ $empresa->info_telefono }}
+                                                        </h6>
+                                                        <h6>{{ __('Email:') }}
+                                                            {{ $empresa->info_correo }}
+                                                        </h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -212,7 +219,7 @@
                                                     <tbody>
                                                     @foreach($facturacion->productos as $producto)
 
-                                                        <tr>{{$producto->prod_nombre}}
+                                                        <tr>
                                                             <td>
                                                                 {{$producto->prod_nombre}}
                                                                 <input type="hidden" value="{{$producto->id}}" id="prod_{{$producto->id}}">
@@ -344,7 +351,7 @@
                     @csrf
                     @method('put')
                     <div class="modal-header">
-                        <h3 class="modal-title">{{ __('¿Desea guardar la facturación?') }} {{--<b id="cli_nombre"></b>--}}</h3>
+                        <h3 class="modal-title">{{ __('¿Desea finalizar la facturación?') }} {{--<b id="cli_nombre"></b>--}}</h3>
                         <button class="close cerrarModal" type="button" aria-label="Close" data-dismiss="modal">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -354,7 +361,7 @@
                     <div class="modal-footer">
                         <div class="d-grid gap-2 d-md-block">
                             <button class="btn btn-light" type="button" data-dismiss="modal">{{ __('Cancelar') }}</button>
-                            <button class="btn btn-success" type="submit">{{ __('Guardar') }}</button>
+                            <button class="btn btn-success" type="submit">{{ __('Finalizar') }}</button>
                         </div>
                     </div>
                 </form>

@@ -44,6 +44,9 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'categoria_id' => ['required'],
+        ]);
 
         $producto = new Producto();
         $producto->prod_nombre      = $request->prod_nombre;
@@ -67,7 +70,7 @@ class ProductoController extends Controller
             $actual = $materialProducto->material->mat_cantidad;
             $materialProducto->material->mat_cantidad = $actual-$materialProducto->mat_prod_cantidad;
             $materialProducto->material->save();
-            
+
         }
         return redirect()->route('producto.index') ->with('success','Registro editado correctamente');
     }
@@ -131,7 +134,7 @@ class ProductoController extends Controller
                     $materialProducto->material_id          = $request->mat_id[$k];
                     $materialProducto->producto_id          = $producto->id;
                     $materialProducto->save();
-        
+
                     $actual = $materialProducto->material->mat_cantidad;
                     $materialProducto->material->mat_cantidad = $actual-$materialProducto->mat_prod_cantidad;
                     $materialProducto->material->save();
@@ -146,7 +149,7 @@ class ProductoController extends Controller
                         $materialProducto->mat_prod_cantidad=$request->mat_cantidad[$k];
                         $materialProducto->save();
                     }
-                }  
+                }
             }else{
                 //Para materia prima eliminada al editar
                 if(MaterialProducto::where('material_id',$request->mat_id[$k])->where('producto_id',$producto->id)->count()>0){
@@ -155,8 +158,8 @@ class ProductoController extends Controller
                     $materialProducto->material->mat_cantidad = $actual+$materialProducto->mat_prod_cantidad;
                     $materialProducto->material->save();
                     $materialProducto->delete();
-                }    
-            }    
+                }
+            }
         }
         return redirect()->route('producto.index') ->with('success','Registro editado correctamente');
     }

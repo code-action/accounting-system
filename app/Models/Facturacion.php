@@ -118,4 +118,20 @@ class Facturacion extends Model
         }
     }
 
+    public function actualizarExistencias(array $cot_id_prod, array $cot_cant)
+    {
+        $cantidades = []; // Diccionario que asocia el id_producto (clave) con la cantidad (valor) que piden de ese producto
+        for ($i = 0; $i < sizeof($cot_id_prod); $i++){
+            $cantidades[$cot_id_prod[$i]] = $cot_cant[$i];
+        }
+        //dd($cantidades);
+
+        foreach ($cot_id_prod as $id_prod) {
+            //dd('$id_pro', $id_prod, '$cantidades', $cantidades, '$cantidades[$id_prod]', $cantidades[$id_prod]);
+            $producto = Producto::findOrFail($id_prod);
+            $producto->prod_cantidad = $producto->prod_cantidad - $cantidades[$id_prod];
+            $producto->save();
+            //dd($producto->prod_cantidad);
+        }
+    }
 }

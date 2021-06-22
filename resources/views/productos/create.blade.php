@@ -32,6 +32,7 @@
                                             <option value="{{ $c->id }}">{{ $c->cat_nombre }}</option>
                                         @endforeach
                                     </select>
+                                    @include('alerts.feedback', ['field' => 'categoria_id'])
                                 </div>
                                 <div class="form-group bmd-form-group col-md-4">
                                     <label for="prod_precio" class="bmd-label-floating">Precio</label>

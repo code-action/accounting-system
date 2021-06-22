@@ -46,7 +46,8 @@ class ClienteController extends Controller
                 $cliente->cli_email = $request->get('email');
                 $cliente->cli_contacto = $request->get('contacto');
                 $cliente->save();*/
-        return redirect()->route('cliente.index')->withStatus(__('Cliente creado exitosamente.'));
+        return redirect()->route('cliente.index')->with('success',__('Registro creado exitosamente.'));
+            //->withStatus(__('Cliente creado exitosamente.'));
     }
 
     /**
@@ -82,7 +83,7 @@ class ClienteController extends Controller
     {
         //dd($request);
         $cliente->update($request->all());
-        return redirect()->route('cliente.index')->withStatus(__('Cliente editado exitosamente.'));
+        return redirect()->route('cliente.index')->with('success',__('Registro editado correctamente.'));
     }
 
     /**
@@ -94,6 +95,6 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         $cliente->delete();
-        return redirect()->route('cliente.index');
+        return redirect()->route('cliente.index')->with('success', __('Registro eliminado exitosamente.'));
     }
 }

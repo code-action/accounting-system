@@ -1,6 +1,6 @@
 $("#datatables").on('click', '.add_product', function () {
-    // Campos que no se muestran eb ka tabla "Agregar Productos" estarán en campos ocultos
-    // Validar exitencias
+    // Campos que no se muestran en la tabla "Agregar Productos" estarán en campos ocultos
+    // Validar existencias
     //console.log('id', $(this).parents('tr').find('td:eq(0)').find('input:eq(0)').val())
     id = parseInt($(this).parents('tr').find('td:eq(0)').find('input:eq(0)').val())
     producto = $(this).parents('tr').find('td:eq(0)').text().trim()
@@ -11,6 +11,7 @@ $("#datatables").on('click', '.add_product', function () {
 
     var table = $('#datatables2').DataTable()
     table.draw()
+
     var agregado = verificarProdEnLista(id)
     //console.log(agregado)
     // agregado[0] si existe el producto en la cotización es true
@@ -45,6 +46,26 @@ $("#datatables").on('click', '.add_product', function () {
     calcularTotales()
 });
 
+// Retorna si ha sido seleccionado un cliente y su categoria
+function clienteSeleccionado(){
+    seleccionado = false
+    categoria = null
+    idCliente = $('#input-cli_nombre').val()
+    //console.log($('#input-cli_nombre').val())
+    //console.log($('#cliente_'+$('#input-cli_nombre').val()).attr('categoria'))
+
+    if ($('#input-cli_nombre').val()){
+        seleccionado = true
+        categoria = $('#cliente_'+idCliente).attr('categoria')
+    }
+    return [seleccionado, categoria]
+}
+
+// Calcular totales cuando se seleccione un cliente, si es gran contribuyente realizará el cálculo
+$('#input-cli_nombre').on('change',function(){
+    calcularTotales()
+});
+
 function calcularTotales(){
     filas = $('#datatables2').find('tbody').find('tr')
     //console.log('calcularTotales')
@@ -55,15 +76,25 @@ function calcularTotales(){
     var retención = 0.0
     var total = 0.0
 
-    filas.each(function (i) {
-        sumas = sumas + parseFloat($(this).find('#precio_total').parents('td').text().trim())
-        console.log(sumas)
-    })
 
+    if (!filas.find('td').hasClass('dataTables_empty')) {
+        filas.each(function (i) {
+            sumas = sumas + parseFloat($(this).find('#precio_total').parents('td').text().trim())
+            // console.log(sumas)
+        })
+    }
+
+
+    //console.log($('#input-cli_nombre').val())
+    //console.log($('#cliente_'+$('#input-cli_nombre').val()).attr('categoria'))
+
+    clienteSel = clienteSeleccionado()
+    // clienteSeleccionado() funcion para saber si es 1: Gran Contribuyente, 2: Mediano Contribuyente, 3: Otros C.
     // Cálculos basados en la suma
     iva = sumas * 0.13
     subtotal = sumas + iva
-    if(sumas > 113)
+
+    if(sumas > 113 || clienteSel[1] === '1')
         retención = sumas * 0.01
 
     total = sumas + iva - retención
@@ -112,7 +143,7 @@ function verificarProdEnLista(idProdAdd){
 
 function actualizarProdEnLista(idProdAdd, cant, fila){
     // Valores actuales en la lista de cotizacion
-    console.log(fila)
+    //console.log(fila)
     cantidad = parseInt(fila.find('#cant_' + idProdAdd).val())
     precioU = parseFloat(fila.find('#prec_' + idProdAdd).val())
     //console.log('FUNCION actualizarProdEnLista', cantidad, precioU)
@@ -144,7 +175,7 @@ $("#datatables2").on('click', '.del_product', function () {
     producto = $(this).parents('tr').find('td:eq(0)').text().trim()
     cantidad = $(this).parents('tr').find('td:eq(1)').find('input:eq(0)').val()
     precioU = $(this).parents('tr').find('td:eq(2)').text().trim()
-    console.log(producto, cantidad, precioU)
+    //console.log(producto, cantidad, precioU)
 
     var table = $('#datatables2').DataTable()
     fila = $(this).parents('tr')
@@ -170,7 +201,7 @@ function reiniciarTotales(){
 }
 
 function guardar_datos_prod(url, titulo){
-    console.log('url', url)
+    //console.log('url', url)
     if(url)
         $('#form_guardar_cotizacion').prop('action', url)
 
@@ -294,12 +325,11 @@ function mostrarMensajesError(campos){
         $('#input-cli_estado-error').css({'display':'none'});
 
     if(campos.includes('cotizacion') === true){
-        $('#cot_incompleta').modal('show')
+        $('#titulo_mensaje_error').text($('#mensaje_cot_incompleta').text())
+        $('#mensaje_error').modal('show')
         //console.log('Cotización sin productos 2')
     }
 }
 
 
-function enviar_datos_prod() {
-}
 

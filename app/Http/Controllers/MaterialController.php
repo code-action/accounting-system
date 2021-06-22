@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Material;
+use App\Models\Proveedor;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use DB;
 
@@ -22,27 +24,47 @@ class MaterialController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        return view('materiales.create');
+        $proveedores = Proveedor::all();
+        return view('materiales.create', ['proveedores' => $proveedores]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
+        //dd($request);
         $request->validate([
             'mat_nombre' => 'required',
-            'mat_cantidad' => 'required'
+            // Matriz
+            'mat_cantidad' => 'required|array|min:1',
+            'mat_precio_u' => 'required|array|min:1',
+            'prov_nombre' => 'required|array|min:1',
+
+            // Campos de la matriz
+
         ]);
 
-        Material::create($request->all());
+        //Material::create($request->all());
+        $material = new Material();
+        $material->mat_nombre = $request->mat_nombre;
+        $material->mat_cantidad = 0;
+        $material->save();
+
+        for ($i = 0; $i < count($request->prov_nombre); $i++) {
+            //echo $request->prov_nombre[$i];
+            $material->proveedores()->attach($request->prov_nombre[$i],
+                ['mat_prov_preciou' => $request->mat_precio_u[$i],
+                    'mat_prov_cantidad' => $request->mat_cantidad[$i]]);
+        }
+
         return redirect()->route('raw.index')->with('success','Registro creado exitosamente.');
     }
 
@@ -61,12 +83,14 @@ class MaterialController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Material  $material
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $material = Material::find($id);
-        return view('materiales.edit', compact('material'));
+        $proveedores = Proveedor::all();
+        $material = Material::findOrFail($id);
+        //dd($material->proveedores);
+        return view('materiales.edit', compact('material', 'proveedores'));
     }
 
     /**
@@ -74,17 +98,38 @@ class MaterialController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Material  $material
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        //dd($request);
+        /*$request->validate([
             'mat_nombre' => 'required',
-            'mat_cantidad' => 'required'
-        ]);
+            'mat_cantidad' => 'required',
+            'prov_nombre' => 'required'
+        ]);*/
 
         $material = Material::find($id);
-        $material->update($request->all());
+        //$material->update($request->all());
+        $material->mat_nombre = $request->mat_nombre;
+        $material->mat_cantidad = 0;
+        $material->save();
+        //dd($material->pivot);
+        if ($request->id_eliminados) {
+            /*for ($i = 0; $i < count($request->id_eliminados); $i++) {
+                DB::table('material_proveedor')->where('id', $request->id_eliminados[$i])->delete();
+            }*/
+            DB::table('material_proveedor')->whereIn('id', $request->id_eliminados)->delete();
+        }
+
+        if ($request->nuevo_prov_nombre) {
+            for ($i = 0; $i < count($request->nuevo_prov_nombre); $i++) {
+                //echo $request->prov_nombre[$i];
+                $material->proveedores()->attach($request->nuevo_prov_nombre[$i],
+                    ['mat_prov_preciou' => $request->nuevo_mat_precio_u[$i],
+                        'mat_prov_cantidad' => $request->nuevo_mat_cantidad[$i]]);
+            }
+        }
 
         return redirect()->route('raw.index') ->with('success','Registro editado correctamente');
     }

@@ -13,11 +13,12 @@ class Material extends Model
 
     protected $fillable = [
         'mat_nombre',
-        'mat_cantidad'
     ];
 
     public function proveedores()
     {
         // return $this->hasMany('App\MaterialProvider');
+        return $this->belongsToMany(Proveedor::class)
+            ->withPivot('id', 'mat_prov_preciou', 'mat_prov_cantidad')->withTimestamps();
     }
 }

@@ -83,34 +83,34 @@
                                             </td>
 
                                             <td class="td-actions text-right">
-                                                <a rel="tooltip" class="btn btn-default btn-link"
-                                                  data-original-title="" title="{{-- __('Facturar') --}}"
-                                                   onclick="abrir_modal_facturar('{{$cotizacion}}', '{{$cotizacion->productos}}',
-                                                       '{{route('facturacion.crear', $cotizacion)}}')">
-                                                    <i class="material-icons">credit_card</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>
-
                                                 <a rel="tooltip" class="btn btn-info btn-link"
-                                                  {{-- href="{{ route('cotizacion.show', $cotizacion) }}"--}}
+                                                   {{-- href="{{ route('cotizacion.show', $cotizacion) }}"--}}
                                                    data-original-title="" title="{{-- __('Ver') --}}"
                                                    onclick="abrir_modal_ver('{{$cotizacion}}', '{{$cotizacion->productos}}',
                                                        '{{route('cotizacion.show', $cotizacion)}}')">
                                                     <i class="material-icons">assignment</i>
                                                 </a>
+                                                @if($cotizacion->cot_estado != 'Aceptada')
+                                                    <a rel="tooltip" class="btn btn-default btn-link"
+                                                      data-original-title="" title="{{-- __('Facturar') --}}"
+                                                       onclick="abrir_modal_facturar('{{$cotizacion}}', '{{$cotizacion->productos}}',
+                                                           '{{route('facturacion.crear', $cotizacion)}}')">
+                                                        <i class="material-icons">credit_card</i>
+                                                        <div class="ripple-container"></div>
+                                                    </a>
+                                                    <a rel="tooltip" class="btn btn-success btn-link"
+                                                       href="{{ route('cotizacion.edit', $cotizacion) }}"
+                                                       data-original-title="" title="{{-- __('Editar') --}}">
+                                                        <i class="material-icons">edit</i>
+                                                    </a>
 
-                                                <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="{{ route('cotizacion.edit', $cotizacion) }}"
-                                                   data-original-title="" title="{{-- __('Editar') --}}">
-                                                    <i class="material-icons">edit</i>
-                                                </a>
-
-                                                <a rel="tooltip" class="btn btn-danger btn-link"
-                                                        onclick="abrir_modal_eliminar('{{$cotizacion}}', '{{$cotizacion->productos}}',
-                                                        '{{route('cotizacion.destroy', $cotizacion)}}')"
-                                                        data-original-title="" title="{{-- __('Eliminar') --}}">
-                                                    <i class="material-icons">delete_outline</i>
-                                                </a>
+                                                    <a rel="tooltip" class="btn btn-danger btn-link"
+                                                            onclick="abrir_modal_eliminar('{{$cotizacion}}', '{{$cotizacion->productos}}',
+                                                            '{{route('cotizacion.destroy', $cotizacion)}}')"
+                                                            data-original-title="" title="{{-- __('Eliminar') --}}">
+                                                        <i class="material-icons">delete_outline</i>
+                                                    </a>
+                                                @endif
                                             </td>
 
                                         </tr>

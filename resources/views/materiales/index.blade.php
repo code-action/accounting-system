@@ -22,48 +22,82 @@
                         <div class="table-responsive">
                             <table id="datatables" class="table" style="display:none; width: 100%">
                                 <thead class=" text-info">
-                                    <th> ID </th>
-                                    <th> Nombre </th>
-                                    <th> Cantidad </th>
-                                    <th> F. Ingreso </th>
-                                    <th class="text-right"> Acciones </th>
+                                    {{--<th> ID </th>--}}
+                                    <th> {{ __('Nombre') }} </th>
+                                    <th> {{ __('Cant. Total') }} </th>
+                                    <th> {{ __('Cantidades') }}
+                                    <th> {{ __('Precio U.') }} </th>
+                                    <th>{{ __('Proveedor') }}</th>
+                                    <th> {{ __('F. Ingreso') }} </th>
+                                    <th class="text-right">{{ __('Acciones') }}</th>
                                 </thead>
                                 <tbody>
-                                    @foreach($materials as $m)
+                                @foreach($materials as $m)
+
                                         <tr>
-                                            <td> {{ $m->id }} </td>
+                                            {{--<td> {{ $m->id }} </td>--}}
                                             <td> {{ $m->mat_nombre }} </td>
-                                            <td> {{ $m->mat_cantidad }} </td>
-                                            <td> {{ $m->created_at }} </td>
+                                            <td>
+                                                @php
+                                                    $total_cantidad = 0;
+                                                @endphp
+                                                @foreach($m->proveedores as $p)
+                                                    @php
+                                                        $total_cantidad += $p->pivot->mat_prov_cantidad
+                                                    @endphp
+                                                @endforeach
+
+                                                {{$total_cantidad}}
+
+                                            </td>
+                                            <td>
+                                                @foreach($m->proveedores as $p)
+                                                    {{ $p->pivot->mat_prov_cantidad }}<br>
+                                                @endforeach
+                                            </td>
+
+                                            <td>
+                                                @foreach($m->proveedores as $p)
+                                                    {{number_format($p->pivot->mat_prov_preciou, 2, '.', ',')}}<br>
+
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($m->proveedores as $p)
+                                                    {{$p->prov_nombre}}<br>
+                                                @endforeach
+                                            </td>
+                                            <td> {{ $m->created_at->format('d-m-Y') }} </td>
                                             <td class="td-actions text-right">
-                                                <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('raw.edit', $m->id) }}" data-original-title="" title="Editar">
+                                                <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('raw.edit', $m) }}"
+                                                   data-original-title="" title="Editar">
                                                     <i class="material-icons">edit</i>
                                                 </a>
                                                 <form class="d-inline" id="form-delete" action="{{ route('raw.destroy', $m->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar"
-                                                    onclick="
-                                                        return swal({
-                                                        html: '{{ __('¿Desea eliminar la materia prima') }}'+' '+'<b>'+'{{$m->mat_nombre}}'+'?</b>',
-                                                            showCancelButton: true,
-                                                            reverseButtons : true,
-                                                            confirmButtonText: '{{ __('Eliminar') }}',
-                                                            cancelButtonText: '{{ __('Cancelar') }}',
-                                                            confirmButtonClass: 'btn btn-danger',
-                                                            cancelButtonClass: 'btn btn-default',
-                                                            buttonsStyling: false
-                                                        }).then((result) => {
-                                                            if (result.value) {
-                                                            submit();
-                                                            }
-                                                        });">
+                                                            onclick="
+                                                                return swal({
+                                                                html: '{{ __('¿Desea eliminar la materia prima') }}'+' '+'<b>'+'{{$m->mat_nombre}}'+'?</b>',
+                                                                showCancelButton: true,
+                                                                reverseButtons : true,
+                                                                confirmButtonText: '{{ __('Eliminar') }}',
+                                                                cancelButtonText: '{{ __('Cancelar') }}',
+                                                                confirmButtonClass: 'btn btn-danger',
+                                                                cancelButtonClass: 'btn btn-default',
+                                                                buttonsStyling: false
+                                                                }).then((result) => {
+                                                                if (result.value) {
+                                                                submit();
+                                                                }
+                                                                });">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -104,7 +138,7 @@
             },
             "columnDefs": [{
                 "orderable": false,
-                "targets": 3
+                "targets": [2,3,4,6]
             }, ],
         });
     });

@@ -57,7 +57,7 @@
                                 <form action="{{ route('ordencompra.destroy', $orden->id) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                
+
                                     @if(!$orden->ord_estado)
                                         <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('ordencompra.edit', $orden) }}" data-original-title="" title="Editar">
                                         <i class="material-icons">edit</i>

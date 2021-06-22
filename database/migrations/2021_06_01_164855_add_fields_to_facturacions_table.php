@@ -32,13 +32,12 @@ class AddFieldsToFacturacionsTable extends Migration
     public function down()
     {
         Schema::table('facturacions', function (Blueprint $table) {
-            $table->dropColumn('cliente_id');
+            //$table->dropColumn('facturacions_cliente_id_foreign');
             $table->dropColumn('fact_codigo');
             $table->dropColumn('fact_sumas');
             $table->dropColumn('fact_iva');
             $table->dropColumn('fact_subtotal');
             $table->dropColumn('fact_retencion');
-
 
         });
     }

@@ -28,7 +28,8 @@ class Producto extends Model
     // Relación muchos a muchos
     public function cotizaciones()
     {
-        return $this->belongsToMany(Cotizacion::class)->withPivot('cot_prod_cantidad', 'cot_prod_preciou');
+        return $this->belongsToMany(Cotizacion::class)
+            ->withPivot('cot_prod_cantidad', 'cot_prod_preciou', 'cot_prod_total')->withTimestamps();
     }
 
     public function cantidad($producto_id,$material_id){
@@ -38,6 +39,7 @@ class Producto extends Model
         else
             return $material->mat_prod_cantidad;
     }
+
     //validar que el producto no este en cotización o en facturación
     public function validarUso($id){
         $producto= Producto::find($id);

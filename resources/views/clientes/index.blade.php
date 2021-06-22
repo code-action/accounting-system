@@ -43,9 +43,9 @@
                                     </th>
                                     </thead>
                                     <tbody>
-                                        @php
-                                            $categorias=['Gran Contribuyente', 'Mediano Contribuyente', 'Otros Contribuyentes'];
-                                        @endphp
+                                    @php
+                                        $categorias=['Gran Contribuyente', 'Mediano Contribuyente', 'Otros Contribuyentes'];
+                                    @endphp
                                     @foreach ($clientes as $cliente)
                                         <tr>
                                             <td>
@@ -69,7 +69,7 @@
                                                    data-original-title=""
                                                    title="" onclick="abrir_modal_mostrar('{{$cliente}}',
                                                     '{{route('cliente.show', $cliente)}}')">
-                                                    <i class="material-icons">visibility</i>
+                                                    <i class="material-icons">assignment</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
                                                 {{--<a rel="tooltip" class="btn btn-dark btn-link"
@@ -86,10 +86,12 @@
 
 
                                                 <button rel="tooltip" class="btn btn-danger btn-link"
-                                                        onclick="abrir_modal_eliminar('{{$cliente->cli_nombre}}',
+                                                        {{--onclick="abrir_modal_eliminar('{{$cliente->cli_nombre}}',
+                                                            '{{route('cliente.destroy', $cliente)}}')"--}}
+                                                        onclick="abrir_modal_eliminar('{{$cliente}}',
                                                             '{{route('cliente.destroy', $cliente)}}')"
                                                         data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
+                                                    <i class="material-icons">delete_outline</i>
                                                     <div class="ripple-container"></div>
                                                 </button>
 
@@ -115,39 +117,7 @@
 
 
 @push('js')
-    <script type="text/javascript">
-        function abrir_modal_eliminar(cliente, url){
-            $('#form_eliminar_cliente').prop('action', url)
-
-            $('#cli_nombre').text('')
-            $('#cli_nombre').append(cliente)
-            $('#eliminar_cliente').modal('show');
-            //console.log(cliente, url)
-        }
-
-        function abrir_modal_mostrar(cliente, url){
-            cliente = JSON.parse(cliente)
-
-            //$('#form_eliminar_cliente').prop('action', url)
-
-            //$('#cli_nombre').text('')
-            $('#input-cli_nombre-mostrar').val(cliente.cli_nombre)
-            $('#input-cli_contacto-mostrar').val(cliente.cli_contacto)
-            $('#input-cli_email-mostrar').val(cliente.cli_email)
-            $('#input-cli_telefono-mostrar').val(cliente.cli_telefono)
-
-            $('#input-cli_categoria-mostrar').val(cliente.cli_categoria)
-            $('#input-cli_direccion-mostrar').val(cliente.cli_direccion)
-            $('#input-cli_telefono-mostrar').val(cliente.cli_telefono)
-            $('#input-cli_dui-mostrar').val(cliente.cli_dui)
-            $('#input-cli_nit-mostrar').val(cliente.cli_nit)
-            $('#input-cli_nrc-mostrar').val(cliente.cli_nrc)
-
-            $('#abrir_modal_mostrar').modal('show');
-            console.log(cliente, url)
-        }
-    </script>
-
+    <script src="{{asset('js/clientes/index.js')}}"></script>
     <script>
         $(document).ready(function() {
             $('#datatables').fadeIn(1100);

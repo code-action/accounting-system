@@ -91,7 +91,6 @@
                                             <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Categoría') }}</label>
                                             <div class="col-sm-10">
                                                 <div class="form-group">
-                                                    @php ($categorias=['Gran Contribuyente', 'Mediano Contribuyente', 'Otros Contribuyentes'])
                                                     <select class="js-example-basic-single js-states has-error
                                                                 form-control" name="cli_categoria" id="input-cli_categoria"
                                                             data-style="select-with-transition" title=""
@@ -100,9 +99,10 @@
                                                                 style="background-color:lightgray">
                                                             {{__('Seleccione una categoría de contribuyente')}}
                                                         </option>
-                                                        @foreach($categorias as $cat)
-                                                            <option value="{{$cat}}">{{$cat}}</option>
-                                                        @endforeach
+                                                        <option value="1">Gran Contribuyente</option>
+                                                        <option value="2">Mediano Contribuyente</option>
+                                                        <option value="3">Otros Contribuyentes</option>
+
                                                     </select>
                                                     @include('alerts.feedback', ['field' => 'cli_categoria'])
                                                 </div>
@@ -116,7 +116,8 @@
                                                 <div class="form-group{{ $errors->has('cli_dui') ? ' has-danger' : '' }}">
                                                     <input class="form-control{{ $errors->has('cli_contacto') ? ' is-invalid' : '' }}"
                                                            name="cli_dui" id="input-cli_dui" type="text"
-                                                           placeholder="{{ __('Documento Único de Identidad (Opcional)') }}" value="{{ old('cli_dui') }}"
+                                                           placeholder="{{ __('Documento Único de Identidad (Opcional)') }}"
+                                                           value="{{ old('cli_dui') }}"
                                                            aria-required="true"/>
                                                     @include('alerts.feedback', ['field' => 'cli_dui'])
                                                 </div>
