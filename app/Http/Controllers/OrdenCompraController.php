@@ -50,7 +50,10 @@ class OrdenCompraController extends Controller
             $ordenCompra->ord_fecha=$request->ord_fecha;
             $ordenCompra->proveedor_id=$request->proveedor_id;
             $ordenCompra->ord_total=$request->ord_total;
-            $ordenCompra->ord_descuento=$request->ord_descuento;
+            if($request->ord_descuento!="")
+                $ordenCompra->ord_descuento=$request->ord_descuento;
+            else
+                $ordenCompra->ord_descuento=0;
             $ordenCompra->ord_iva_incluido=$request->ord_iva_incluido;
             $ordenCompra->save();
             
