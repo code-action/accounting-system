@@ -24,10 +24,10 @@
                                 <thead class=" text-info">
                                     {{--<th> ID </th>--}}
                                     <th> {{ __('Nombre') }} </th>
-                                    <th> {{ __('Cant. Total') }} </th>
-                                    <th> {{ __('Cantidades') }}
+                                    <th> {{ __('Cantidad Total') }} </th>
+                                    {{--<th> {{ __('Cantidades') }} </th>
                                     <th> {{ __('Precio U.') }} </th>
-                                    <th>{{ __('Proveedor') }}</th>
+                                    <th>{{ __('Proveedor') }}</th>--}}
                                     <th> {{ __('F. Ingreso') }} </th>
                                     <th class="text-right">{{ __('Acciones') }}</th>
                                 </thead>
@@ -46,16 +46,13 @@
                                                         $total_cantidad += $p->pivot->mat_prov_cantidad
                                                     @endphp
                                                 @endforeach
-
                                                 {{$total_cantidad}}
-
                                             </td>
-                                            <td>
+                                            {{--<td>
                                                 @foreach($m->proveedores as $p)
                                                     {{ $p->pivot->mat_prov_cantidad }}<br>
                                                 @endforeach
                                             </td>
-
                                             <td>
                                                 @foreach($m->proveedores as $p)
                                                     {{number_format($p->pivot->mat_prov_preciou, 2, '.', ',')}}<br>
@@ -66,9 +63,16 @@
                                                 @foreach($m->proveedores as $p)
                                                     {{$p->prov_nombre}}<br>
                                                 @endforeach
-                                            </td>
+                                            </td>--}}
                                             <td> {{ $m->created_at->format('d-m-Y') }} </td>
                                             <td class="td-actions text-right">
+                                                <a rel="tooltip" class="btn btn-info btn-link"
+                                                   data-original-title=""
+                                                   title="" onclick="abrir_modal_mostrar('{{$m}}',
+                                                    '{{route('cliente.show', $m)}}')">
+                                                    <i class="material-icons">assignment</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
                                                 <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('raw.edit', $m) }}"
                                                    data-original-title="" title="Editar">
                                                     <i class="material-icons">edit</i>
@@ -109,39 +113,42 @@
 </div>
 
 @endsection
-
+@section('modals')
+    @include('materiales.modalShow')
+@endsection
 @push('js')
-<script>
-    $(document).ready(function () {
-        $('#datatables').fadeIn(1100);
-        $('#datatables').DataTable({
-            "pagingType": "full_numbers",
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            responsive: true,
-            language: {
-                search: "_INPUT_",
-                searchPlaceholder: "Buscar materia prima",
-                "lengthMenu": 'Mostrar _MENU_ registros',
-                "info": 'Mostrando página _PAGE_ de _PAGES_',
-                "infoEmpty": 'No hay registros disponibles',
-                "zeroRecords": 'Registro no encontrado',
-                "infoFiltered": '(Total de registros filtrados _MAX_)',
-                "paginate": {
-                    "next": 'siguiente',
-                    "previous": 'anterior',
-                    "first": 'primero',
-                    "last": 'último'
+    <script src="{{asset('js/materiales/index.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatables').fadeIn(1100);
+            $('#datatables').DataTable({
+                "pagingType": "full_numbers",
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Buscar materia prima",
+                    "lengthMenu": 'Mostrar _MENU_ registros',
+                    "info": 'Mostrando página _PAGE_ de _PAGES_',
+                    "infoEmpty": 'No hay registros disponibles',
+                    "zeroRecords": 'Registro no encontrado',
+                    "infoFiltered": '(Total de registros filtrados _MAX_)',
+                    "paginate": {
+                        "next": 'siguiente',
+                        "previous": 'anterior',
+                        "first": 'primero',
+                        "last": 'último'
+                    },
                 },
-            },
-            "columnDefs": [{
-                "orderable": false,
-                "targets": [2,3,4,6]
-            }, ],
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": [3]
+                }, ],
+            });
         });
-    });
 
-</script>
+    </script>
 @endpush

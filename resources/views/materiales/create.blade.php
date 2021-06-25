@@ -54,7 +54,7 @@
                                                                    aria-required="true"/>
                                                             <span id="mat_cantidad1-error" class="error text-danger"
                                                                   for="input-mat_cantidad1" style="display: none;">
-                                                                {{ __('El campo cantidad es requerido')}}
+                                                                {{ __('El campo cantidad es requerido y debe ser un número entero')}}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -226,7 +226,7 @@
         </div>
     </div>
 
-    <text id="mensaje_sin_proveedores" class="d-none">{{ __('No ha agregado ningún proveedor')}}</text>
+    <text id="mensaje_sin_proveedores" class="d-none">{{ __('No se ha agregado ningún proveedor')}}</text>
 @endsection
 
 @push('js')

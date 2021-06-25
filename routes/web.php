@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth','change']], function () {
     Route::resource('facturacion', FacturacionController::class);
     Route::post('facturacion/crear/{cotizacion}', [FacturacionController::class, 'crear'])->name('facturacion.crear'); // botón facturar
     Route::post('facturacion/crear/', [FacturacionController::class, 'crear2'])->name('facturacion.crear2'); // botón guardar y facturar
+    Route::resource('empaque', \App\Http\Controllers\EmpaqueController::class);
 
     Route::resource('raw', 'App\Http\Controllers\MaterialController');
     Route::resource('proyecto', 'App\Http\Controllers\ProyectoController');

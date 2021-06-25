@@ -18,7 +18,8 @@ class MaterialController extends Controller
     public function index()
     {
         $materials = Material::all();
-        return view('materiales.index', compact('materials'));
+        $proveedores = Proveedor::all();
+        return view('materiales.index', compact('materials', 'proveedores'));
     }
 
     /**
@@ -116,9 +117,6 @@ class MaterialController extends Controller
         $material->save();
         //dd($material->pivot);
         if ($request->id_eliminados) {
-            /*for ($i = 0; $i < count($request->id_eliminados); $i++) {
-                DB::table('material_proveedor')->where('id', $request->id_eliminados[$i])->delete();
-            }*/
             DB::table('material_proveedor')->whereIn('id', $request->id_eliminados)->delete();
         }
 

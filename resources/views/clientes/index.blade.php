@@ -91,7 +91,7 @@
                                                         onclick="abrir_modal_eliminar('{{$cliente}}',
                                                             '{{route('cliente.destroy', $cliente)}}')"
                                                         data-original-title="" title="">
-                                                    <i class="material-icons">delete_outline</i>
+                                                    <i class="material-icons">close</i>
                                                     <div class="ripple-container"></div>
                                                 </button>
 

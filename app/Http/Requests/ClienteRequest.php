@@ -42,7 +42,7 @@ class ClienteRequest extends FormRequest
                         'required', 'min:5','max:100','unique:clientes','email'
                     ],
                     'cli_direccion' => [
-                        'required', 'min:20', 'max:300'
+                        'required', 'min:15', 'max:300'
                     ],
                     'cli_dui' => [
                     ],

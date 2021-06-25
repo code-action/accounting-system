@@ -34,8 +34,6 @@ $("#contenedor").on('click', '.add', function () {
         //linea.find('#i-prov_nombre').attr('id', "prov_nombre" + i).removeAttr("disabled")//.append(options) ---------
         //$("prov_nombre" + i).append(options)
 
-
-
         lineaClone.attr('style', 'inline')
 
 
@@ -72,12 +70,13 @@ function validarLinea(){
     camposError = []
 
     //console.log(linea0.find('#mat_cantidad1').val())
-    if (linea0.find('#mat_cantidad1').val() === '' || linea0.find('#mat_cantidad1').val() < 0) {
+    if (linea0.find('#mat_cantidad1').val() === '' || linea0.find('#mat_cantidad1').val() < 0
+        || !Number.isInteger(parseFloat(linea0.find('#mat_cantidad1').val()))) {
         //console.log('Cantidad sin seleccionar')
         camposError.push('cantidad')
         camposCorrectos = false
     }
-    console.log(linea0.find('#mat_precio_u1').val().length)
+    //console.log(linea0.find('#mat_precio_u1').val().length)
 
     if (linea0.find('#mat_precio_u1').val() === '' || linea0.find('#mat_precio_u1').val() < 0
         || linea0.find('#mat_precio_u1').val().length > 6) {
