@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth','change']], function () {
     Route::resource('tarea', 'App\Http\Controllers\TareaController');
     Route::resource('ubicacion', 'App\Http\Controllers\UbicacionController');
 	Route::resource('informacion', 'App\Http\Controllers\InformacionController');
+    Route::resource('medida', 'App\Http\Controllers\MedidaController');
     Route::resource('categoria', 'App\Http\Controllers\CategoriaController');
     Route::resource('producto', 'App\Http\Controllers\ProductoController');
 	Route::resource('ordencompra', 'App\Http\Controllers\OrdenCompraController');

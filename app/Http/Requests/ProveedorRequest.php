@@ -65,8 +65,8 @@ class ProveedorRequest extends FormRequest
     public function attributes()
     {
         return [
-            'prov_nombre' => 'código',
-            'prov_encargado' => 'nombre',
+            'prov_nombre' => 'nombre',
+            'prov_encargado' => 'encargado',
             'prov_telefono' => 'teléfono',
             'prov_email' => 'email',
         ];
