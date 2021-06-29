@@ -38,7 +38,43 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="row" id="datosPresentacion">
+                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Presentación') }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <select class="js-example-basic-single js-states form-control" name="empaque_id" id="empaque_id" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
+                                                        <option value="" selected disabled style="background-color:lightgray">{{__('Seleccione la presentaciòn')}}</option>
+                                                        @foreach ($empaques as $empaque)
+                                                            <option value="{{$empaque->id}}">{{ $empaque->emp_nombre }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group {{ $errors->has('mat_contenido') ? ' has-danger' : '' }}">
+                                                    <input class="form-control{{ $errors->has('mat_contenido') ? ' is-invalid' : '' }}"
+                                                        name="mat_contenido" id="mat_contenido" type="number"
+                                                        placeholder="{{ __('Contenido') }}" value=""
+                                                        aria-required="true" min="0.01" step="0.01" onKeyPress= 'return positiveNumberH( this, event,this.value);'/>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <select class="js-example-basic-single js-states form-control" name="medida_id" id="medida_id" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
+                                                        <option value="" selected disabled style="background-color:lightgray">{{__('Seleccione una unidad de medida')}}</option>
+                                                        @foreach ($medidas as $medida)
+                                                            <option value="{{$medida->id}}">{{ $medida->med_nombre }} ({{$medida->med_abreviatura}})</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <span id="i-mat_contenido-error" class="error text-danger" style="display: none;">
+                                                    {{ __('Los campos de la presentación son requeridos')}}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <br><br><br>
                                     <div id="contenedor" class="col-md-9 col-sm-12 offset-md-1 offset-lg-2">
@@ -233,7 +269,6 @@
 
     <script src="{{asset('js/materiales/create.js')}}"></script>
     <script>
-
         $("#select_prov_nombre1").select2({
             language: {
                 noResults: function() {
@@ -244,6 +279,32 @@
                 }
             },
             placeholder: '{{__('Seleccione un proveedor')}}',
+        })
+    </script>
+    <script>
+        $("#empaque_id").select2({
+            language: {
+                noResults: function() {
+                    return "{{__('Resultado no encontrado')}}";
+                },
+                searching: function() {
+                    return "{{__('Buscando')}}...";
+                }
+            },
+            placeholder: '{{__('Seleccione la presentación')}}',
+        })
+    </script>
+    <script>
+        $("#medida_id").select2({
+            language: {
+                noResults: function() {
+                    return "{{__('Resultado no encontrado')}}";
+                },
+                searching: function() {
+                    return "{{__('Buscando')}}...";
+                }
+            },
+            placeholder: '{{__('Seleccione una unidad de medida')}}',
         })
     </script>
 @endpush

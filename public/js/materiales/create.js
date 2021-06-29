@@ -135,6 +135,16 @@ function mostrarMensajesError(campos) {
         $('#i-mat_nombre-error').css({'display':'none'});
         $('#form-group-mat_nombre').removeClass('has-danger')
     }
+    if(campos.includes('presentacion') === true){
+        console.log('Aquì 1')
+        //console.log('Vendedor sin seleccionar 2')
+        $('#i-mat_contenido-error').css({'display':'block'});
+        // $('#form-group-mat_nombre').addClass('has-danger')
+    }else{
+        console.log('Aquì 2')
+        $('#i-mat_contenido-error').css({'display':'none'});
+        // $('#form-group-mat_nombre').removeClass('has-danger')
+    }
 
 
     if(campos.includes('sin_proveedor') === true){
@@ -172,6 +182,15 @@ function validarSubmit(){
         //console.log('Sin proveedor')
         camposError.push('sin_proveedor')
         camposCorrectos = false
+    }
+    console.log(parseFloat($('#mat_contenido').val()))
+        //Nuevo
+    if ($('#mat_contenido').val().trim() === '' || $('#empaque_id').find('option:selected').val() == "" || $('#medida_id').find('option:selected').val() == "") {
+        camposError.push('presentacion')
+        camposCorrectos = false;
+    }else if(parseFloat($('#mat_contenido').val())==0){
+        camposError.push('presentacion')
+        camposCorrectos = false;
     }
 
     //console.log(camposCorrectos, camposError)

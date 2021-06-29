@@ -33,10 +33,12 @@
                                 </thead>
                                 <tbody>
                                 @foreach($materials as $m)
-
+                                    @php
+                                        $m->mat_nombre=$m->mat_nombre.(!is_null($m->empaque)?" ".$m->empaque->emp_nombre." ":"").$m->mat_contenido.(!is_null($m->medida)?$m->medida->med_abreviatura:"");
+                                    @endphp
                                         <tr>
                                             {{--<td> {{ $m->id }} </td>--}}
-                                            <td> {{ $m->mat_nombre }} </td>
+                                            <td> {{ $m->mat_nombre }}</td>
                                             <td>
                                                 @php
                                                     $total_cantidad = 0;

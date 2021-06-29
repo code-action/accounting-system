@@ -76,9 +76,13 @@ class MedidaController extends Controller
      * @param  \App\Models\Medida  $medida
      * @return \Illuminate\Http\Response
      */
-    public function update(MedidaRequest $request, Medida $medida)
+    public function update(MedidaRequest $request, $id)
     {
-        //
+        $medida = Medida::findOrFail($id);        
+        $medida->med_nombre=$request->med_nombre;
+        $medida->med_abreviatura=$request->med_abreviatura;
+        $medida->save();
+        return redirect()->route('medida.index')->with('success','Registro editado exitosamente.');
     }
 
     /**

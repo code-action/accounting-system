@@ -6,6 +6,8 @@ use App\Models\Material;
 use App\Models\Proveedor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Models\Empaque;
+use App\Models\Medida;
 use DB;
 
 class MaterialController extends Controller
@@ -30,7 +32,9 @@ class MaterialController extends Controller
     public function create()
     {
         $proveedores = Proveedor::all();
-        return view('materiales.create', ['proveedores' => $proveedores]);
+        $empaques = Empaque::orderBy('emp_nombre')->get();
+        $medidas = Medida::orderBy('med_nombre')->get();
+        return view('materiales.create', compact('empaques', 'proveedores', 'medidas'));
     }
 
     /**
@@ -57,6 +61,9 @@ class MaterialController extends Controller
         $material = new Material();
         $material->mat_nombre = $request->mat_nombre;
         $material->mat_cantidad = 0;
+        $material->empaque_id=$request->empaque_id;
+        $material->mat_contenido=$request->mat_contenido;
+        $material->medida_id=$request->medida_id;
         $material->save();
 
         for ($i = 0; $i < count($request->prov_nombre); $i++) {
@@ -90,8 +97,9 @@ class MaterialController extends Controller
     {
         $proveedores = Proveedor::all();
         $material = Material::findOrFail($id);
-        //dd($material->proveedores);
-        return view('materiales.edit', compact('material', 'proveedores'));
+        $empaques = Empaque::orderBy('emp_nombre')->get();
+        $medidas = Medida::orderBy('med_nombre')->get();
+        return view('materiales.edit', compact('material', 'proveedores', 'empaques', 'medidas'));
     }
 
     /**
@@ -114,6 +122,9 @@ class MaterialController extends Controller
         //$material->update($request->all());
         $material->mat_nombre = $request->mat_nombre;
         $material->mat_cantidad = 0;
+        $material->empaque_id=$request->empaque_id;
+        $material->mat_contenido=$request->mat_contenido;
+        $material->medida_id=$request->medida_id;
         $material->save();
         //dd($material->pivot);
         if ($request->id_eliminados) {
