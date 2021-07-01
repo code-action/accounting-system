@@ -29,6 +29,19 @@ function msmError(field, type = 0) {
         }
     });
 }
+function msmInfo(field) {
+    $.notify({
+        icon: "info",
+        message: field
+    }, {
+        type: "info",
+        timer: 3000,
+        placement: {
+            from: "top",
+            align: "right"
+        }
+    });
+}
 
 function positiveNumber(obj, e, valor) {
     val = (document.all) ? e.keyCode : e.which;

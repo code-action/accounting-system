@@ -125,7 +125,10 @@ class OrdenCompraController extends Controller
             $ordenCompra->ord_fecha=$request->ord_fecha;
             $ordenCompra->proveedor_id=$request->proveedor_id;
             $ordenCompra->ord_total=$request->ord_total;
-            $ordenCompra->ord_descuento=$request->ord_descuento;
+            if($request->ord_descuento!="")
+                $ordenCompra->ord_descuento=$request->ord_descuento;
+            else
+                $ordenCompra->ord_descuento=0;
             $ordenCompra->ord_iva_incluido=$request->ord_iva_incluido;
             $ordenCompra->save();
             
@@ -202,5 +205,18 @@ class OrdenCompraController extends Controller
         $orden->save();
         DB::commit();
         return redirect()->route('ordencompra.index')->with('success','Registro creado exitosamente.');
+    }
+
+    public function filtro(Request $request){
+        $filtrados=Material::join('empaques','empaques.id','=','materiales.empaque_id')
+            ->join('medidas', 'medidas.id', '=', 'materiales.medida_id')
+            ->select('materiales.id','materiales.mat_codigo','materiales.mat_nombre','materiales.mat_contenido', 'empaques.emp_nombre', 'medidas.med_abreviatura')
+            ->where('mat_codigo','like',"%".$request->buscar."%")
+            ->orWhere('mat_nombre','like',"%".$request->buscar."%")
+            ->orderBy('mat_nombre')
+            ->take(10)
+            ->get();
+        // $filtrados=Material::where('mat_codigo','like',"%".$request->buscar."%")->orWhere('mat_nombre','like',"%".$request->buscar."%")->with('empaque','medida')->take(10)->get();
+        return $filtrados;
     }
 }

@@ -1,43 +1,8 @@
-$('#agregarMateria').click(function () {
-    if (validarAux()) {
-        cantidad = parseFloat($('#aux_cantidad').val())
-        costo = parseFloat($('#aux_costo').val()).toFixed(2)
-        material_id = $('#aux_material').find('option:selected').val()
-        text_material = $('#aux_material').find('option:selected').text()
-
-        html = "<tr>" +
-            "<td>" +
-            text_material +
-            "<input type='hidden' name='material_id[]' value='" + material_id + "'/>" +
-            "</td>" +
-            "<td class='text-right'>" +
-            cantidad +
-            "<input type='hidden' name='mo_cantidad[]' value='" + cantidad + "'/>" +
-            "</td>" +
-            "<td class='text-right'>" +
-            costo +
-            "<input type='hidden' name='mo_costo[]' value='" + formatNumber(costo) + "'/>" +
-            "</td>" +
-            "<td class='text-right'>" +
-            formatNumber((costo * cantidad).toFixed(2)) +
-            "<input type='hidden' name='estado_fila[]' value='nuevo'/>" +
-            "</td>" +
-            "<td class='td-actions text-right'>" +
-            '<button rel="tooltip" class="btn btn-danger btn-link deleteMaterial" type="button">' +
-            '<i class="material-icons">close</i>' +
-            '<div class="ripple-container"></div>' +
-            '</button>' +
-            "<input type='hidden' name='materia_orden_id[]' value=''/>" +
-            "</td>" +
-            "</tr>";
-
-        $('#tablaMateriales').find('tbody').append(html)
-        refreshTotal()
-
+function validarAux(material_id) {
+    if ($('.added'+material_id).length>0) {
+        msmError("La materia prima ya fue agregada",1);
+        return false;
     }
-    refreshActiveFunctions();
-});
-function validarAux() {
     if ($('#aux_cantidad').val().trim() == '') {
         msmError("cantidad");
         return false;
@@ -52,10 +17,6 @@ function validarAux() {
         msmError("costo");
         return false;
     }
-    if ($('#aux_material').find('option:selected').val() == "") {
-        msmError("materia prima");
-        return false;
-    }
     return true;
 }
 
@@ -67,6 +28,7 @@ $('#guardarOrden').click(function () {
 });
 
 function refreshActiveFunctions() {
+    console.log("refresh")
     $(".deleteMaterial").unbind()
     $('.deleteMaterial').click(function () {
         if ($(this).parent('td').parent('tr').find('input:eq(3)').val() == "nuevo")
@@ -76,6 +38,48 @@ function refreshActiveFunctions() {
             $(this).parent('td').parent('tr').addClass('d-none')
         }
         refreshTotal()
+    });
+    $(".agregarMateria").unbind()
+    $('.agregarMateria').click(function () {
+        console.log("Aquì")
+        if (validarAux($(this).parents('tr').find('input:eq(0)').val())) {
+            cantidad = parseFloat($('#aux_cantidad').val())
+            costo = parseFloat($('#aux_costo').val()).toFixed(2)
+            
+            material_id = $(this).parents('tr').find('input:eq(0)').val()
+            text_material = $(this).parents('tr').find('td:eq(0)').text()+" "+$(this).parents('tr').find('td:eq(1)').text()
+            console.log(material_id)
+    
+            html = "<tr class='added"+material_id+"'>" +
+                "<td>" +
+                text_material +
+                "<input type='hidden' name='material_id[]' value='" + material_id + "'/>" +
+                "</td>" +
+                "<td class='text-right'>" +
+                cantidad +
+                "<input type='hidden' name='mo_cantidad[]' value='" + cantidad + "'/>" +
+                "</td>" +
+                "<td class='text-right'>" +
+                costo +
+                "<input type='hidden' name='mo_costo[]' value='" + formatNumber(costo) + "'/>" +
+                "</td>" +
+                "<td class='text-right'>" +
+                formatNumber((costo * cantidad).toFixed(2)) +
+                "<input type='hidden' name='estado_fila[]' value='nuevo'/>" +
+                "</td>" +
+                "<td class='td-actions text-right'>" +
+                '<button rel="tooltip" class="btn btn-danger btn-link deleteMaterial" type="button">' +
+                '<i class="material-icons">close</i>' +
+                '<div class="ripple-container"></div>' +
+                '</button>' +
+                "<input type='hidden' name='materia_orden_id[]' value=''/>" +
+                "</td>" +
+                "</tr>";
+    
+            $('#tablaMateriales').find('tbody').append(html)
+            refreshTotal()
+            msmInfo("Materia prima agregada")
+        }
     });
 }
 
@@ -157,3 +161,42 @@ $('#ord_descuento').keyup(function () {
 })
 
 refreshActiveFunctions()
+let timeout
+$('#modal-filtrar').keyup(function(){
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      filtrar(this)
+      clearTimeout(timeout)
+    },1000)  
+})
+function filtrar(field){
+    if($(field).val().trim()!=""){
+        $('#tabla-filtro').find('tbody').find('tr').remove()
+        routeRequest = $('#mainRoute').val() + "materiaprimafiltro"
+        $.ajax({
+            type: 'get',
+            url: routeRequest,
+            data: {
+                buscar: $(field).val(),
+            },
+            success: function (r) {
+                $(r).each(function (key, value){
+                    html=
+                        "<tr>"+
+                        "<td>"+value.mat_codigo+"</td>"+
+                        "<td>"+value.mat_nombre+" "+value.emp_nombre+" "+value.mat_contenido+value.med_abreviatura+"</td>"+
+                        "<td class='td-actions text-right'>"+
+                        '<button type="button" rel="tooltip" class="btn btn-info agregarMateria" href="#" data-original-title="" title="Eliminar">'+
+                        '<i class="material-icons">add</i></button>'+
+                        "<input value='"+value.id+"' type='hidden'/>"+
+                        "</td>"+
+                        "</tr>"
+                        $('#tabla-filtro').find('tbody').append(html)  
+                })
+                refreshActiveFunctions();
+            }
+        })
+    }else{
+        $('#tabla-filtro').find('tbody').find('tr').remove()
+    }
+}

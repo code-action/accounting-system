@@ -30,80 +30,25 @@
                                             <h4><b>Agregar materia prima</b></h4>
                                         </div>
                                     <div class="card-body text-dark border">
-                                    
-                                    <div class="row">
-                                        <div class="form-group bmd-form-group col-md-6">
-                                            <label for="aux_cantidad" class="bmd-label-floating">Cantidad</label>
-                                            <input class="form-control" name="aux_cantidad" id="aux_cantidad" type="number" min="1" step="1" onKeyPress= 'return positiveNumber( this, event,this.value);'/>
-                                        </div>
-
-                                        <div class="form-group bmd-form-group col-md-6">
-                                            <label for="aux_costo" class="bmd-label-floating">Costo</label>
-                                            <input class="form-control" name="aux_costo" id="aux_costo" type="number" min="0.01" step="0.01" onKeyPress= 'return positiveNumberH( this, event,this.value);'/>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label">{{ __('Buscar') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <select class="js-example-basic-single js-states form-control" id="aux_material" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
-                                                    <option value="" disabled selected style="background-color:lightgray">{{__('Seleccione una materia prima')}}</option>
-                                                    @foreach ($materiales as $material)
-                                                        <option value="{{$material->id}}">{{ $material->mat_nombre }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <button class="btn btn-info btn-sm" id="agregarMateria" type="button">
-                                                <i class="material-icons">add_shopping_cart</i>
-                                                <div class="ripple-container"></div>
-                                            </button>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <button class="btn btn-success btn-sm" id="guardarOrden" type="button">
-                                                <i class="material-icons">done</i>
-                                                <div class="ripple-container"></div>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-8">
-
-                                    <div class="card border mb-3" style="max-width: 100rem;">
-
-                                        <div class="card-header bg-light" {{--style="border: dimgray 1px solid"--}}>
-                                            <h4><b>Agregados</b></h4>
-                                        </div>
-                                    <div class="card-body text-dark border">
-
                                         <div class="row">
-                                            <label class="col-sm-2 col-form-label">{{ __('N° de Orden') }}</label>
-                                            <div class="col-sm-4">
+                                            <label class="col-sm-4 col-form-label">{{ __('N° de Orden') }}</label>
+                                            <div class="col-sm-8">
                                                 <div class="form-group">
                                                 <input class="form-control" name="ord_numero" id="ord_numero" type="text"/>
                                                 @include('alerts.feedback', ['field' => 'ord_fecha'])
                                                 </div>
                                             </div>
-                                            <label class="col-sm-2 col-form-label">{{ __('Fecha') }}</label>
-                                            <div class="col-sm-4">
+                                            <label class="col-sm-4 col-form-label">{{ __('Fecha') }}</label>
+                                            <div class="col-sm-8">
                                                 <div class="form-group">
                                                 <input class="form-control" name="ord_fecha" id="ord_fecha" type="date"/>
                                                 @include('alerts.feedback', ['field' => 'ord_fecha'])
                                                 </div>
                                             </div>
                                         </div>
-    
                                         <div class="row">
-                                            <label class="col-sm-2 col-form-label">{{ __('Proveedor') }}</label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-4 col-form-label">{{ __('Proveedor') }}</label>
+                                            <div class="col-sm-8">
                                                 <div class="form-group">
                                                     <select class="js-example-basic-single js-states form-control" name="proveedor_id" id="proveedor_id" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
                                                         <option value="" disabled selected style="background-color:lightgray">{{__('Seleccione un proveedor')}}</option>
@@ -114,15 +59,14 @@
                                                 </div>
                                             </div>
                                         </div>
-    
                                         <div class="row">
-                                            <label class="col-sm-2 col-form-label">{{ __('Descuento') }} %</label>
-                                            <div class="col-sm-3">
+                                            <label class="col-sm-4 col-form-label">{{ __('Descuento') }} %</label>
+                                            <div class="col-sm-8">
                                                 <div class="form-group">
                                                 <input class="form-control" name="ord_descuento" id="ord_descuento" min="0"  max="100" type="number" onKeyPress= 'return positiveNumberH( this, event,this.value);'/>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-12">
                                                 <div class="form-check" style="margin-top: 20px">
                                                     <input type="hidden" name="ord_iva_incluido" id="ord_iva_incluido" value="1">
                                                     <label class="form-check-label">
@@ -135,6 +79,34 @@
                                             </div>
                                         </div>
 
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#materiaPrima" type="button" rel="tooltip" title="Buscar materia prima">
+                                                    <i class="material-icons">add_shopping_cart</i>
+                                                    <div class="ripple-container"></div>
+                                                </button>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <button class="btn btn-success btn-sm" id="guardarOrden" type="button" rel="tooltip" title="Guardar Orden de Compra">
+                                                    <i class="material-icons">done</i>
+                                                    <div class="ripple-container"></div>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-8">
+
+                                    <div class="card border mb-3" style="max-width: 100rem;">
+
+                                        <div class="card-header bg-light" {{--style="border: dimgray 1px solid"--}}>
+                                            <h4><b>Agregados</b></h4>
+                                        </div>
+                                    <div class="card-body text-dark border">
                                     <div class="table-responsive">
                                         <table id="tablaMateriales" class="table table-striped table-no-bordered table-hover datatable-rose" style="width: 100%">
                                             <thead class="text-primary">
@@ -188,6 +160,7 @@
             </div>
         </div>
     </div>
+    @include('ordenescompras.opciones.modalmateria')
 </div>
 @endsection
 

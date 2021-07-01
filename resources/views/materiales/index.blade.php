@@ -23,6 +23,7 @@
                             <table id="datatables" class="table" style="display:none; width: 100%">
                                 <thead class=" text-info">
                                     {{--<th> ID </th>--}}
+                                    <th> {{ __('Código') }} </th>
                                     <th> {{ __('Nombre') }} </th>
                                     <th> {{ __('Cantidad Total') }} </th>
                                     {{--<th> {{ __('Cantidades') }} </th>
@@ -37,6 +38,7 @@
                                         $m->mat_nombre=$m->mat_nombre.(!is_null($m->empaque)?" ".$m->empaque->emp_nombre." ":"").$m->mat_contenido.(!is_null($m->medida)?$m->medida->med_abreviatura:"");
                                     @endphp
                                         <tr>
+                                            <td>{{ $m->mat_codigo}}</td>
                                             {{--<td> {{ $m->id }} </td>--}}
                                             <td> {{ $m->mat_nombre }}</td>
                                             <td>

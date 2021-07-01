@@ -21,6 +21,27 @@
                             <div class="card-body ">
                                 <div class="row ">
                                     <div class="col-md-11">
+                                        <div class="row" id="codigomateria">
+                                            <input type="hidden" id="aux_id" value="">
+                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Código') }}</label>
+                                            <div class="col-sm-12 col-lg-10 ">
+                                                <div class="form-group" id="form-group-mat_codigo">
+                                                    <input class="form-control{{ $errors->has('mat_codigo') ? ' is-invalid' : '' }}"
+                                                           name="mat_codigo" id="mat_codigo" type="text"
+                                                           placeholder="{{ __('Código') }}" value="{{ old('mat_codigo') }}"
+                                                           aria-required="true"/>
+
+                                                    <span id="i-mat_codigo-error" class="error text-danger"
+                                                          for="input-i-mat_codigo" style="display: none;">
+                                                                {{ __('El campo código de materia prima es requerido y tener al menos 3 caracteres')}}
+                                                    </span>
+                                                    <span id="i-mat_duplicado-error" class="error text-danger"
+                                                            style="display: none;">
+                                                                {{ __('El código ingresado ya ha sido registrado')}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="row" id="nombreMateria">
                                             <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Nombre') }}</label>

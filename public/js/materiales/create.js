@@ -135,6 +135,12 @@ function mostrarMensajesError(campos) {
         $('#i-mat_nombre-error').css({'display':'none'});
         $('#form-group-mat_nombre').removeClass('has-danger')
     }
+    if(campos.includes('codigo_materia') === true){
+        //console.log('Vendedor sin seleccionar 2')
+        $('#i-mat_codigo-error').css({'display':'block'});
+    }else{
+        $('#i-mat_codigo-error').css({'display':'none'});
+    }
     if(campos.includes('presentacion') === true){
         console.log('Aquì 1')
         //console.log('Vendedor sin seleccionar 2')
@@ -174,6 +180,15 @@ function validarSubmit(){
         camposError.push('nombre_materia')
         camposCorrectos = false
     }
+    if ($('#mat_codigo').val().trim() === '') {
+        camposError.push('codigo_materia')
+        camposCorrectos = false
+    }
+
+    if($('#i-mat_duplicado-error').hasClass('duplicado')){
+        camposError.push('duplicado')
+        camposCorrectos = false
+    }
     //debugger
     //contenedor
     //console.log('contenedor', $('#contenedor').children())//.length)
@@ -197,3 +212,26 @@ function validarSubmit(){
     return [camposCorrectos, camposError];
 }
 
+$('#mat_codigo').keyup(function(){
+    routeRequest = $('#mainRoute').val()
+    routeRequest=routeRequest + "validarcodigo"
+    if($('#mat_codigo').val().trim()!=""){
+        $.ajax({
+            type: 'post',
+            url: routeRequest,
+            data: {
+                codigo: $('#mat_codigo').val(),
+                id: $('#aux_id').val(),
+            },
+            success: function (r) {
+                if (r != 0) {
+                    $('#i-mat_duplicado-error').css({'display':'block'});
+                    $('#i-mat_duplicado-error').addClass('duplicado');
+                }else{
+                    $('#i-mat_duplicado-error').css({'display':'none'});
+                    $('#i-mat_duplicado-error').removeClass('duplicado');
+                }
+            }
+        })
+    }
+})

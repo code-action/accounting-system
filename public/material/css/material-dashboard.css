@@ -29336,3 +29336,10 @@ select.selectpicker {
 .lv{
   padding: 0px 15px 0 0 !important;
 }
+.divFiltro{
+  /* overflow: auto; */
+  /* white-space: nowrap; */
+  overflow-y: auto;
+  position:relative;
+  height: 22rem !important;
+}

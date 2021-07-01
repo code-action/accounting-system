@@ -59,6 +59,7 @@ class MaterialController extends Controller
 
         //Material::create($request->all());
         $material = new Material();
+        $material->mat_codigo = $request->mat_codigo;
         $material->mat_nombre = $request->mat_nombre;
         $material->mat_cantidad = 0;
         $material->empaque_id=$request->empaque_id;
@@ -119,7 +120,7 @@ class MaterialController extends Controller
         ]);*/
 
         $material = Material::find($id);
-        //$material->update($request->all());
+        $material->mat_codigo = $request->mat_codigo;
         $material->mat_nombre = $request->mat_nombre;
         $material->mat_cantidad = 0;
         $material->empaque_id=$request->empaque_id;
@@ -159,6 +160,15 @@ class MaterialController extends Controller
         } catch(\Exception $e){
             DB::rollback();
             return redirect()->route('raw.index')->with('error','El registro no pudo eliminarse.');
+        }
+    }
+
+    public function validarcodigo(Request $request){
+        if($request->id==""){
+            return Material::where('mat_codigo',$request->codigo)->count();
+        }else{
+            return Material::where('mat_codigo',$request->codigo)->where('id','!=',$request->id)->count();
+
         }
     }
 }
