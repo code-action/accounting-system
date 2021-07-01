@@ -1,5 +1,5 @@
 function showModal(producto_id) {
-    $('#ver_facturacion').modal('show');
+    $('#ver_producto').modal('show');
     routeRequest = $('#mainRoute').val()
     $.ajax({
         type: 'get',

@@ -81,6 +81,14 @@
         <script src="{{ asset('material') }}/js/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
 
         <script>
+            // Eliminar tooltips que quedan ocultos en el DOM
+            $('.td-actions').mouseleave(function() {
+                tooltips = $(".bs-tooltip-top")
+                if ( tooltips.length > 0 ) {
+                    tooltips.remove()
+                    //console.log('Borrando tooltips...')
+                }
+            });
           $(document).ready(function () {
             @if (session('success')) //Succesfully
               $.notify({

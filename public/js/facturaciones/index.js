@@ -2,7 +2,7 @@ function abrir_modal_ver_fact(facturacion, productos, url){
     facturacion = JSON.parse(facturacion)
     productos = JSON.parse(productos)
 
-    console.log(facturacion, productos)
+    //console.log(facturacion, productos)
     // ver_fact_fecha, ver_fact_cli_nombre, ver_fact_descripcion, ver_fact_cli_email, ver_fact_cli_telefono
     // ver_fact_sumas, ver_fact_iva, ver_fact_subtotal, ver_fact_retencion, ver_fact_total
 
@@ -54,7 +54,7 @@ function abrir_modal_eliminar_fact(facturacion, productos, url){
     facturacion = JSON.parse(facturacion)
     productos = JSON.parse(productos)
 
-    console.log(url)
+    //console.log(url)
 
     // PONER URL PARA HACER POST, UPDATE, ETC
     $('#form_eliminar_facturacion').prop('action', url)

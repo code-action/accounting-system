@@ -67,30 +67,23 @@
 
                                                 <a rel="tooltip" class="btn btn-info btn-link"
                                                    data-original-title=""
-                                                   title="" onclick="abrir_modal_mostrar('{{$cliente}}',
+                                                   title="{{ __('Ver') }}" onclick="abrir_modal_mostrar('{{$cliente}}',
                                                     '{{route('cliente.show', $cliente)}}')">
                                                     <i class="material-icons">assignment</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
-                                                {{--<a rel="tooltip" class="btn btn-dark btn-link"
-                                                   href="{{ route('cliente.show', $cliente) }}" data-original-title=""
-                                                   title="">
-                                                    <i class="material-icons">visibility</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>--}}
+
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="{{ route('cliente.edit', $cliente) }}" data-original-title="" title="">
+                                                   href="{{ route('cliente.edit', $cliente) }}" data-original-title=""
+                                                   title="{{ __('Editar') }}">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
-
-
                                                 <button rel="tooltip" class="btn btn-danger btn-link"
-                                                        {{--onclick="abrir_modal_eliminar('{{$cliente->cli_nombre}}',
-                                                            '{{route('cliente.destroy', $cliente)}}')"--}}
+
                                                         onclick="abrir_modal_eliminar('{{$cliente}}',
                                                             '{{route('cliente.destroy', $cliente)}}')"
-                                                        data-original-title="" title="">
+                                                        data-original-title="" title="{{ __('Eliminar') }}">
                                                     <i class="material-icons">close</i>
                                                     <div class="ripple-container"></div>
                                                 </button>

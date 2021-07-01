@@ -140,8 +140,9 @@
                                             </div>
                                             <div class="col-md-1 col-sm-1">
                                                 <div class="row justify-content-center" style="margin-top: 9px;" >
-                                                    <a rel="tooltip" class="btn btn-success btn-sm btn-round btn-fab add" href="#"
-                                                       data-original-title="" title="Agregar proveedor">
+                                                    <a rel="tooltip" class="btn td-actions btn-success btn-sm btn-round
+                                                    btn-fab add" href="#" data-original-title=""
+                                                       title="{{ __('Agregar') }}">
                                                         <i class="material-icons">add</i>
                                                         <div class="ripple-container"></div>
                                                     </a>
@@ -209,8 +210,8 @@
                                             {{--Botón eliminar--}}
                                             <div class="col-md-1 col-sm-1">
                                                 <div class="row justify-content-center" style="margin-top: 9px;">
-                                                    <a href="#" data-original-title="Edit Task" class="btn btn-danger
-                                                        btn-sm btn-round btn-fab delete">
+                                                    <a href="#" data-original-title="" class="btn btn-danger
+                                                        btn-sm btn-round btn-fab delete" title="{{ __('Eliminar') }}">
                                                         <i class="material-icons">close</i>
                                                         <div class="ripple-container"></div>
                                                     </a>

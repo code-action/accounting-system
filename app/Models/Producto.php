@@ -48,4 +48,14 @@ class Producto extends Model
         else
             return true;
     }
+
+    public function empaque()
+    {
+        return $this->belongsTo(Empaque::class);
+    }
+
+    public function medida()
+    {
+        return $this->belongsTo(Medida::class);
+    }
 }

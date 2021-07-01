@@ -165,8 +165,6 @@
     </div>
 @endsection
 @push('js')
-
-
     <script>
         $("#input-cli_categoria").select2({
             language: {

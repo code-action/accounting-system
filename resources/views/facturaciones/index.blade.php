@@ -77,7 +77,8 @@
                                                     <i class="material-icons">assignment</i>
                                                 </a>
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="{{ route('facturacion.edit', $facturacion) }}" data-original-title="" title="">
+                                                   href="{{ route('facturacion.edit', $facturacion) }}" data-original-title=""
+                                                   title="{{ __('Editar')}}">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
@@ -85,8 +86,8 @@
                                                 <a rel="tooltip" class="btn btn-danger btn-link"
                                                         onclick="abrir_modal_eliminar_fact('{{$facturacion}}', '{{$facturacion->productos}}',
                                                             '{{route('facturacion.destroy', $facturacion)}}')"
-                                                        data-original-title="" title="">
-                                                    <i class="material-icons">delete_outline</i>
+                                                        data-original-title="" title="{{ __('Eliminar')}}">
+                                                    <i class="material-icons">close</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
                                                 {{-- @endcan --}}

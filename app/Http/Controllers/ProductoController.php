@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductoRequest;
+use App\Models\Empaque;
+use App\Models\Medida;
 use App\Models\Producto;
 use App\Models\Material;
 use App\Models\Categoria;
@@ -20,8 +23,11 @@ class ProductoController extends Controller
      */
     public function index()
     {
+        $categorias = Categoria::all();
+        $medidas = Medida::all();
+        $empaques = Empaque::all();
         $productos = Producto::with('materiales')->get();
-        return view('productos.index', compact('productos'));
+        return view('productos.index', compact('productos', 'categorias', 'medidas', 'empaques'));
     }
 
     /**
@@ -33,31 +39,35 @@ class ProductoController extends Controller
     {
         $materiales = Material::all();
         $categorias = Categoria::all();
-        return view('productos.create', compact('materiales', 'categorias'));
+        $medidas = Medida::all();
+        $empaques = Empaque::all();
+        return view('productos.create', compact('materiales', 'categorias', 'medidas', 'empaques'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ProductoRequest $request)
     {
-        $request->validate([
-            'categoria_id' => ['required'],
-        ]);
+        //dd($request);
 
         $producto = new Producto();
+        $producto->prod_codigo      = $request->prod_codigo;
         $producto->prod_nombre      = $request->prod_nombre;
         $producto->prod_cantidad    = $request->prod_cantidad;
         $producto->prod_precio      = $request->prod_precio;
-        $producto->prod_desc        = $request->prod_desc;
+        $producto->prod_desc        = $request->prod_descripcion;
         $producto->categoria_id     = $request->categoria_id;
-
+        $producto->medida_id     = $request->prod_medida;
+        $producto->empaque_id     = $request->prod_empaque;
+        $producto->prod_contenido     = $request->prod_contenido;
+        $producto->prod_procedimiento     = $request->prod_proced;
         $producto->save();
 
-        foreach($request->mat_cantidad as $k => $material) {
+        /*foreach($request->mat_cantidad as $k => $material) {
             if(!isset($material) || (int) $material <= 0)
                 continue;
 
@@ -71,7 +81,7 @@ class ProductoController extends Controller
             $materialProducto->material->mat_cantidad = $actual-$materialProducto->mat_prod_cantidad;
             $materialProducto->material->save();
 
-        }
+        }*/
         return redirect()->route('producto.index') ->with('success','Registro editado correctamente');
     }
 
@@ -95,15 +105,18 @@ class ProductoController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Producto  $producto
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit($id)
     {
         $materiales = Material::all();
         $categorias = Categoria::all();
-        $productos = Producto::with('materiales')->find($id);
+        $medidas = Medida::all();
+        $empaques = Empaque::all();
+        $producto = Producto::findOrFail($id);
         // dd($productos);
-        return view('productos.edit', compact('materiales', 'categorias', 'productos'));
+        return view('productos.edit', compact('materiales', 'categorias', 'producto',
+            'medidas', 'empaques'));
     }
 
     /**
@@ -111,20 +124,25 @@ class ProductoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Producto  $producto
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request,$id)
+    public function update(ProductoRequest $request, $id)
     {
+        //dd($request);
         $producto = Producto::find($id);
+        $producto->prod_codigo      = $request->prod_codigo;
         $producto->prod_nombre      = $request->prod_nombre;
         $producto->prod_cantidad    = $request->prod_cantidad;
         $producto->prod_precio      = $request->prod_precio;
-        $producto->prod_desc        = $request->prod_desc;
+        $producto->prod_desc        = $request->prod_descripcion;
         $producto->categoria_id     = $request->categoria_id;
-
+        $producto->medida_id     = $request->prod_medida;
+        $producto->empaque_id     = $request->prod_empaque;
+        $producto->prod_contenido     = $request->prod_contenido;
+        $producto->prod_procedimiento     = $request->prod_proced;
         $producto->save();
 
-        foreach($request->mat_cantidad as $k => $material) {
+        /*foreach($request->mat_cantidad as $k => $material) {
             if(isset($material) || (int) $material > 0){
                 echo "->".$request->mat_cantidad[$k];
                 //Para nueva materia prima agregada
@@ -160,7 +178,7 @@ class ProductoController extends Controller
                     $materialProducto->delete();
                 }
             }
-        }
+        }*/
         return redirect()->route('producto.index') ->with('success','Registro editado correctamente');
     }
 

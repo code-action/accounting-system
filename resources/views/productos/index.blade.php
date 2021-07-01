@@ -11,7 +11,7 @@
                         <div class="card-icon">
                             <i class="material-icons">inventory_2</i>
                         </div>
-                        <h4 class="card-title">Lista de Productos</h4>
+                        <h4 class="card-title">{{ __('Lista de Productos') }}</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -23,22 +23,32 @@
                             <table id="datatables" class="table" style="display:none; width: 100%">
                                 <thead class=" text-info">
                                     <th> ID </th>
-                                    <th> Nombre </th>
-                                    <th> Cantidad </th>
-                                    <th> F. Ingreso </th>
+                                    <th>{{ __('Código') }}</th>
+                                    <th> {{ __('Nombre') }}</th>
+                                    <th>{{ __('Precio') }}</th>
+                                    <th>{{ __('Cantidad') }}  </th>
+                                    <th>{{ __('Presentación') }}</th>
+                                    <th> {{ __('F. Ingreso') }}</th>
                                     <th class="text-right"> Acciones </th>
                                 </thead>
                                 <tbody>
                                     @foreach($productos as $p)
                                         <tr>
                                             <td> {{ $p->id }} </td>
+                                            <td> {{ $p->prod_codigo }} </td>
                                             <td> {{ $p->prod_nombre }} </td>
+                                            <td> {{number_format($p->prod_precio, 2, '.', ',')}} </td>
                                             <td> {{ $p->prod_cantidad }} </td>
-                                            <td> {{ $p->created_at }} </td>
+                                            <td> {{ $p->empaque->emp_nombre }}
+                                                {{ $p->prod_contenido }}
+                                                {{ $p->medida->med_abreviatura }}
+                                            </td>
+                                            <td> {{date("d-m-Y", strtotime($p->created_at))}}</td>
                                             <td class="td-actions text-right">
-                                                <form class="d-inline" id="form-delete" action="{{ route('producto.destroy', $p->id) }}" method="POST">
+                                                <form class="d-inline" {{--id="form-delete"--}}
+                                                action="{{ route('producto.destroy', $p->id) }}" method="POST">
                                                     <a rel="tooltip" class="btn btn-info btn-link"
-                                                    onclick="showModal({{$p->id}})"
+                                                    onclick="{{--showModal({{$p->id}});--}} abrir_modal_mostrar('{{$p}}')"
                                                     data-original-title="" title="{{ __('Ver') }}">
                                                      <i class="material-icons">assignment</i>
                                                     </a>
@@ -84,12 +94,20 @@
         </div>
     </div>
 </div>
-@include('productos.modalShow')
+
+@endsection
+
+@section('modals')
+    @include('productos.modalShow')
 @endsection
 
 @push('js')
-<script>
+    <script src="{{asset('js/productos/index.js')}}"></script>
+
+    <script>
     $(document).ready(function () {
+
+
         $('#datatables').fadeIn(1100);
         $('#datatables').DataTable({
             "pagingType": "full_numbers",
@@ -122,6 +140,7 @@
     });
 
 </script>
-<script src="{{ asset('js') }}/productos.js"></script>
+
+    <script src="{{ asset('js') }}/productos.js"></script>
 
 @endpush

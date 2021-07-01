@@ -70,19 +70,20 @@
                                             <td class="td-actions text-right">
                                                 <a rel="tooltip" class="btn btn-info btn-link"
                                                    data-original-title=""
-                                                   title="" onclick="abrir_modal_mostrar('{{$m}}',
+                                                   title="{{ __('Ver')}}" onclick="abrir_modal_mostrar('{{$m}}',
                                                     '{{route('cliente.show', $m)}}')">
                                                     <i class="material-icons">assignment</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
                                                 <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('raw.edit', $m) }}"
-                                                   data-original-title="" title="Editar">
+                                                   data-original-title="" title="{{ __('Editar')}}">
                                                     <i class="material-icons">edit</i>
                                                 </a>
                                                 <form class="d-inline" id="form-delete" action="{{ route('raw.destroy', $m->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" rel="tooltip" class="btn btn-danger btn-link" href="#" data-original-title="" title="Eliminar"
+                                                    <button type="button" rel="tooltip" class="btn btn-danger btn-link"
+                                                            href="#" data-original-title="" title="{{ __('Eliminar')}}"
                                                             onclick="
                                                                 return swal({
                                                                 html: '{{ __('¿Desea eliminar la materia prima') }}'+' '+'<b>'+'{{$m->mat_nombre}}'+'?</b>',
