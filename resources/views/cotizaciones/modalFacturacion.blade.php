@@ -123,7 +123,7 @@
                                                 {{ __('Precio U.') }}
                                             </th>
                                             <th style="width: 130px;">
-                                                {{ __('Precio Total') }}
+                                                {{ __('Total') }}
                                             </th>
                                             {{--<th class="text-right"  style="width:100px;">
                                                 {{ __('Acciones') }}
@@ -147,7 +147,7 @@
                                         </table>
                                     </div>
                                     <div class="row justify-content-end">
-                                        <div class="col-md-4 col-lg-5 col-sm-7">
+                                        <div class="col-md-7 col-lg-7 col-sm-7">
                                             <div class="card border mb-3">
                                                 {{--<div class="card-header">Header</div>--}}
                                                 <div class="card-body text-dark">

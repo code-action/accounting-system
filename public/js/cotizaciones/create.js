@@ -23,7 +23,7 @@ $("#datatables").on('click', '.add_product', function () {
             precioU + '<input type="hidden" value="'+precioU+'" id="prec_'+id+'">',
             precioT + '<input type="hidden" value="'+precioT+'" id="prect_'+id+'">' +
             '<input type="hidden" value="" id="precio_total">',
-            '<button type="button" class="btn btn-danger btn-link del_product"\n' + 'style="\n' +
+            '<button type="button" class="btn btn-danger btn-link del_product" data-original-title="" title="Eliminar"\n' + 'style="\n' +
             '    margin-top: 0px;\n' +
             '    margin-left: 0px;\n' +
             '    margin-right: 0px;\n' +

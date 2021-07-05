@@ -15,6 +15,10 @@ function abrir_modal_eliminar(cotizacion, productos, url){
     $('#cotizacion_delete').fadeIn(1100);
     var cotizacion_borrar = $('#cotizacion_delete').DataTable({
         retrieve: true,
+        "scrollCollapse": true,
+        scrollY: "18rem",
+        info: false,
+        paging: false,
         "pagingType": "full_numbers",
         "lengthMenu": [
             [10, 25, 50, -1],
@@ -56,17 +60,20 @@ function abrir_modal_ver(cotizacion, productos, url){
     // COLOCAR DATOS DEL CLIENTE, LA EMPRESA Y TOTALES
     colocarDatos('ver', cotizacion)
 
-
     // LISTA DE PRODUCTOS COTIZADOS
-    $('#cotizacion_show').fadeIn(1100);
+    //$('#cotizacion_show').fadeIn(1100);
     var cotizacion_ver = $('#cotizacion_show').DataTable({
         retrieve: true,
-        "pagingType": "full_numbers",
+        "scrollCollapse": true,
+        scrollY: "18rem",
+        pagingType: "full_numbers",
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
         ],
-        responsive: true,
+        info: false,
+        paging: false,
+        responsive: false,
         language: {
             search: "_INPUT_",
             searchPlaceholder: "Buscar productos",
@@ -84,7 +91,10 @@ function abrir_modal_ver(cotizacion, productos, url){
         },
         "columnDefs": [
         ],
+
     });
+
+
     listarProductos(cotizacion_ver, productos)
 
 
@@ -109,12 +119,16 @@ function abrir_modal_facturar(cotizacion, productos, url){
     $('#cotizacion_facturar').fadeIn(1100);
     var cotizacion_facturar = $('#cotizacion_facturar').DataTable({
         retrieve: true,
+        "scrollCollapse": true,
+        scrollY: "18rem",
         "pagingType": "full_numbers",
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
         ],
-        responsive: true,
+        info: false,
+        paging: false,
+        responsive: false,
         language: {
             search: "_INPUT_",
             searchPlaceholder: "Buscar productos",
@@ -172,3 +186,9 @@ function colocarDatos(prefijo, cotizacion){
     $('#'+prefijo+'_cot_retencion').text(cotizacion.cot_retencion.toFixed(2))
     $('#'+prefijo+'_cot_total').text(cotizacion.cot_total.toFixed(2))
 }
+
+
+
+
+
+

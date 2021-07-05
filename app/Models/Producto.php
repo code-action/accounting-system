@@ -58,4 +58,10 @@ class Producto extends Model
     {
         return $this->belongsTo(Medida::class);
     }
+
+    // Relación de muchos a muchos
+    public function materialesF()
+    {
+        return $this->belongsTo(Medida::class);
+    }
 }

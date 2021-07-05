@@ -18,9 +18,7 @@
 
 
                     <div class="row {{--justify-content-start--}}">
-                        {{-- Inicio de  Agregar Productos --}}
 
-                        {{-- Fin de Agregar Productos --}}
                         {{-- Inicio de Cotización --}}
                         <div class="col-md-12 col-sm-12 col-lg-12">
                             <div class="card border mb-3" style="max-width: 100rem; {{--border-style:
@@ -83,21 +81,19 @@
                                         <table id="cotizacion_show" class="table table-striped table-no-bordered
                                                 table-hover datatable-rose" style="width: 100%">
                                             <thead class="text-primary">
-                                            <th>
-                                                {{ __('Producto') }}
-                                            </th>
-                                            <th style="width: 90px;">
-                                                {{ __('Cant.') }}
-                                            </th>
-                                            {{--<th>
-                                                {{ __('Descripción') }}
-                                            </th>--}}
-                                            <th style="width: 110px;">
-                                                {{ __('Precio U.') }}
-                                            </th>
-                                            <th style="width: 130px;">
-                                                {{ __('Precio Total') }}
-                                            </th>
+                                                <th>
+                                                    {{ __('Producto') }}
+                                                </th>
+                                                <th style="width: 90px;">
+                                                    {{ __('Cant.') }}
+                                                </th>
+
+                                                <th style="width: 110px;">
+                                                    {{ __('Precio U.') }}
+                                                </th>
+                                                <th style="width: 130px;">
+                                                    {{ __('Total') }}
+                                                </th>
                                             {{--<th class="text-right"  style="width:100px;">
                                                 {{ __('Acciones') }}
                                             </th>--}}
@@ -107,7 +103,7 @@
                                         </table>
                                     </div>
                                     <div class="row justify-content-end">
-                                        <div class="col-md-4 col-lg-5 col-sm-7">
+                                        <div class="col-md-7 col-lg-7 col-sm-7">
                                             <div class="card border mb-3">
                                                 {{--<div class="card-header">Header</div>--}}
                                                 <div class="card-body text-dark">

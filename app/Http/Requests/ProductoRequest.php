@@ -109,7 +109,7 @@ class ProductoRequest extends FormRequest
             'prod_precio' => 'precio',
             'categoria_id' => 'categoría',
             'prod_descripcion' => 'descripción',
-            'prod_medida' => 'unidad de medida',
+            'prod_medida' => 'medida',
             'prod_empaque' => 'empaque',
             'prod_contenido' => 'contenido',
             'prod_proced' => 'procedimiento de elaboración'

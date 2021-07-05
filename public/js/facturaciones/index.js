@@ -16,13 +16,18 @@ function abrir_modal_ver_fact(facturacion, productos, url){
     // LISTA DE PRODUCTOS COTIZADOS
     $('#facturacion_show').fadeIn(1100);
     var facturacion_show = $('#facturacion_show').DataTable({
+        "scrollCollapse": true,
+        scrollY: "18rem",
+        info: false,
+        paging: false,
+        responsive: false,
+
         retrieve: true,
         "pagingType": "full_numbers",
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
         ],
-        responsive: true,
         language: {
             search: "_INPUT_",
             searchPlaceholder: "Buscar productos",
@@ -69,12 +74,17 @@ function abrir_modal_eliminar_fact(facturacion, productos, url){
     $('#facturacion_delete').fadeIn(1100);
     var cotizacion_borrar = $('#facturacion_delete').DataTable({
         retrieve: true,
+        "scrollCollapse": true,
+        scrollY: "18rem",
+
+        info: false,
+        paging: false,
+        responsive: false,
         "pagingType": "full_numbers",
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
         ],
-        responsive: true,
         language: {
             search: "_INPUT_",
             searchPlaceholder: "Buscar productos",

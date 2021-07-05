@@ -25,32 +25,34 @@
                             </div>--}}
 
                             <div class="row">
-                                {{-- Inicio de  Agregar Productos --}}
-                                <div class="col-md-5">
-                                    <div class="card border mb-3" style="max-width: 100rem;">
+                                {{-- Inicio de Agregar Productos --}}
+                                <div class="col-md-10 col-lg-5">
+                                    <div class="card border mb-3" style="max-width: 100rem; border: dimgray 1px solid">
                                         <div class="card-header bg-light" {{--style="border: dimgray 1px solid"--}}>
                                             <h4><b>Agregar productos</b></h4>
                                         </div>
-                                        <div class="card-body border text-dark">
+                                        <div class="card-body text-dark border">
                                             {{--<h5 class="card-title"><h4><b>Agregar Productos</b></h4></h5>--}}
                                             <div class="table-responsive">
                                                 <table id="tabla_productos" class="table table-striped table-no-bordered
-                                                table-hover datatable-rose" style="display:none; width: 100%">
+                                                table-hover datatable-rose" style="width: 100%">
                                                     <thead class="text-primary">
+
                                                     <th>
                                                         {{ __('Producto') }}
                                                     </th>
                                                     <th style="width: 70px;">
                                                         {{ __('Cant.') }}
                                                     </th>
+
                                                     <th style="width: 90px;">
                                                         {{ __('Precio U.') }}
                                                     </th>
                                                     <th  style="width: 105px;">
-                                                        {{ __('Existencia') }}
+                                                        {{ __('Exist.') }}
                                                     </th>
-                                                    <th class="text-right"  style="width:80px;">
-                                                        {{ __('Acciones') }}
+                                                    <th class="text-right" style="width: 50px;">
+                                                        {{ __('Acción') }}
                                                     </th>
                                                     </thead>
                                                     <tbody>
@@ -62,23 +64,26 @@
                                                                        value="{{$producto->id}}">
                                                             </td>
                                                             <td>
-                                                                <input type="number" class="form-control" id="prod_cantidad"
+                                                                <input type="number" class="form-control input-cantidad" id="prod_cantidad"
                                                                        name="prod_cantidad" min="1" value="1"
                                                                        max="{{$producto->prod_cantidad}}">
                                                             </td>
-                                                            <td>{{number_format($producto->prod_precio, 2, '.', ',')}}</td>
+                                                            <td>{{ number_format($producto->prod_precio, 2, '.', ',')}}</td>
                                                             <td>{{$producto->prod_cantidad}}</td>
 
+
                                                             <td class="td-actions text-right">
-                                                                <button type="button" class="btn btn-success btn-link add_product"
-                                                                        data-original-title="" title="">
+
+
+                                                                <a rel="tooltip" class="btn btn-success btn-link add_product"
+                                                                   data-original-title="" title="{{ __('Agregar')}}">
                                                                     <i class="material-icons">add</i>
                                                                     <div class="ripple-container"></div>
-                                                                </button>
+                                                                </a>
+
                                                             </td>
                                                         </tr>
                                                     @endforeach
-
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -87,7 +92,7 @@
                                 </div>
                                 {{-- Fin de Agregar Productos --}}
                                 {{-- Inicio de Cotización --}}
-                                <div class="col-md-7">
+                                <div class="col-md-10 col-lg-7">
                                     <div class="card border mb-3" style="max-width: 100rem;">
                                         <div class="card-header border bg-light" {{--style="border: dimgray 1px solid"--}}>
                                             <div class="row">
@@ -255,7 +260,7 @@
                                                 </table>
                                             </div>
                                             <div class="row justify-content-end">
-                                                <div class="col-md-4 col-lg-5 col-sm-7">
+                                                <div class="col-md-7 col-lg-7 col-sm-7">
                                                     <div class="card border mb-3">
                                                         {{--<div class="card-header">Header</div>--}}
                                                         <div class="card-body text-dark">
@@ -405,15 +410,18 @@
 
     </script>
     <script>
-
+        $(document).ready(function() {
             $('#tabla_productos').fadeIn(1100);
             $('#tabla_productos').DataTable({
+                scrollY: "30rem",
                 "pagingType": "full_numbers",
                 "lengthMenu": [
                     [10, 25, 50, -1],
                     [10, 25, 50, "All"]
                 ],
-                responsive: true,
+                info: false,
+                "paging": false,
+                responsive: false,
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "Buscar productos",
@@ -430,18 +438,22 @@
                     },
                 },
                 "columnDefs": [
-                    { "orderable": false, "targets": 4 },
+                    { "orderable": false, "targets": [1, 4] },
+                    {"visible": true},
                 ],
             });
 
             $('#tabla_facturacion').fadeIn(1100);
             $('#tabla_facturacion').DataTable({
+                scrollY: "18rem",
+                info: false,
+                "paging": false,
+                responsive: false,
                 "pagingType": "full_numbers",
                 "lengthMenu": [
                     [10, 25, 50, -1],
                     [10, 25, 50, "All"]
                 ],
-                responsive: true,
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "Buscar productos",
@@ -462,6 +474,6 @@
                     { "targets": [4], className: "text-right", }
                 ],
             });
-
+        });
     </script>
 @endpush

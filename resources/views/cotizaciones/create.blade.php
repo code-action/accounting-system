@@ -25,8 +25,8 @@
                             </div>--}}
 
                             <div class="row">
-                                {{-- Inicio de  Agregar Productos --}}
-                                <div class="col-md-5">
+                                {{-- Inicio de Agregar Productos --}}
+                                <div class="col-md-10 col-lg-5">
                                     <div class="card border mb-3" style="max-width: 100rem; border: dimgray 1px solid">
                                         <div class="card-header bg-light" {{--style="border: dimgray 1px solid"--}}>
                                             <h4><b>Agregar productos</b></h4>
@@ -34,28 +34,28 @@
                                         <div class="card-body text-dark border">
                                             {{--<h5 class="card-title"><h4><b>Agregar Productos</b></h4></h5>--}}
                                             <div class="table-responsive">
-                                                <table id="datatables" class="table table-striped table-no-bordered table-hover datatable-rose" style="display:none; width: 100%">
-                                                    <thead class="text-primary">
+                                                <table id="datatables" class="table table-striped table-no-bordered
+                                                table-hover datatable-rose" style="width: 100%">
+                                                <thead class="text-primary">
+
                                                     <th>
                                                         {{ __('Producto') }}
                                                     </th>
                                                     <th style="width: 70px;">
                                                         {{ __('Cant.') }}
                                                     </th>
-                                                    {{--<th>
-                                                        {{ __('Descripción') }}
-                                                    </th>--}}
+
                                                     <th style="width: 90px;">
                                                         {{ __('Precio U.') }}
                                                     </th>
                                                     <th  style="width: 105px;">
-                                                        {{ __('Existencia') }}
+                                                        {{ __('Exist.') }}
                                                     </th>
-                                                    <th class="text-right"  style="width:80px;">
-                                                        {{ __('Acciones') }}
+                                                    <th class="text-right" style="width: 50px;">
+                                                        {{ __('Acción') }}
                                                     </th>
-                                                    </thead>
-                                                    <tbody>
+                                                </thead>
+                                                <tbody>
                                                     @foreach($productos as $producto)
                                                         <tr>
                                                             <td>
@@ -64,7 +64,6 @@
                                                                        value="{{$producto->id}}">
                                                             </td>
                                                             <td>
-                                                                {{--$producto->prod_cantidad--}}
                                                                 <input type="number" class="form-control input-cantidad" id="prod_cantidad"
                                                                        name="prod_cantidad" min="1" value="1"
                                                                        max="{{$producto->prod_cantidad}}">
@@ -72,30 +71,28 @@
                                                             <td>{{ number_format($producto->prod_precio, 2, '.', ',')}}</td>
                                                             <td>{{$producto->prod_cantidad}}</td>
 
-                                                            {{-- @can('manage-items', App\User::class) --}}
+
                                                             <td class="td-actions text-right">
-                                                                {{-- @if ($proveedor->items->isEmpty() && auth()->user()->can('delete', $proveedor)) --}}
-                                                                <button type="button" class="btn btn-success btn-link add_product"
-                                                                        data-original-title="" title="">
+
+
+                                                                <a rel="tooltip" class="btn btn-success btn-link add_product"
+                                                                   data-original-title="" title="{{ __('Agregar')}}">
                                                                     <i class="material-icons">add</i>
                                                                     <div class="ripple-container"></div>
-                                                                </button>
-                                                                {{--@endif --}}
+                                                                </a>
 
                                                             </td>
-                                                            {{-- @endcan --}}
                                                         </tr>
                                                     @endforeach
-
-                                                    </tbody>
-                                                </table>
+                                                </tbody>
+                                            </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 {{-- Fin de Agregar Productos --}}
                                 {{-- Inicio de Cotización --}}
-                                <div class="col-md-7">
+                                <div class="col-md-10 col-lg-7">
                                     <div class="card border mb-3" style="max-width: 100rem;">
                                         <div class="card-header border bg-light" {{--style="border: dimgray 1px solid"--}}>
                                             <div class="row">
@@ -109,10 +106,10 @@
                                         </div>
                                         <div class="card-body text-dark">
                                             {{--<h5 class="card-title" ><h4><b>Detalles de Cotización</b></h4></h5>--}}
-                                            <div class="row justify-content-end cliente-datos">
+                                            <div class="row cliente-datos">
                                                 <div class="col-md-7">
                                                     <div class="row">
-                                                        <label class="col-sm-2 col-form-label">{{ __('Cliente') }}</label>
+                                                        {{--<label class="col-sm-2 col-lg-2 col-form-label">{{ __('Cliente') }}</label>--}}
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <select class="js-example-basic-single js-states has-error
@@ -121,7 +118,7 @@
                                                                         data-size="100" style="width: 100%">
                                                                     <option value="" disabled selected
                                                                             style="background-color:lightgray">
-                                                                        {{__('Seleccione un cliente')}}
+
                                                                     </option>
                                                                     @foreach ($clientes as $cliente)
                                                                         <option id="cliente_{{$cliente->id}}" value="{{$cliente->id}}"
@@ -140,7 +137,7 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <label class="col-sm-2 col-form-label">{{ __('Estado') }}</label>
+                                                        {{--<label class="col-sm-2 col-form-label">{{ __('Estado') }}</label>--}}
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <select class="js-example-basic-single js-states has-error
@@ -165,7 +162,7 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <label class="col-sm-2 col-form-label">{{ __('Descripción') }}</label>
+                                                        {{--<label class="col-sm-2 col-form-label">{{ __('Descripción') }}</label>--}}
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <textarea  class="form-control"
@@ -219,10 +216,10 @@
 
                                             <div class="row">
                                                 <div class="col-12 text-right">
-                                                    <a href="#" class="btn btn-primary"
+                                                    <a href="#" class="btn btn-primary btn-sm"
                                                        onclick="guardar_datos_prod('{{ route('cotizacion.store') }}', 'guardar')"
                                                     >Guardar</a>
-                                                    <a href="#" class="btn btn-success"
+                                                    <a href="#" class="btn btn-success btn-sm"
                                                        onclick="guardar_datos_prod('{{ route('facturacion.store') }}', 'facturar')"
                                                     >Guardar y facturar</a>
                                                 </div>
@@ -238,47 +235,23 @@
                                                     <th style="width: 70px;">
                                                         {{ __('Cant.') }}
                                                     </th>
-                                                    {{--<th>
-                                                        {{ __('Descripción') }}
-                                                    </th>--}}
                                                     <th style="width: 90px;">
                                                         {{ __('Precio U.') }}
                                                     </th>
                                                     <th style="width: 110px;">
-                                                        {{ __('Precio Total') }}
+                                                        {{ __('Total') }}
                                                     </th>
                                                     <th class="text-right"  style="width:80px;">
-                                                        {{ __('Acciones') }}
+                                                        {{ __('Acción') }}
                                                     </th>
                                                     </thead>
                                                     <tbody>
-                                                    {{--<tr>
-                                                        <td>
-                                                            asfg
-                                                        </td>
-                                                        <td>
-                                                            ghtfrhg
-                                                        </td>
-                                                        <td>
-                                                            dsdsf
-                                                        </td>
-                                                        <td>
-                                                            sdfsf
-                                                        </td>
-                                                        <td class="td-actions text-right">
-                                                            <button type="button" class="btn btn-danger btn-link"
-                                                                    data-original-title="" title="">
-                                                                <i class="material-icons">close</i>
-                                                                <div class="ripple-container"></div>
-                                                            </button>
-                                                        </td>
-                                                    </tr>--}}
 
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <div class="row justify-content-end">
-                                                <div class="col-md-4 col-lg-5 col-sm-7">
+                                                <div class="col-md-7 col-lg-7 col-sm-7">
                                                     <div class="card border mb-3">
                                                         {{--<div class="card-header">Header</div>--}}
                                                         <div class="card-body text-dark">
@@ -436,14 +409,17 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#datatables').fadeIn(1100);
-            $('#datatables').DataTable({
+            var tablaAgregar = $('#datatables').fadeIn(1100);
+            tablaAgregar.DataTable({
+                scrollY: "30rem",
                 "pagingType": "full_numbers",
                 "lengthMenu": [
                     [10, 25, 50, -1],
                     [10, 25, 50, "All"]
                 ],
-                responsive: true,
+                info: false,
+                "paging": false,
+                responsive: false,
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "Buscar productos",
@@ -460,19 +436,23 @@
                     },
                 },
                 "columnDefs": [
-                    { "orderable": false, "targets": 4 },
+                    { "orderable": false, "targets": [1, 4] },
+                    {"visible": true},
                 ],
             });
         });
         $(document).ready(function() {
             $('#datatables2').fadeIn(1100);
             $('#datatables2').DataTable({
+                scrollY: "18rem",
                 "pagingType": "full_numbers",
                 "lengthMenu": [
                     [10, 25, 50, -1],
                     [10, 25, 50, "All"]
                 ],
-                responsive: true,
+                info: false,
+                "paging": false,
+                responsive: false,
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "Buscar productos",
