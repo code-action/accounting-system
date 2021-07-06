@@ -31,7 +31,7 @@ class OrdenCompraController extends Controller
     public function create()
     {
         $proveedores= Proveedor::orderBy('prov_nombre')->get();
-        $materiales= Material::orderBy('mat_nombre')->get(['id','mat_nombre']);
+        $materiales= Material::orderBy('mat_nombre')->get();
         return view('ordenescompras.create',compact('proveedores','materiales'));
     }
 
@@ -105,7 +105,7 @@ class OrdenCompraController extends Controller
     {
         $ordenCompra = OrdenCompra::find($id);
         $proveedores = Proveedor::orderBy('prov_nombre')->get();
-        $materiales= Material::orderBy('mat_nombre')->get(['id','mat_nombre']);
+        $materiales= Material::orderBy('mat_nombre')->get();
         return view('ordenescompras.edit',compact('proveedores','materiales','ordenCompra'));
     }
 

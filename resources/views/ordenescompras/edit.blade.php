@@ -23,52 +23,51 @@
                             @method('put')
                             <div class="row">
                                 <div class="col-md-4">
+                                    <div class="card border mb-3" style="max-width: 100rem;">
+
+                                        <div class="card-header bg-light" {{--style="border: dimgray 1px solid"--}}>
+                                            <h4><b>Información</b></h4>
+                                        </div>
+                                    <div class="card-body text-dark border">
                                     <div class="row">
-                                        <label class="col-sm-3 col-form-label">{{ __('N° de Orden') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                            <input class="form-control" name="ord_numero" id="ord_numero" type="text" value="{{$ordenCompra->ord_numero}}"/>
+                                        <div class="col-md-12">
+                                            <label class="form-label label-top">{{ __('N° de Orden') }}</label>
+                                            <input class="form-control" name="ord_numero" id="ord_numero" type="text" value="{{$ordenCompra->ord_numero}}" placeholder="{{ __('N° de Orden de Compra') }}"/>
                                             @include('alerts.feedback', ['field' => 'ord_fecha'])
-                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <label class="col-sm-3 col-form-label">{{ __('Fecha') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label class="form-label label-top">{{ __('Fecha') }}</label>
                                             <input class="form-control" name="ord_fecha" id="ord_fecha" type="date" value="{{$ordenCompra->ord_fecha}}"/>
                                             @include('alerts.feedback', ['field' => 'ord_fecha'])
-                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <label class="col-sm-3 col-form-label">{{ __('Proveedor') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <select class="js-example-basic-single js-states form-control" name="proveedor_id" id="proveedor_id" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
-                                                    <option value="" disabled selected style="background-color:lightgray">{{__('Seleccione un proveedor')}}</option>
-                                                    @foreach ($proveedores as $proveedor)
-                                                        @if($proveedor->id==$ordenCompra->proveedor_id)
-                                                        <option value="{{$proveedor->id}}" selected>{{ $proveedor->prov_nombre }}</option>
-                                                        @else
-                                                        <option value="{{$proveedor->id}}">{{ $proveedor->prov_nombre }}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                        {{-- <label class="col-sm-4 col-form-label">{{ __('Proveedor') }}</label> --}}
+                                        <div class="col-sm-12">
+                                            <label class="form-label label-top-select">{{ __('Proveedor') }}</label>
+                                            <select class="js-example-basic-single js-states form-control" name="proveedor_id" id="proveedor_id" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
+                                                <option value="" disabled selected style="background-color:lightgray">{{__('Seleccione un proveedor')}}</option>
+                                                @foreach ($proveedores as $proveedor)
+                                                    @if($proveedor->id==$ordenCompra->proveedor_id)
+                                                    <option value="{{$proveedor->id}}" selected>{{ $proveedor->prov_nombre }}</option>
+                                                    @else
+                                                    <option value="{{$proveedor->id}}">{{ $proveedor->prov_nombre }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <label class="col-sm-3 col-form-label">{{ __('Descuento') }} %</label>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                            <input class="form-control" name="ord_descuento" id="ord_descuento" min="0"  max="100" type="number" onKeyPress= 'return positiveNumberH( this, event,this.value);' value="{{$ordenCompra->ord_descuento}}"/>
-                                            </div>
+                                        <div class="col-md-12">
+                                            <label class="form-label label-top">{{ __('Descuento') }} %</label>
+                                            <input class="form-control" name="ord_descuento" id="ord_descuento" min="0"  max="100" type="number" onKeyPress= 'return positiveNumberH( this, event,this.value);' value="{{$ordenCompra->ord_descuento}}" placeholder="{{ __('Descuento') }}"/>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-12">
                                             <div class="form-check" style="margin-top: 20px">
                                                 <input type="hidden" name="ord_iva_incluido" id="ord_iva_incluido" value="{{$ordenCompra->ord_iva_incluido}}">
                                                 <label class="form-check-label">
@@ -80,43 +79,7 @@
                                               </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
-                                        <label class="col-sm-3 col-form-label">{{ __('Cantidad') }}</label>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                            <input class="form-control" name="aux_cantidad" id="aux_cantidad" type="number" step="1" onKeyPress= 'return positiveNumber( this, event,this.value);'/>
-                                            </div>
-                                        </div>
-                                        <label class="col-sm-2 col-form-label">{{ __('Costo') }} $</label>
-                                        <div class="col-sm-4">
-                                            <div class="form-group">
-                                            <input class="form-control" name="aux_costo" id="aux_costo" type="number" step="0.01" onKeyPress= 'return positiveNumberH( this, event,this.value);'/>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label">{{ __('Buscar') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <select class="js-example-basic-single js-states form-control" id="aux_material" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
-                                                    <option value="" disabled selected style="background-color:lightgray">{{__('Seleccione una materia prima')}}</option>
-                                                    @foreach ($materiales as $material)
-                                                        <option value="{{$material->id}}">{{ $material->mat_nombre }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <button class="btn btn-info btn-sm" id="agregarMateria" type="button">
-                                                <i class="material-icons">add_shopping_cart</i>
-                                                <div class="ripple-container"></div>
-                                            </button>
-                                        </div>
                                         <div class="col-sm-3">
                                             <button class="btn btn-success btn-sm" id="guardarOrden" type="button">
                                                 <i class="material-icons">done</i>
@@ -124,9 +87,50 @@
                                             </button>
                                         </div>
                                     </div>
-
+                                    </div>
+                                </div>
                                 </div>
                                 <div class="col-md-8">
+
+                                    <div class="card border mb-3" style="max-width: 100rem;">
+
+                                        <div class="card-header bg-light" {{--style="border: dimgray 1px solid"--}}>
+                                            <h4><b>Agregar materia prima</b></h4>
+                                        </div>
+                                    <div class="card-body text-dark border">
+                                    {{-- fields --}}
+                                    <div class="row breadcrumb">
+                                        <div class="col-md-2">
+                                            <label for="aux_cantidad" class="form-label label-top">Cantidad</label>
+                                            <input class="form-control" name="aux_cantidad" id="aux_cantidad" type="number" min="1" step="1" onKeyPress= 'return positiveNumber( this, event,this.value);' placeholder="cantidad"/>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label for="aux_costo" class="form-label label-top">Costo</label>
+                                            <input class="form-control" name="aux_costo" id="aux_costo" type="number" min="0.01" step="0.01" onKeyPress= 'return positiveNumberH( this, event,this.value);' placeholder="costo"/>
+                                        </div>
+                                        {{-- <label class="col-sm-2 col-form-label">{{ __('Buscar') }}</label> --}}
+                                        <div class="col-sm-7">
+                                            <div class="form-group">
+                                                <select class="js-example-basic-single js-states form-control" id="aux_material" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
+                                                    <option value="" disabled selected style="background-color:lightgray">{{__('Seleccione una materia prima')}}</option>
+                                                    @foreach ($materiales as $material)
+                                                    <option value="{{$material->id}}">{{ $material->mat_codigo}} {{ $material->mat_nombre }} {{ $material->empaque->emp_nombre}} {{ $material->mat_contenido}}{{ $material->medida->med_abreviatura}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 col-sm-1">
+                                            <div class="row justify-content-center" style="margin-top: 9px;" >
+                                                <a rel="tooltip" class="btn td-actions btn-success btn-sm btn-round
+                                                btn-fab add" href="#" data-original-title=""
+                                                   title="{{ __('Agregar') }}" id="agregarMateria">
+                                                    <i class="material-icons">add</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="table-responsive">
                                         <table id="tablaMateriales" class="table table-striped table-no-bordered table-hover datatable-rose" style="width: 100%">
                                             <thead class="text-primary">
@@ -201,6 +205,8 @@
                                         <label class="col-sm-3 col-form-label lv" id="total-l">Total</label>
                                         <label class="col-sm-2 col-form-label lv" id="total">{{number_format($ordenCompra->ord_total,2,'.', ',')}}</label>
                                     </div>
+                                </div>
+                                </div>
                                 </div>
                             </div>
                         </form>

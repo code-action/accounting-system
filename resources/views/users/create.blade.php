@@ -16,21 +16,17 @@
                         <div class="card-body ">
                             @csrf
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label">{{ __('Nombre') }}</label>
-                                    <div class="col-sm-7">
-                                      <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                                    <div class="col-sm-12">
+                                        <label class="form-label label-top">{{ __('Nombre') }}</label>
                                         <input class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" id="input-name" type="text" placeholder="{{ __('Nombre') }}" value="{{ old('name') }}" aria-required="true"/>
                                         @include('alerts.feedback', ['field' => 'name'])
-                                      </div>
                                     </div>
                                 </div>
                             <div class="row">
-                                <label class="col-sm-2 col-form-label">{{ __('Correo') }}</label>
-                                <div class="col-sm-7">
-                                  <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                <div class="col-sm-12">
+                                    <label class="form-label label-top">{{ __('Correo') }}</label>
                                     <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="input-email" type="text" placeholder="{{ __('Correo') }}" value="{{ old('email') }}" aria-required="true"/>
                                     @include('alerts.feedback', ['field' => 'email'])
-                                  </div>
                                 </div>
                             </div>
                         </div>

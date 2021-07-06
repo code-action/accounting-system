@@ -79,6 +79,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if($id==auth()->user()->id)
+        return view('profile.edit');
         $user = User::find($id);
         return view('users.edit', compact('user'));
     }
