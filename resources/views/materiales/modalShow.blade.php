@@ -11,10 +11,17 @@
                 <div class="modal-body">
                     <div class="card-body ">
                         <div class="row" style="margin-bottom: 15px;">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label for="input-cli_nombre-mostrar" class="form-label"
                                        style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
-                                    {{ __('Nombre') }}
+                                    {{ __('Código') }}
+                                </label>
+                                <input type="text" class="form-control" id="input-mat_codigo-mostrar" disabled>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="input-cli_nombre-mostrar" class="form-label"
+                                       style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
+                                    {{ __('Materia Prima') }}
                                 </label>
                                 <input type="text" class="form-control" id="input-mat_nombre-mostrar" disabled>
                             </div>
@@ -25,7 +32,7 @@
                                 </label>
                                 <input type="text" class="form-control" id="input-total-mostrar" disabled>
                             </div>
-                            <div class="col-md-4 col-sm-6">
+                            <div class="col-md-2 col-sm-6">
                                 <label for="input-cli_nombre-mostrar" class="form-label"
                                        style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
                                     {{ __('Fecha Ingreso') }}

@@ -138,18 +138,20 @@ function mostrarMensajesError(campos) {
     if(campos.includes('codigo_materia') === true){
         //console.log('Vendedor sin seleccionar 2')
         $('#i-mat_codigo-error').css({'display':'block'});
+        $('#form-group-mat_codigo').addClass('has-danger')
     }else{
         $('#i-mat_codigo-error').css({'display':'none'});
+        $('#form-group-mat_codigo').removeClass('has-danger')
     }
     if(campos.includes('presentacion') === true){
         console.log('Aquì 1')
         //console.log('Vendedor sin seleccionar 2')
         $('#i-mat_contenido-error').css({'display':'block'});
-        // $('#form-group-mat_nombre').addClass('has-danger')
+        $('#form-group-mat_contenido').addClass('has-danger')
     }else{
         console.log('Aquì 2')
         $('#i-mat_contenido-error').css({'display':'none'});
-        // $('#form-group-mat_nombre').removeClass('has-danger')
+        $('#form-group-mat_contenido').removeClass('has-danger')
     }
 
 

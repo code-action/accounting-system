@@ -1,20 +1,10 @@
 @extends('layouts.app', ['activePage' => 'materiales', 'titlePage' => __('Materia Prima')])
 
 @section('content')
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Error</strong> Hemos encontrado estos problemas<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <form method="post" action="{{ route('raw.update', $material->id) }}" autocomplete="off" class="form-horizontal"
                       id="form_material">
                     @csrf
@@ -29,291 +19,321 @@
                         </div>
                         <div class="card-body ">
                             <div class="row ">
-                                <div class="col-md-11">
-                                    <div class="row" id="codigomateria">
-                                        <input type="hidden" id="aux_id" value="{{$material->id}}">
-                                        <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Código') }}</label>
-                                        <div class="col-sm-12 col-lg-10 ">
-                                            <div class="form-group" id="form-group-mat_codigo">
-                                                <input class="form-control{{ $errors->has('mat_codigo') ? ' is-invalid' : '' }}"
-                                                       name="mat_codigo" id="mat_codigo" type="text"
-                                                       placeholder="{{ __('Código') }}" value="{{ $material->mat_codigo }}"
-                                                       aria-required="true"/>
-
-                                                <span id="i-mat_codigo-error" class="error text-danger"
-                                                      for="input-i-mat_codigo" style="display: none;">
-                                                            {{ __('El campo código de materia prima es requerido y tener al menos 3 caracteres')}}
-                                                </span>
-                                                <span id="i-mat_duplicado-error" class="error text-danger"
-                                                style="display: none;">
-                                                    {{ __('El código ingresado ya ha sido registrado')}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row" id="nombreMateria">
-                                        <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Nombre') }}</label>
-                                        <div class="col-sm-12 col-lg-10 ">
-                                            <div class="form-group" id="form-group-mat_nombre">
-                                                <input class="form-control{{ $errors->has('mat_nombre') ? ' is-invalid' : '' }}"
-                                                       name="mat_nombre" id="i-mat_nombre" type="text"
-                                                       placeholder="{{ __('Nombre Materia Prima') }}" value="{{$material->mat_nombre}}"
-                                                       aria-required="true"/>
-                                                <span id="i-mat_nombre-error" class="error text-danger"
-                                                      for="input-i-mat_nombre" style="display: none;">
-                                                    {{ __('El campo nombre de materia prima es requerido y tener al menos 3 caracteres')}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row" id="datosPresentacion">
-                                        <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Presentación') }}</label>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <select class="js-example-basic-single js-states form-control" name="empaque_id" id="empaque_id" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
-                                                    <option value="" {{is_null($material->empaque_id)?"selected":""}} disabled style="background-color:lightgray">{{__('Seleccione la presentación')}}</option>
-                                                    @foreach ($empaques as $empaque)
-                                                        <option value="{{$empaque->id}}" {{$material->empaque_id==$empaque->id?"selected":""}}>{{ $empaque->emp_nombre }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group {{ $errors->has('mat_contenido') ? ' has-danger' : '' }}">
-                                                <input class="form-control{{ $errors->has('mat_contenido') ? ' is-invalid' : '' }}"
-                                                    name="mat_contenido" id="mat_contenido" type="number"
-                                                    placeholder="{{ __('Contenido') }}" value="{{$material->mat_contenido}}"
-                                                    aria-required="true" min="0.01" step="0.01" onKeyPress= 'return positiveNumberH( this, event,this.value);'/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <select class="js-example-basic-single js-states form-control" name="medida_id" id="medida_id" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
-                                                    <option value="" disabled style="background-color:lightgray">{{__('Seleccione una unidad de medida')}}</option>
-                                                    @foreach ($medidas as $medida)
-                                                        <option value="{{$medida->id}}" {{$material->medida_id==$medida->id?"selected":""}}>{{ $medida->med_nombre }} ({{$medida->med_abreviatura}})</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <label class="col-sm-3 col-md-3 col-lg-2 col-form-label"></label>
-                                        <div class="col-sm-9">
-                                            <span id="i-mat_contenido-error" class="error text-danger" style="display: none;">
-                                                {{ __('Los campos de la presentación son requeridos')}}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <br><br><br>
-                                <div id="contenedor" class="col-md-9 col-sm-12 offset-md-1 offset-lg-2">
-
-                                    {{--Para agregar nuevos proveedores --}}
-                                    <div id="add_mat_prov1" class="row breadcrumb">
-
-                                        <div class="col-md-3 col-sm-2">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group" id="form-group-mat_cantidad1">
-                                                        <input class="form-control{{ $errors->has('mat_cantidad') ? ' is-invalid' : '' }}"
-                                                               name="" id="mat_cantidad1" type="number"
-                                                               placeholder="{{ __('Cantidad') }}" value=""
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="row" id="codigomateria">
+                                                <input type="hidden" id="aux_id" value="">
+                                                <div class="col-sm-12 col-lg-12">
+                                                    <label for="input-mat_codigo" class="form-label"
+                                                           style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
+                                                        {{ __('Código') }}
+                                                    </label>
+                                                    <div class="form-group" id="form-group-mat_codigo" style="margin-top: 0px;">
+                                                        <input class="form-control{{ $errors->has('mat_codigo') ? ' is-invalid' : '' }}"
+                                                               name="mat_codigo" id="mat_codigo" type="text"
+                                                               placeholder="{{ __('Código de Materia Prima') }}"
+                                                               value="{{ $material->mat_codigo }}"
                                                                aria-required="true"/>
-                                                        <span id="mat_cantidad1-error" class="error text-danger"
-                                                              for="input-mat_cantidad1" style="display: none;">
+
+                                                        <span id="i-mat_codigo-error" class="error text-danger"
+                                                              for="input-i-mat_codigo" style="display: none;">
+                                                                {{ __('El campo código es requerido y debe tener al menos 3 caracteres')}}
+                                                            </span>
+                                                        <span id="i-mat_duplicado-error" class="error text-danger"
+                                                              style="display: none;">
+                                                                {{ __('El código ingresado ya ha sido registrado')}}
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" id="nombreMateria">
+                                                <div class="col-sm-12 col-lg-12">
+                                                    <label for="input-mat_codigo" class="form-label"
+                                                           style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
+                                                        {{ __('Nombre') }}
+                                                    </label>
+                                                    <div class="form-group" id="form-group-mat_nombre"
+                                                         style="margin-top: 0px;">
+                                                        <input class="form-control"
+                                                               name="mat_nombre" id="i-mat_nombre" type="text"
+                                                               placeholder="{{ __('Nombre de Materia Prima') }}"
+                                                               value="{{$material->mat_nombre}}"
+                                                               aria-required="true"/>
+                                                        <span id="i-mat_nombre-error" class="error text-danger"
+                                                              for="input-i-mat_nombre" style="display: none;">
+                                                                {{ __('El campo nombre es requerido y debe tener al menos 3 caracteres')}}
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" id="datosPresentacion">
+                                                <div class="col-sm-12">
+                                                    <label for="input-prod_codigo" class="form-label"
+                                                           style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
+                                                        {{ __('Presentación') }}
+                                                    </label>
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <select class="js-example-basic-single js-states form-control" name="empaque_id" id="empaque_id" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
+                                                                    <option value="" {{is_null($material->empaque_id)?"selected":""}} disabled style="background-color:lightgray">{{__('Seleccione la presentación')}}</option>
+                                                                    @foreach ($empaques as $empaque)
+                                                                        <option value="{{$empaque->id}}" {{$material->empaque_id==$empaque->id?"selected":""}}>{{ $empaque->emp_nombre }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group" id="form-group-mat_contenido"
+                                                                 style="margin-top: 0px;">
+                                                                <input class="form-control{{ $errors->has('mat_contenido') ? ' is-invalid' : '' }}"
+                                                                       name="mat_contenido" id="mat_contenido" type="number"
+                                                                       placeholder="{{ __('Contenido') }}" value="{{$material->mat_contenido}}"
+                                                                       aria-required="true" min="0.01" step="0.01"
+                                                                       onKeyPress= 'return positiveNumberH( this, event,this.value);'/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <select class="js-example-basic-single js-states form-control" name="medida_id" id="medida_id" data-style="select-with-transition" title="" data-size="100" style="width: 100%">
+                                                                    <option value="" disabled style="background-color:lightgray">{{__('Seleccione una unidad de medida')}}</option>
+                                                                    @foreach ($medidas as $medida)
+                                                                        <option value="{{$medida->id}}" {{$material->medida_id==$medida->id?"selected":""}}>{{ $medida->med_nombre }} ({{$medida->med_abreviatura}})</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        {{--<label class="col-sm-3 col-md-3 col-lg-2 col-form-label"></label>--}}
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group
+                                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                                 style="margin-top: 0px;">
+                                                                    <span id="i-mat_contenido-error" class="error text-danger" style="display: none;">
+                                                                        {{ __('Los campos de la presentación son requeridos')}}
+                                                                    </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{--Columnma 2--}}
+                                            <div id="contenedor" class="col-md-12 col-sm-12">
+
+                                                {{--Para agregar nuevos proveedores --}}
+                                                <div id="add_mat_prov1" class="row breadcrumb">
+
+                                                    <div class="col-md-3 col-sm-2">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group" id="form-group-mat_cantidad1">
+                                                                    <input class="form-control{{ $errors->has('mat_cantidad') ? ' is-invalid' : '' }}"
+                                                                           name="" id="mat_cantidad1" type="number"
+                                                                           placeholder="{{ __('Cantidad') }}" value=""
+                                                                           aria-required="true"/>
+                                                                    <span id="mat_cantidad1-error" class="error text-danger"
+                                                                          for="input-mat_cantidad1" style="display: none;">
                                                                 {{ __('El campo cantidad es requerido y debe ser un número entero')}}
                                                             </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-3">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group" id="form-group-mat_precio_u1">
-                                                        <input class="form-control{{ $errors->has('mat_precio_u') ? ' is-invalid' : '' }}"
-                                                               name="" id="mat_precio_u1" type="number" step="0.01"
-                                                               placeholder="{{ __('Precio Unitario') }}" value=""
-                                                               aria-required="true"/>
-                                                        <span id="mat_precio_u1-error" class="error text-danger"
-                                                              for="input-mat_precio_u1" style="display: none;">
+                                                    <div class="col-md-3 col-sm-3">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group" id="form-group-mat_precio_u1">
+                                                                    <input class="form-control{{ $errors->has('mat_precio_u') ? ' is-invalid' : '' }}"
+                                                                           name="" id="mat_precio_u1" type="number" step="0.01"
+                                                                           placeholder="{{ __('Precio Unitario') }}" value=""
+                                                                           aria-required="true"/>
+                                                                    <span id="mat_precio_u1-error" class="error text-danger"
+                                                                          for="input-mat_precio_u1" style="display: none;">
                                                                 {{ __('El campo precio unitario es requerido y debe tener 8 dígitos como máximo')}}
                                                             </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="col-md-5 col-sm-6">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div style="margin-top: 16px;" class="form-group" id="form-group-select_prov_nombre1" >
-                                                        <select class="js-example-basic-single js-states has-error
+                                                    <div class="col-md-5 col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div style="margin-top: 16px;" class="form-group" id="form-group-select_prov_nombre1" >
+                                                                    <select class="js-example-basic-single js-states has-error
                                                             form-control" name="" id="select_prov_nombre1"
-                                                                data-style="select-with-transition"
-                                                                data-size="100" style="width: 100%">
-                                                            <option selected disabled value="0">
-                                                                {{__('Seleccione un proveedor')}}
-                                                            </option>
-                                                            @foreach ($proveedores as $proveedor)
-                                                                <option id="proveedor_{{$proveedor->id}}" value="{{$proveedor->id}}">
-                                                                    {{ $proveedor->prov_nombre }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <span id="prov_nombre1-error" class="error text-danger"
-                                                              for="input-prov_nombre1" style="display: none;">
+                                                                            data-style="select-with-transition"
+                                                                            data-size="100" style="width: 100%">
+                                                                        <option selected disabled value="0">
+                                                                            {{__('Seleccione un proveedor')}}
+                                                                        </option>
+                                                                        @foreach ($proveedores as $proveedor)
+                                                                            <option id="proveedor_{{$proveedor->id}}" value="{{$proveedor->id}}">
+                                                                                {{ $proveedor->prov_nombre }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <span id="prov_nombre1-error" class="error text-danger"
+                                                                          for="input-prov_nombre1" style="display: none;">
                                                                 {{ __('El campo precio proveedor es requerido')}}
                                                             </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1 col-sm-1">
-                                            <div class="row justify-content-center" style="margin-top: 9px;" >
-                                                <a rel="tooltip" class="btn btn-success btn-sm btn-round btn-fab add" href="#"
-                                                   data-original-title="" title="Agregar proveedor">
-                                                    <i class="material-icons">add</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    {{--cantidad, preciou y proveedores que se envian--}}
-                                    {{--Visible--}}
-                                    @foreach($material->proveedores as $prov)
-                                        <div id="add_mat_prov"  class="row">
-                                            <div class="col-md-3 col-sm-2">
-                                                <div class="row">
-                                                <input type="hidden" id="id_proveedor" name="id_proveedor[]"
-                                                       value="{{$prov->pivot->id}}" disabled/>
-                                                <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <input class="form-control{{ $errors->has('mat_cantidad') ? ' is-invalid' : '' }}"
-                                                               id="i-mat_cantidad-visible" type="number"
-                                                               placeholder="{{ __('Cantidad') }}" value="{{$prov->pivot->mat_prov_cantidad}}"
-                                                               aria-required="true" disabled/>
-                                                        {{--<input type="hidden" name="mat_cantidad[]"
-                                                               value="{{$prov->pivot->mat_prov_cantidad}}"/>--}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3">
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <input class="form-control{{ $errors->has('mat_precio_u') ? ' is-invalid' : '' }}"
-                                                                   name="mat_precio_u[]" id="i-mat_precio_u-visiable" type="number" step="0.01"
-                                                                   placeholder="{{ __('Precio Unitario') }}" disabled
-                                                                   value="{{$prov->pivot->mat_prov_preciou}}" aria-required="true"/>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
+                                                    <div class="col-md-1 col-sm-1">
+                                                        <div class="row justify-content-center" style="margin-top: 9px;" >
+                                                            <a rel="tooltip" class="btn btn-success btn-sm btn-round btn-fab add" href="#"
+                                                               data-original-title="" title="Agregar proveedor">
+                                                                <i class="material-icons">add</i>
+                                                                <div class="ripple-container"></div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
 
-                                            <div class="col-md-5 col-sm-6">
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div style="margin-top: 16px;" id="" class="form-group prov_nombre
+                                                </div>
+
+                                                {{--cantidad, preciou y proveedores que se envian--}}
+                                                {{--Visible--}}
+                                                @foreach($material->proveedores as $prov)
+                                                    <div id="add_mat_prov"  class="row">
+                                                        <div class="col-md-3 col-sm-2">
+                                                            <div class="row">
+                                                                <input type="hidden" id="id_proveedor" name="id_proveedor[]"
+                                                                       value="{{$prov->pivot->id}}" disabled/>
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <input class="form-control{{ $errors->has('mat_cantidad') ? ' is-invalid' : '' }}"
+                                                                               id="i-mat_cantidad-visible" type="number"
+                                                                               placeholder="{{ __('Cantidad') }}" value="{{$prov->pivot->mat_prov_cantidad}}"
+                                                                               aria-required="true" disabled/>
+                                                                        {{--<input type="hidden" name="mat_cantidad[]"
+                                                                               value="{{$prov->pivot->mat_prov_cantidad}}"/>--}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-3">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <input class="form-control{{ $errors->has('mat_precio_u') ? ' is-invalid' : '' }}"
+                                                                               name="mat_precio_u[]" id="i-mat_precio_u-visiable" type="number" step="0.01"
+                                                                               placeholder="{{ __('Precio Unitario') }}" disabled
+                                                                               value="{{$prov->pivot->mat_prov_preciou}}" aria-required="true"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-5 col-sm-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div style="margin-top: 16px;" id="" class="form-group prov_nombre
                                                                 {{ $errors->has('prov_nombre') ? ' has-danger' : '' }}">
-                                                            <select class="js-example-basic-single js-states has-error
+                                                                        <select class="js-example-basic-single js-states has-error
                                                                     form-control select" name="prov_nombre[]"
-                                                                    data-style="select-with-transition" title=""
-                                                                    data-size="100" style="width: 100%" disabled>
-                                                                <option selected>
-                                                                    {{$prov->prov_nombre}}
-                                                                </option>
-                                                            </select>
+                                                                                data-style="select-with-transition" title=""
+                                                                                data-size="100" style="width: 100%" disabled>
+                                                                            <option selected>
+                                                                                {{$prov->prov_nombre}}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {{--Botón eliminar--}}
+                                                        <div class="col-md-1 col-sm-1">
+                                                            <div class="row justify-content-center" style="margin-top: 9px;" >
+                                                                <a rel="tooltip" class="btn btn-danger btn-sm btn-round btn-fab delete"
+                                                                   href="#" data-original-title="" title="">
+                                                                    <i class="material-icons">close</i>
+                                                                    <div class="ripple-container"></div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                                {{--Oculta--}}
+                                                <div id="add_mat_prov0" style="display: none"  class="row">
+                                                    <div class="col-md-3 col-sm-2">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group {{ $errors->has('mat_cantidad') ? ' has-danger' : '' }}">
+                                                                    <input class="form-control{{ $errors->has('mat_cantidad') ? ' is-invalid' : '' }}"
+                                                                           name="nuevo_mat_cantidad[]" id="i-mat_cantidad" type="number"
+                                                                           placeholder="{{ __('Cantidad') }}" value="" min="1"
+                                                                           aria-required="true" disabled/>
+                                                                    <input type="hidden" name="nuevo_mat_cantidad[]"
+                                                                           value="" id="i-mat_cantidad_o" disabled/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group{{ $errors->has('mat_precio_u') ? ' has-danger' : '' }}">
+                                                                    <input class="form-control{{ $errors->has('mat_precio_u') ? ' is-invalid' : '' }}"
+                                                                           name="nuevo_mat_precio_u[]" id="i-mat_precio_u" type="number" step="0.01"
+                                                                           min="0.01" placeholder="{{ __('Precio Unitario') }}"
+                                                                           value=""
+                                                                           aria-required="true" disabled/>
+                                                                    <input type="hidden" name="nuevo_mat_precio_u[]"
+                                                                           value="" id="i-mat_preciou_o" disabled/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-5 col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div style="margin-top: 16px;" id="cotenedor_select" class="form-group prov_nombre
+                                                            {{ $errors->has('prov_nombre') ? ' has-danger' : '' }}">
+                                                                    <select class="js-example-basic-single js-states has-error
+                                                                form-control" name="prov_nombre[]" id="i-prov_nombre"
+                                                                            data-style="select-with-transition" title=""
+                                                                            data-size="100" style="width: 100%" disabled>
+                                                                        <option selected disabled value="0">
+                                                                            {{__('Seleccione un proveedor')}}
+                                                                        </option>
+                                                                        @foreach ($proveedores as $proveedor)
+                                                                            <option id="proveedor_{{$proveedor->id}}"
+                                                                                    value="{{$proveedor->id}}">
+                                                                                {{ $proveedor->prov_nombre }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <input type="hidden" name="nuevo_prov_nombre[]"
+                                                                           value="" id="i-prov_nombre_o" disabled/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{--Botón eliminar--}}
+                                                    <div class="col-md-1">
+                                                        <div class="row justify-content-center" style="margin-top: 9px;" >
+                                                            <a rel="tooltip" class="btn btn-danger btn-sm btn-round btn-fab delete"
+                                                               href="#" data-original-title="" title="">
+                                                                <i class="material-icons">close</i>
+                                                                <div class="ripple-container"></div>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            {{--Botón eliminar--}}
-                                            <div class="col-md-1 col-sm-1">
-                                                <div class="row justify-content-center" style="margin-top: 9px;" >
-                                                    <a rel="tooltip" class="btn btn-danger btn-sm btn-round btn-fab delete"
-                                                       href="#" data-original-title="" title="">
-                                                        <i class="material-icons">close</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                    {{--Oculta--}}
-                                    <div id="add_mat_prov0" style="display: none"  class="row">
-                                        <div class="col-md-3 col-sm-2">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group {{ $errors->has('mat_cantidad') ? ' has-danger' : '' }}">
-                                                        <input class="form-control{{ $errors->has('mat_cantidad') ? ' is-invalid' : '' }}"
-                                                               name="nuevo_mat_cantidad[]" id="i-mat_cantidad" type="number"
-                                                               placeholder="{{ __('Cantidad') }}" value="" min="1"
-                                                               aria-required="true" disabled/>
-                                                        <input type="hidden" name="nuevo_mat_cantidad[]"
-                                                               value="" id="i-mat_cantidad_o" disabled/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-3">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group{{ $errors->has('mat_precio_u') ? ' has-danger' : '' }}">
-                                                        <input class="form-control{{ $errors->has('mat_precio_u') ? ' is-invalid' : '' }}"
-                                                               name="nuevo_mat_precio_u[]" id="i-mat_precio_u" type="number" step="0.01"
-                                                               min="0.01" placeholder="{{ __('Precio Unitario') }}"
-                                                               value=""
-                                                               aria-required="true" disabled/>
-                                                        <input type="hidden" name="nuevo_mat_precio_u[]"
-                                                               value="" id="i-mat_preciou_o" disabled/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-5 col-sm-6">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div style="margin-top: 16px;" id="cotenedor_select" class="form-group prov_nombre
-                                                            {{ $errors->has('prov_nombre') ? ' has-danger' : '' }}">
-                                                        <select class="js-example-basic-single js-states has-error
-                                                                form-control" name="prov_nombre[]" id="i-prov_nombre"
-                                                                data-style="select-with-transition" title=""
-                                                                data-size="100" style="width: 100%" disabled>
-                                                            <option selected disabled value="0">
-                                                                {{__('Seleccione un proveedor')}}
-                                                            </option>
-                                                            @foreach ($proveedores as $proveedor)
-                                                                <option id="proveedor_{{$proveedor->id}}"
-                                                                        value="{{$proveedor->id}}">
-                                                                    {{ $proveedor->prov_nombre }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <input type="hidden" name="nuevo_prov_nombre[]"
-                                                               value="" id="i-prov_nombre_o" disabled/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{--Botón eliminar--}}
-                                        <div class="col-md-1">
-                                            <div class="row justify-content-center" style="margin-top: 9px;" >
-                                                <a rel="tooltip" class="btn btn-danger btn-sm btn-round btn-fab delete"
-                                                    href="#" data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <br><br><br>
+
                             </div>
                             {{--Eliminados--}}
                             <div id="eliminados">

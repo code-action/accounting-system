@@ -5,9 +5,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <form method="post" action="{{ route('producto.update', $producto->id) }}" autocomplete="off" class="form-horizontal">
+                    <form method="post" action="{{ route('producto.store') }}" autocomplete="off" class="form-horizontal">
                         @csrf
-                        @method('put')
+                        @method('post')
 
                         <div class="card ">
                             <div class="card-header card-header-info card-header-icon">
@@ -20,193 +20,232 @@
                                 <div class="row ">
                                     <div class="col-md-5">
                                         <div class="row ">
-                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Código') }}</label>
-                                            <div class="col-sm-10">
-                                                <div class="form-group{{ $errors->has('prod_codigo') ? ' has-danger' : '' }}">
-                                                    <input class="form-control{{ $errors->has('prod_codigo') ? ' is-invalid' : '' }}"
-                                                           name="prod_codigo" id="input-prod_codigo" type="text"
-                                                           placeholder="{{ __('Código del producto') }}"
-                                                           value="{{old('prod_codigo', $producto->prod_codigo)}}"
-                                                           aria-required="true"/>
+                                            <div class="col-sm-12">
+                                                <label for="input-prod_codigo" class="form-label"
+                                                       style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
+                                                    {{ __('Código') }}
+                                                </label>
+                                                <input class="form-control{{ $errors->has('prod_codigo') ? ' is-invalid' : '' }}"
+                                                       name="prod_codigo" id="input-prod_codigo" type="text"
+                                                       placeholder="{{ __('Código del producto') }}"
+                                                       value="{{old('prod_codigo', $producto->prod_codigo)}}"
+                                                       aria-required="true"/>
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
                                                     @include('alerts.feedback', ['field' => 'prod_codigo'])
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row ">
-                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Nombre') }}</label>
-                                            <div class="col-sm-10">
-                                                <div class="form-group{{ $errors->has('prod_nombre') ? ' has-danger' : '' }}">
-                                                    <input class="form-control{{ $errors->has('prod_nombre') ? ' is-invalid' : '' }}"
-                                                           name="prod_nombre" id="input-mat_nombre" type="text"
-                                                           placeholder="{{ __('Nombre del producto') }}"
-                                                           value="{{old('prod_nombre', $producto->prod_nombre)}}"
-                                                           aria-required="true"/>
+                                            <div class="col-sm-12">
+                                                <label for="input-mat_nombre" class="form-label"
+                                                       style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
+                                                    {{ __('Nombre') }}
+                                                </label>
+                                                <input class="form-control{{ $errors->has('prod_nombre') ? ' is-invalid' : '' }}"
+                                                       name="prod_nombre" id="input-mat_nombre" type="text"
+                                                       placeholder="{{ __('Nombre del producto') }}"
+                                                       value="{{old('prod_nombre', $producto->prod_nombre)}}"
+                                                       aria-required="true"/>
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
                                                     @include('alerts.feedback', ['field' => 'prod_nombre'])
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row">
-                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Cantidad') }}</label>
-                                            <div class="col-sm-10">
-                                                <div class="form-group{{ $errors->has('prod_cantidad') ? ' has-danger' : '' }}">
-                                                    <input class="form-control{{ $errors->has('prod_cantidad') ? ' is-invalid' : '' }}"
-                                                           name="prod_cantidad" id="input-mat_cantidad" type="text"
-                                                           placeholder="{{ __('Cantidad') }}"
-                                                           value="{{old('prod_cantidad', $producto->prod_cantidad)}}"
-                                                           aria-required="true"/>
+                                            <div class="col-sm-12">
+                                                <label for="input-mat_cantidad" class="form-label"
+                                                       style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
+                                                    {{ __('Cantidad') }}
+                                                </label>
+                                                <input class="form-control{{ $errors->has('prod_cantidad') ? ' is-invalid' : '' }}"
+                                                       name="prod_cantidad" id="input-mat_cantidad" type="number"
+                                                       placeholder="{{ __('Cantidad') }}"
+                                                       value="{{old('prod_cantidad', $producto->prod_cantidad)}}"
+                                                       aria-required="true"/>
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
                                                     @include('alerts.feedback', ['field' => 'prod_cantidad'])
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Precio') }}</label>
-                                            <div class="col-sm-10">
-                                                <div class="form-group {{ $errors->has('prod_precio') ? ' has-danger' : '' }}">
-                                                    <input class="form-control{{ $errors->has('prod_precio') ? ' is-invalid' : '' }}"
-                                                           name="prod_precio" id="input-prod_precio" type="text"
-                                                           placeholder="{{ __('Precio') }}"
-                                                           value="{{old('prod_precio', $producto->prod_precio)}}"
-                                                           aria-required="true"/>
+                                            <div class="col-sm-12">
+                                                <label for="input-mat_cantidad" class="form-label"
+                                                       style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
+                                                    {{ __('Precio') }}
+                                                </label>
+                                                <input class="form-control{{ $errors->has('prod_precio') ? ' is-invalid' : '' }}"
+                                                       name="prod_precio" id="input-prod_precio" type="number"
+                                                       placeholder="{{ __('Precio') }}"
+                                                       value="{{old('prod_precio', $producto->prod_precio)}}"
+                                                       aria-required="true"/>
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
                                                     @include('alerts.feedback', ['field' => 'prod_precio'])
                                                 </div>
                                             </div>
                                         </div>
-
-
-
                                     </div>
                                     <div class="col-md-5">
                                         <div class="row">
-                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Categoría') }}</label>
-                                            <div class="col-sm-10">
-                                                <div class="form-group" style="margin-top: 16px;">
-                                                    <select class="js-example-basic-single js-states form-control
-                                                    {{ $errors->has('categoria_id') ? ' has-danger' : '' }}"
-                                                            name="categoria_id" id="input-categoria_id"
-                                                            data-style="select-with-transition" title=""
-                                                            data-size="100" style="width: 100%">
-                                                        <option value="" disabled selected></option>
-                                                        @foreach($categorias as $c)
-                                                            <option value="{{$c->id}}"
-                                                                    @if(old('categoria_id') == $c->id)
-                                                                        selected
-                                                                    @elseif($producto->categoria_id == $c->id)
-                                                                        selected
-                                                                    @endif>
-                                                                {{$c->cat_nombre}}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                            <div class="col-sm-12">
+                                                <label for="input-categoria_id" class="form-label"
+                                                       style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;padding-bottom: 8px;">
+                                                    {{ __('Categoría') }}
+                                                </label>
+                                                <select class="js-example-basic-single js-states form-control
+                                                {{ $errors->has('categoria_id') ? ' has-danger' : '' }}"
+                                                        name="categoria_id" id="input-categoria_id"
+                                                        data-style="select-with-transition" title=""
+                                                        data-size="100" style="width: 100%">
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($categorias as $c)
+                                                        <option value="{{$c->id}}"
+                                                                @if(old('categoria_id') == $c->id)
+                                                                selected
+                                                                @elseif($producto->categoria_id == $c->id)
+                                                                selected
+                                                            @endif>
+                                                            {{$c->cat_nombre}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
                                                     @include('alerts.feedback', ['field' => 'categoria_id'])
                                                 </div>
                                             </div>
                                         </div>
 
-
-
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-sm-12">
+                                                <label for="input-prod_descripcion" class="form-label"
+                                                       style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;padding-bottom: 8px;">
+                                                    {{ __('Presentación') }}
+                                                </label>
                                                 <div class="row">
-                                                    <label class="col-sm-4 col-md-4 col-lg-4 col-form-label">{{ __('Presentación') }}</label>
-                                                    <div class="col-sm-8">
-                                                        <div class="form-group" style="margin-top: 16px;">
-                                                            <select class="js-example-basic-single js-states form-control
+                                                    <div class="col-md-5">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <select class="js-example-basic-single js-states form-control
                                                         {{ $errors->has('prod_empaque') ? ' has-danger' : '' }}"
-                                                                    name="prod_empaque" id="input-prod_empaque"
-                                                                    data-style="select-with-transition" title=""
-                                                                    data-size="100" style="width: 100%">
-                                                                <option value="" disabled selected></option>
-                                                                @foreach($empaques as $e)
-                                                                    <option value="{{$e->id}}"
-                                                                            @if(old('prod_empaque') == $e->id)
+                                                                        name="prod_empaque" id="input-prod_empaque"
+                                                                        data-style="select-with-transition" title=""
+                                                                        data-size="100" style="width: 100%">
+                                                                    <option value="" disabled selected></option>
+                                                                    @foreach($empaques as $e)
+                                                                        <option value="{{$e->id}}"
+                                                                                @if(old('prod_empaque') == $e->id)
                                                                                 selected
-                                                                            @elseif($producto->empaque_id == $e->id)
-                                                                                selected
-                                                                            @endif>
-                                                                        {{$e->emp_nombre}}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            @include('alerts.feedback', ['field' => 'prod_empaque'])
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="row">
-                                                    {{--<label class="col-sm-3 col-md-3 col-lg-2 col-form-label">
-                                                    {{ __('Contenido') }}</label>--}}
-                                                    <div class="col-sm-12" >
-                                                        <div class="form-group {{ $errors->has('prod_contenido') ? ' has-danger' : '' }}">
-                                                            <input class="form-control{{ $errors->has('prod_contenido') ? ' is-invalid' : '' }}"
-                                                                   name="prod_contenido" id="input-prod_contenido" type="text"
-                                                                   placeholder="{{ __('Contenido') }}"
-                                                                   value="{{old('prod_contenido', $producto->prod_contenido)}}"
-                                                                   aria-required="true"/>
-                                                            @include('alerts.feedback', ['field' => 'prod_contenido'])
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="row">
-                                                    {{--<label class="col-sm-3 col-md-3 col-lg-2 col-form-label">
-                                                    {{ __('Medida') }}</label>--}}
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group" style="margin-top: 16px;">
-                                                            <select class="js-example-basic-single js-states has-error select2
-                                                                form-control" name="prod_medida" id="input-prod_medida"
-                                                                    data-style="select-with-transition" title=""
-                                                                    data-size="100" style="width: 100%">
-                                                                <option value="" disabled selected></option>
-                                                                @foreach($medidas as $m)
-                                                                    <option value="{{$m->id}}"
-                                                                            @if(old('prod_medida') == $m->id)
-                                                                                selected
-                                                                            @elseif($producto->medida_id == $m->id)
+                                                                                @elseif($producto->empaque_id == $e->id)
                                                                                 selected
                                                                             @endif>
-                                                                        {{$m->med_nombre}} ({{$m->med_abreviatura}})
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            @include('alerts.feedback', ['field' => 'prod_medida'])
+                                                                            {{$e->emp_nombre}}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <div class="form-group
+                                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                                     style="margin-top: 0px;">
+                                                                    @include('alerts.feedback', ['field' => 'prod_empaque'])
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="row">
+                                                            <div class="col-sm-12" >
+                                                                <input class="form-control{{ $errors->has('prod_contenido') ? ' is-invalid' : '' }}"
+                                                                       name="prod_contenido" id="input-prod_contenido" type="text"
+                                                                       placeholder="{{ __('Contenido') }}"
+                                                                       value="{{old('prod_contenido', $producto->prod_contenido)}}"
+                                                                       aria-required="true"/>
+                                                                <div class="form-group
+                                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                                     style="margin-top: 0px;">
+                                                                    @include('alerts.feedback', ['field' => 'prod_contenido'])
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <select class="js-example-basic-single js-states has-error select2
+                                                            form-control" name="prod_medida" id="input-prod_medida"
+                                                                        data-style="select-with-transition" title=""
+                                                                        data-size="100" style="width: 100%">
+                                                                    <option value="" disabled selected></option>
+                                                                    @foreach($medidas as $m)
+                                                                        <option value="{{$m->id}}"
+                                                                                @if(old('prod_medida') == $m->id)
+                                                                                selected
+                                                                                @elseif($producto->medida_id == $m->id)
+                                                                                selected
+                                                                            @endif>
+                                                                            {{$m->med_nombre}} ({{$m->med_abreviatura}})
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <div class="form-group
+                                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                                     style="margin-top: 0px;">
+                                                                    @include('alerts.feedback', ['field' => 'prod_medida'])
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row ">
-                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Descripción') }}</label>
-                                            <div class="col-sm-10">
-                                                <div class="form-group{{ $errors->has('prod_descripcion') ? ' has-danger' : '' }}">
-                                                    <textarea class="form-control{{ $errors->has('prod_descripcion') ? ' is-invalid' : '' }}"
-                                                              name="prod_descripcion" id="input-prod_descripcion" type="text"
-                                                              placeholder="{{ __('Descripción del producto') }}"
-                                                              aria-required="true">{{old('prod_descripcion', $producto->prod_desc)}}</textarea>
+                                            <div class="col-sm-12">
+                                                <label for="input-prod_descripcion" class="form-label"
+                                                       style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
+                                                    {{ __('Descripción') }}
+                                                </label>
+                                                <textarea class="form-control{{ $errors->has('prod_descripcion') ? ' is-invalid' : '' }}"
+                                                          name="prod_descripcion" id="input-prod_descripcion" type="text"
+                                                          placeholder="{{ __('Descripción del producto') }}"
+                                                          aria-required="true">{{old('prod_descripcion', $producto->prod_desc)}}</textarea>
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
                                                     @include('alerts.feedback', ['field' => 'prod_descripcion'])
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row ">
-                                            <label class="col-sm-3 col-md-3 col-lg-2 col-form-label">{{ __('Procedimiento') }}</label>
-                                            <div class="col-sm-10" >
-                                                <div class="form-group{{ $errors->has('prod_proced') ? ' has-danger' : '' }}">
-                                                    <textarea class="form-control{{ $errors->has('prod_proced') ? ' is-invalid' : '' }}"
-                                                              name="prod_proced" id="input-prod_proced" type="text" rows="3"
-                                                              placeholder="{{ __('Procedimiento de elaboración') }}"
-                                                              aria-required="true">{{old('prod_proced', $producto->prod_procedimiento)}}</textarea>
+                                            <div class="col-sm-12" >
+                                                <label for="input-prod_descripcion" class="form-label"
+                                                       style="padding-top: 20px;margin-bottom: 0px;border-bottom-width: 0;">
+                                                    {{ __('Procedimiento') }}
+                                                </label>
+                                                <textarea class="form-control{{ $errors->has('prod_proced') ? ' is-invalid' : '' }}"
+                                                          name="prod_proced" id="input-prod_proced" type="text"
+                                                          placeholder="{{ __('Procedimiento de elaboración') }}"
+                                                          aria-required="true">{{old('prod_proced', $producto->prod_procedimiento)}}</textarea>
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
                                                     @include('alerts.feedback', ['field' => 'prod_proced'])
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
-
-
-                                    <input type="hidden" name="id_validate" value="{{$producto->id}}">
                                 </div>
                             </div>
                             <div class="card-footer ">

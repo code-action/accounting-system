@@ -29,8 +29,11 @@
                                                        name="prod_codigo" id="input-prod_codigo" type="text"
                                                        placeholder="{{ __('Código del producto') }}" value="{{ old('prod_codigo') }}"
                                                        aria-required="true"/>
-                                                @include('alerts.feedback', ['field' => 'prod_codigo'])
-
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
+                                                    @include('alerts.feedback', ['field' => 'prod_codigo'])
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row ">
@@ -43,7 +46,11 @@
                                                        name="prod_nombre" id="input-mat_nombre" type="text"
                                                        placeholder="{{ __('Nombre del producto') }}" value="{{ old('prod_nombre') }}"
                                                        aria-required="true"/>
-                                                @include('alerts.feedback', ['field' => 'prod_nombre'])
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
+                                                    @include('alerts.feedback', ['field' => 'prod_nombre'])
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -56,7 +63,11 @@
                                                        name="prod_cantidad" id="input-mat_cantidad" type="text"
                                                        placeholder="{{ __('Cantidad') }}" value="{{ old('prod_cantidad') }}"
                                                        aria-required="true"/>
-                                                @include('alerts.feedback', ['field' => 'prod_cantidad'])
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
+                                                    @include('alerts.feedback', ['field' => 'prod_cantidad'])
+                                                </div>
                                             </div>
                                         </div>
 
@@ -70,13 +81,13 @@
                                                        name="prod_precio" id="input-prod_precio" type="text"
                                                        placeholder="{{ __('Precio') }}" value="{{ old('prod_precio') }}"
                                                        aria-required="true"/>
-                                                @include('alerts.feedback', ['field' => 'prod_precio'])
-
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
+                                                    @include('alerts.feedback', ['field' => 'prod_precio'])
+                                                </div>
                                             </div>
                                         </div>
-
-
-
                                     </div>
                                     <div class="col-md-5">
                                         <div class="row">
@@ -98,7 +109,11 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                @include('alerts.feedback', ['field' => 'categoria_id'])
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
+                                                    @include('alerts.feedback', ['field' => 'categoria_id'])
+                                                </div>
                                             </div>
                                         </div>
 
@@ -126,8 +141,11 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                                @include('alerts.feedback', ['field' => 'prod_empaque'])
-
+                                                                <div class="form-group
+                                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                                     style="margin-top: 0px;">
+                                                                    @include('alerts.feedback', ['field' => 'prod_empaque'])
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -138,7 +156,11 @@
                                                                        name="prod_contenido" id="input-prod_contenido" type="text"
                                                                        placeholder="{{ __('Contenido') }}" value="{{ old('prod_contenido') }}"
                                                                        aria-required="true"/>
-                                                                @include('alerts.feedback', ['field' => 'prod_contenido'])
+                                                                <div class="form-group
+                                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                                     style="margin-top: 0px;">
+                                                                    @include('alerts.feedback', ['field' => 'prod_contenido'])
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -157,7 +179,11 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                                @include('alerts.feedback', ['field' => 'prod_medida'])
+                                                                <div class="form-group
+                                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                                     style="margin-top: 0px;">
+                                                                    @include('alerts.feedback', ['field' => 'prod_medida'])
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -175,7 +201,11 @@
                                                           name="prod_descripcion" id="input-prod_descripcion" type="text"
                                                           placeholder="{{ __('Descripción del producto') }}"
                                                           aria-required="true">{{old('prod_descripcion') }}</textarea>
-                                                @include('alerts.feedback', ['field' => 'prod_descripcion'])
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
+                                                    @include('alerts.feedback', ['field' => 'prod_descripcion'])
+                                                </div>
                                             </div>
                                         </div>
 
@@ -189,7 +219,11 @@
                                                           name="prod_proced" id="input-prod_proced" type="text"
                                                           placeholder="{{ __('Procedimiento de elaboración') }}"
                                                           aria-required="true">{{old('prod_proced') }}</textarea>
-                                                @include('alerts.feedback', ['field' => 'prod_proced'])
+                                                <div class="form-group
+                                                    {{ $errors->has('prod_codigo') ? ' has-danger' : '' }}"
+                                                     style="margin-top: 0px;">
+                                                    @include('alerts.feedback', ['field' => 'prod_proced'])
+                                                </div>
                                             </div>
                                         </div>
 
