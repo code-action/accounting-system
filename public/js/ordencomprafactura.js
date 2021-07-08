@@ -8,26 +8,33 @@ $('#agregarMateria').click(function () {
         html = "<tr class='added"+material_id+"'>" +
             "<td>" +
             text_material +
-            "<input type='hidden' name='material_id[]' value='" + material_id + "'/>" +
             "</td>" +
             "<td class='text-right'>" +
             cantidad +
-            "<input type='hidden' name='mo_cantidad[]' value='" + cantidad + "'/>" +
             "</td>" +
             "<td class='text-right'>" +
             costo +
-            "<input type='hidden' name='mo_costo[]' value='" + formatNumber(costo) + "'/>" +
             "</td>" +
             "<td class='text-right'>" +
             formatNumber((costo * cantidad).toFixed(2)) +
-            "<input type='hidden' name='estado_fila[]' value='nuevo'/>" +
             "</td>" +
             "<td class='td-actions text-right'>" +
+            '<button rel="tooltip" class="btn btn-warning btn-link editarLote" type="button">'+
+            '<i class="material-icons">feedback</i>'+
+            '<div class="ripple-container"></div>'+
+            '</button>'+
             '<button rel="tooltip" class="btn btn-danger btn-link deleteMaterial" type="button">' +
             '<i class="material-icons">close</i>' +
             '<div class="ripple-container"></div>' +
             '</button>' +
+            "<input type='hidden' name='material_id[]' value='" + material_id + "'/>" +
+            "<input type='hidden' name='mo_cantidad[]' value='" + cantidad + "'/>" +
+            "<input type='hidden' name='mo_costo[]' value='" + formatNumber(costo) + "'/>" +
+            "<input type='hidden' name='estado_fila[]' value='nuevo'/>" +
             "<input type='hidden' name='materia_orden_id[]' value=''/>" +
+            "<input type='hidden' name='mat_prov_lote[]' value=''/>"+
+            "<input type='hidden' name='mat_prov_fecha_fabricacion[]' value=''/>"+
+            "<input type='hidden' name='mat_prov_fecha_vencimiento[]' value=''/></td>"+
             "</td>" +
             "</tr>";
 
@@ -37,11 +44,7 @@ $('#agregarMateria').click(function () {
     }
     refreshActiveFunctions()
 });
-function validarAux(material_id) {
-    if ($('.added'+$('#aux_material').find('option:selected').val()).length>0) {
-        msmError("La materia prima ya fue agregada",1);
-        return false;
-    }
+function validarAux() {
     if ($('#aux_cantidad').val().trim() == '') {
         msmError("cantidad");
         return false;
@@ -63,15 +66,14 @@ function validarAux(material_id) {
     return true;
 }
 
-$('#guardarOrden').click(function () {
-    if (validarOrden()) { //validar campos de orden
-        $('#formOrden').submit();
+$('#guardarFactura').click(function () {
+    if (validarFactura()) { //validar campos de orden
+        $('#formfactura').submit();
     }
 
 });
 
 function refreshActiveFunctions() {
-    console.log("refresh")
     $(".deleteMaterial").unbind()
     $('.deleteMaterial').click(function () {
         if ($(this).parent('td').parent('tr').find('input:eq(3)').val() == "nuevo")
@@ -83,9 +85,21 @@ function refreshActiveFunctions() {
         }
         refreshTotal()
     });
+    $(".editarLote").unbind()
+    $(".editarLote").click(function () {
+        $('.activetr').removeClass('activetr')
+        activetr=$(this).parent('td').parent('tr')
+        activetr.addClass('activetr')
+        $('#auxf_lote').val(activetr.find('input:eq(5)').val())
+        $('#auxf_fabricacion').val(activetr.find('input:eq(6)').val())
+        $('#auxf_vencimiento').val(activetr.find('input:eq(7)').val())
+        $('#auxf_cantidad').val(parseFloat(activetr.find('input:eq(1)').val()))
+        $('#auxf_costo').val(parseFloat(activetr.find('input:eq(2)').val()).toFixed(2))
+        $('#materiaLote').modal('show')
+    })
 }
 
-function validarOrden() {
+function validarFactura() {
     if ($('#ord_numero').val().trim() == '') {
         msmError("N° de Orden");
         return false;
@@ -98,8 +112,16 @@ function validarOrden() {
         msmError("proveedor");
         return false;
     }
+    if ($('#ord_factura').val().trim() == '') {
+        msmError("N° de Factura");
+        return false;
+    }
     if ($('#tablaMateriales').find('tbody').find('tr').length == 0) {
         msmError("No se han agregado <b>materiales</b> a la tabla", 1);
+        return false;
+    }
+    if ($('.btn-warning').length > 0) {
+        msmError("Complete toda la información de los <b>materiales</b> agregados", 1);
         return false;
     }
     return true;
@@ -202,3 +224,57 @@ function filtrar(field){
         $('#tabla-filtro').find('tbody').find('tr').remove()
     }
 }
+$('#guardarLote').click(function(){
+    if(validarLote()){
+        activetr=$('.activetr')
+        cantidad=$('#auxf_cantidad').val()
+        costo=$('#auxf_costo').val()
+        activetr.find('input:eq(5)').val($('#auxf_lote').val())
+        activetr.find('input:eq(6)').val($('#auxf_fabricacion').val())
+        activetr.find('input:eq(7)').val($('#auxf_vencimiento').val())
+        activetr.find('input:eq(1)').val(cantidad)
+        activetr.find('input:eq(2)').val($('#auxf_costo').val())
+        activetr.find('td:eq(1)').text(cantidad)
+        activetr.find('td:eq(2)').text(formatNumber(parseFloat(costo).toFixed(2)))
+        activetr.find('td:eq(3)').text(formatNumber((parseFloat(costo)*parseFloat(cantidad)).toFixed(2)))
+        activetr.find('button:eq(0)').empty()
+        activetr.find('button:eq(0)').removeClass('btn-warning')
+        activetr.find('button:eq(0)').addClass('btn-success')
+        icono='<i class="material-icons">assignment_turned_in</i><div class="ripple-container"></div>'
+        activetr.find('button:eq(0)').html(icono)
+        msmInfo("La información fue actualizada!!")
+        refreshTotal()
+        $('#materiaLote').modal('hide')
+    }
+})
+
+function validarLote() {
+    if ($('#auxf_lote').val().trim() == '') {
+        msmError("nº de lote");
+        return false;
+    }
+    if ($('#auxf_fabricacion').val().trim() == '') {
+        msmError("fecha de fabricación");
+        return false;
+    }
+    if ($('#auxf_vencimiento').val().trim() == '') {
+        msmError("fecha de vencimiento");
+        return false;
+    }
+    if ($('#auxf_cantidad').val().trim() == '') {
+        msmError("cantidad");
+        return false;
+    } else if (parseFloat($('#auxf_cantidad').val()) == 0) {
+        msmError("cantidad");
+        return false;
+    }
+    if ($('#auxf_costo').val().trim() == '') {
+        msmError("costo");
+        return false;
+    } else if (parseFloat($('#auxf_costo').val()) == 0) {
+        msmError("costo");
+        return false;
+    }    
+    return true;
+}
+

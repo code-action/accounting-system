@@ -200,6 +200,7 @@
                                                 {{--cantidad, preciou y proveedores que se envian--}}
                                                 {{--Visible--}}
                                                 @foreach($material->proveedores as $prov)
+                                                @if(is_null($prov->pivot->orden_id))
                                                     <div id="add_mat_prov"  class="row">
                                                         <div class="col-md-3 col-sm-2">
                                                             <div class="row">
@@ -258,6 +259,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                @endif
                                                 @endforeach
                                                 {{--Oculta--}}
                                                 <div id="add_mat_prov0" style="display: none"  class="row">

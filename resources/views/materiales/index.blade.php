@@ -41,13 +41,20 @@
                                             <td>{{ $m->mat_codigo}}</td>
                                             {{--<td> {{ $m->id }} </td>--}}
                                             <td> {{ $m->mat_nombre }}</td>
+
                                             <td>
                                                 @php
                                                     $total_cantidad = 0;
                                                 @endphp
                                                 @foreach($m->proveedores as $p)
+                                                @php
+                                                    if(is_null($p->pivot->mat_prov_disponibles)){
+                                                        $p->pivot->mat_prov_disponibles = $p->pivot->mat_prov_cantidad;
+                                                        $p->pivot->save();
+                                                    }
+                                                @endphp
                                                     @php
-                                                        $total_cantidad += $p->pivot->mat_prov_cantidad
+                                                        $total_cantidad += $p->pivot->mat_prov_disponibles
                                                     @endphp
                                                 @endforeach
                                                 {{$total_cantidad}}

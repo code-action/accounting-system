@@ -8,6 +8,7 @@ use App\Models\Material;
 use DB;
 use Exception;
 use App\Models\MateriaOrden;
+use App\Models\MaterialProveedor;
 use Illuminate\Http\Request;
 
 class OrdenCompraController extends Controller
@@ -188,23 +189,59 @@ class OrdenCompraController extends Controller
     }
 
     public function factura(Request $request){
-        $ordenCompra=OrdenCompra::find($request->id);
-        $tipo="factura";
-        return view('ordenescompras.show',compact('ordenCompra','tipo'));
+        $ordenCompra = OrdenCompra::find($request->id);
+        $proveedores = Proveedor::orderBy('prov_nombre')->get();
+        $materiales= Material::orderBy('mat_nombre')->get();
+        return view('ordenescompras.factura',compact('proveedores','materiales','ordenCompra'));
     }
     public function guardar(Request $request){
+        echo $request->id;
         DB::beginTransaction();
-        $orden = OrdenCompra::find($request->id);
-        foreach ($orden->materiaOrden as $materia){
-            $actual = $materia->material->mat_cantidad;
-            $materia->material->mat_cantidad = $actual+$materia->mo_cantidad;
-            $materia->material->save(); 
-        }
-        $orden->ord_factura=$request->ord_factura;
-        $orden->ord_estado=1;
-        $orden->save();
-        DB::commit();
-        return redirect()->route('ordencompra.index')->with('success','Registro creado exitosamente.');
+        // // try{
+            $ordenCompra = OrdenCompra::find($request->id);
+            $ordenCompra->ord_numero=$request->ord_numero;
+            $ordenCompra->ord_fecha=$request->ord_fecha;
+            $ordenCompra->proveedor_id=$request->proveedor_id;
+            $ordenCompra->ord_total=$request->ord_total;
+            if($request->ord_descuento!="")
+                $ordenCompra->ord_descuento=$request->ord_descuento;
+            else
+                $ordenCompra->ord_descuento=0;
+            $ordenCompra->ord_iva_incluido=$request->ord_iva_incluido;
+            $ordenCompra->ord_factura=$request->ord_factura;
+            $ordenCompra->ord_estado=1;
+            $ordenCompra->save();
+            
+            $material_id=$request->material_id;
+            $mo_cantidad=$request->mo_cantidad;
+            $mo_costo=$request->mo_costo;
+            $mat_prov_lote = $request->mat_prov_lote;
+            $mat_prov_fecha_fabricacion = $request->mat_prov_fecha_fabricacion;
+            $mat_prov_fecha_vencimiento = $request->mat_prov_fecha_vencimiento;
+            // print_r($material_id);
+            // print_r($mo_cantidad);
+            // print_r($mo_costo);
+
+            for($i=0;$i<count($material_id);$i++){
+                $mprov=new MaterialProveedor();
+
+                $mprov->material_id = $material_id[$i];
+                $mprov->proveedor_id = $request->proveedor_id;
+                $mprov->mat_prov_preciou = $mo_costo[$i];
+                $mprov->mat_prov_cantidad = $mo_cantidad[$i];
+                $mprov->mat_prov_lote = $mat_prov_lote[$i];
+                $mprov->mat_prov_fecha_fabricacion = $mat_prov_fecha_fabricacion[$i];
+                $mprov->mat_prov_fecha_vencimiento = $mat_prov_fecha_vencimiento[$i];
+                $mprov->mat_prov_disponibles = $mo_cantidad[$i];
+                $mprov->orden_id = $ordenCompra->id;
+                $mprov->save();
+            }
+            DB::commit();
+            return redirect()->route('ordencompra.index')->with('success','Registro creado exitosamente.');
+        // } catch(\Exception $e){
+        //     DB::rollback();
+        //     return redirect()->route('ordencompra.index')->with('error','El registro no pudo crearse.');
+        // }
     }
 
     public function filtro(Request $request){

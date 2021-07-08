@@ -19,7 +19,7 @@ class Material extends Model
     {
         // return $this->hasMany('App\MaterialProvider');
         return $this->belongsToMany(Proveedor::class)
-            ->withPivot('id', 'mat_prov_preciou', 'mat_prov_cantidad')->withTimestamps();
+            ->withPivot('id', 'mat_prov_preciou', 'mat_prov_cantidad','mat_prov_disponibles','orden_id')->withTimestamps();
     }
     public function empaque()
     {

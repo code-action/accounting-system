@@ -71,7 +71,8 @@ class MaterialController extends Controller
             //echo $request->prov_nombre[$i];
             $material->proveedores()->attach($request->prov_nombre[$i],
                 ['mat_prov_preciou' => $request->mat_precio_u[$i],
-                    'mat_prov_cantidad' => $request->mat_cantidad[$i]]);
+                    'mat_prov_cantidad' => $request->mat_cantidad[$i],
+                    'mat_prov_disponibles' => $request->mat_cantidad[$i]]);
         }
 
         return redirect()->route('raw.index')->with('success','Registro creado exitosamente.');
@@ -137,7 +138,8 @@ class MaterialController extends Controller
                 //echo $request->prov_nombre[$i];
                 $material->proveedores()->attach($request->nuevo_prov_nombre[$i],
                     ['mat_prov_preciou' => $request->nuevo_mat_precio_u[$i],
-                        'mat_prov_cantidad' => $request->nuevo_mat_cantidad[$i]]);
+                        'mat_prov_cantidad' => $request->nuevo_mat_cantidad[$i],
+                        'mat_prov_disponibles' => $request->nuevo_mat_cantidad[$i]]);
             }
         }
 

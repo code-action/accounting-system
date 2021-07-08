@@ -18,9 +18,10 @@
                                 <a href="{{ route('ordencompra.index') }}" class="btn btn-sm btn-info">{{ __('Regresar') }}</a>
                             </div>
                         </div>
-                        <form method="post" action="{{ route('ordencompra.update',$ordenCompra->id) }}" autocomplete="off" class="form-horizontal" id="formOrden">
+                        <form method="post" action="{{ route('guardarmateriafactura') }}" autocomplete="off" class="form-horizontal" id="formfactura">
                             @csrf
-                            @method('put')
+                            @method('post')
+                            <input type="hidden" name="id" value="{{$ordenCompra->id}}">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="card border mb-3" style="max-width: 100rem;">
@@ -80,8 +81,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-sm-12">
+                                            <label class="form-label label-top">{{ __('N° de Factura') }}:</label>
+                                            <input class="form-control" name="ord_factura" id="ord_factura" type="text" placeholder="N° de Factura"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-sm-3">
-                                            <button class="btn btn-success btn-sm" id="guardarOrden" type="button">
+                                            <button class="btn btn-success btn-sm" id="guardarFactura" type="button">
                                                 <i class="material-icons">done</i>
                                                 <div class="ripple-container"></div>
                                             </button>
@@ -101,12 +108,10 @@
                                     {{-- fields --}}
                                     <div class="row breadcrumb">
                                         <div class="col-md-2">
-                                            <label for="aux_cantidad" class="form-label label-top">Cantidad</label>
                                             <input class="form-control" name="aux_cantidad" id="aux_cantidad" type="number" min="1" step="1" onKeyPress= 'return positiveNumber( this, event,this.value);' placeholder="cantidad"/>
                                         </div>
 
                                         <div class="col-md-2">
-                                            <label for="aux_costo" class="form-label label-top">Costo</label>
                                             <input class="form-control" name="aux_costo" id="aux_costo" type="number" min="0.01" step="0.01" onKeyPress= 'return positiveNumberH( this, event,this.value);' placeholder="costo"/>
                                         </div>
                                         {{-- <label class="col-sm-2 col-form-label">{{ __('Buscar') }}</label> --}}
@@ -155,21 +160,28 @@
                                                 $total=0;
                                             @endphp
                                             @foreach ($ordenCompra->materiaOrden as $materia)
-                                                <tr class="added{{$materia->material->id}}">
-                                                    <td>{{$materia->material->mat_codigo}} {{$materia->material->mat_nombre}} {{$materia->material->empaque->emp_nombre}} {{$materia->material->mat_contenido}}{{$materia->material->medida->med_abreviatura}}
-                                                        <input type='hidden' name='material_id[]' value="{{$materia->material_id}}"/></td>
-                                                    <td class="text-right">{{$materia->mo_cantidad}}
-                                                        <input type='hidden' name='mo_cantidad[]' value="{{$materia->mo_cantidad}}"/></td>
-                                                    <td class="text-right">{{number_format($materia->mo_costo,2,'.', ',')}}
-                                                        <input type='hidden' name='mo_costo[]' value="{{$materia->mo_costo}}"/></td>
-                                                    <td class="text-right">{{number_format(($materia->mo_cantidad*$materia->mo_costo),2,'.', ',')}}
-                                                        <input type='hidden' name='estado_fila[]' value='creado'/></td>
+                                                <tr>
+                                                    <td>{{$materia->material->mat_codigo}} {{$materia->material->mat_nombre}} {{$materia->material->empaque->emp_nombre}} {{$materia->material->mat_contenido}}{{$materia->material->medida->med_abreviatura}}</td>
+                                                    <td class="text-right">{{$materia->mo_cantidad}}</td>
+                                                    <td class="text-right">{{number_format($materia->mo_costo,2,'.', ',')}}</td>
+                                                    <td class="text-right">{{number_format(($materia->mo_cantidad*$materia->mo_costo),2,'.', ',')}}</td>
                                                     <td class='td-actions text-right'>
+                                                        <button rel="tooltip" class="btn btn-warning btn-link editarLote" type="button">
+                                                            <i class="material-icons">feedback</i>
+                                                            <div class="ripple-container"></div>
+                                                        </button>
                                                         <button rel="tooltip" class="btn btn-danger btn-link deleteMaterial" type="button">
                                                             <i class="material-icons">close</i>
                                                             <div class="ripple-container"></div>
                                                         </button>
-                                                        <input type='hidden' name='materia_orden_id[]' value='{{$materia->id}}'/></td>
+                                                        <input type='hidden' name='material_id[]' value="{{$materia->material_id}}"/>
+                                                        <input type='hidden' name='mo_cantidad[]' value="{{$materia->mo_cantidad}}"/>
+                                                        <input type='hidden' name='mo_costo[]' value="{{$materia->mo_costo}}"/>
+                                                        <input type='hidden' name='estado_fila[]' value='creado'/>
+                                                        <input type='hidden' name='materia_orden_id[]' value='{{$materia->id}}'/>
+                                                        <input type='hidden' name='mat_prov_lote[]' value=''/>
+                                                        <input type='hidden' name='mat_prov_fecha_fabricacion[]' value=''/>
+                                                        <input type='hidden' name='mat_prov_fecha_vencimiento[]' value=''/></td>
                                                 </tr>
                                                 @php
                                                     $total=$total+($materia->mo_costo*$materia->mo_cantidad);
@@ -215,6 +227,7 @@
             </div>
         </div>
     </div>
+    @include('ordenescompras.opciones.modallote')
 </div>
 @endsection
 
@@ -231,5 +244,5 @@
             }
         })
     </script>
-    <script src="{{ asset('js') }}/ordencompra.js"></script>
+    <script src="{{ asset('js') }}/ordencomprafactura.js"></script>
 @endpush
